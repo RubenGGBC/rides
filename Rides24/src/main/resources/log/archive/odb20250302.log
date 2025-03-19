@@ -1,0 +1,317 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:00:22 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 12976@Rufer
+
+[2025-03-02 18:00:22 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:00:22 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:00:22 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:00:22 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:00:22 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:00:22 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:01:39 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 18228@Rufer
+
+[2025-03-02 18:01:39 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:01:39 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:01:39 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:01:39 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:01:39 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:01:39 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:02:16 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 23768@Rufer
+
+[2025-03-02 18:02:16 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:02:16 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:02:16 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:02:16 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:02:16 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:02:16 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:03:53 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 20980@Rufer
+
+[2025-03-02 18:03:53 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:03:53 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:03:53 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:03:53 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:03:53 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:03:53 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:10:20 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 9116@Rufer
+
+[2025-03-02 18:10:20 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:10:20 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:10:20 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:10:20 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:10:20 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:10:20 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:15:01 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 26472@Rufer
+
+[2025-03-02 18:15:02 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:15:02 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:15:02 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:15:02 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:15:02 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:15:02 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:32:31 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 26372@Rufer
+
+[2025-03-02 18:32:31 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:32:31 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:32:31 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:32:31 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:32:31 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:32:31 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 18:48:36 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 8304@Rufer
+
+[2025-03-02 18:48:36 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 18:48:36 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 18:48:36 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 18:48:36 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 18:48:36 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 18:48:36 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 20:07:33 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 12820@Rufer
+
+[2025-03-02 20:07:33 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 20:07:33 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 20:07:33 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 20:07:33 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 20:07:33 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 20:07:33 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 20:08:26 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 13348@Rufer
+
+[2025-03-02 20:08:26 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 20:08:26 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 20:08:26 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 20:08:26 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 20:08:26 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 20:08:26 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 20:17:04 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 5348@Rufer
+
+[2025-03-02 20:17:04 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 20:17:04 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 20:17:04 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 20:17:04 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 20:17:04 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 20:17:04 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-02 20:17:20 #8 type.registry] 
+New type domain.User
+
+[2025-03-02 20:17:20 #9 type] 
+Type domain.User is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 20:30:05 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 5064@Rufer
+
+[2025-03-02 20:30:05 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 20:30:05 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 20:30:05 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 20:30:05 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 20:30:05 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 20:30:05 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-02 20:30:23 #8 type.registry] 
+New type domain.User
+
+[2025-03-02 20:30:23 #9 type] 
+Type domain.User is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-02 20:32:07 #1 store] 
+Database 'C:\Users\rebel\eclipse-workspace\ride\Rides24-master\src\main\resources\rides.temp' is opened by 16376@Rufer
+
+[2025-03-02 20:32:07 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-02 20:32:07 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-02 20:32:07 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-02 20:32:07 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-02 20:32:07 #6 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-02 20:32:07 #7 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-02 20:32:59 #8 type.registry] 
+New type domain.User
+
+[2025-03-02 20:32:59 #9 type] 
+Type domain.User is not enhanced.
+
