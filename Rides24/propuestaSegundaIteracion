@@ -1,0 +1,50 @@
+1.Confirmar solicitudes de reserva (Conductor)
+Descripción: Un conductor puede revisar y confirmar las solicitudes de viaje enviadas por los pasajeros
+Actores: Conductor
+
+Flujo principal:
+El conductor accede a la aplicación e inicia sesión
+Navega a la sección "Solicitudes de reserva"
+Ve una lista de solicitudes pendientes con detalles como origen, destino, fecha y precio
+Selecciona una solicitud y revisa los detalles del pasajero
+Pulsa en "Confirmar reserva"
+El pasajero recibe una notificación de que su solicitud ha sido aceptada
+Resultado esperado: La reserva pasa a estado "Confirmada" y el pasajero puede ver la actualización en su aplicación
+
+
+2.Valorar conductor y viaje
+Descripción: Permitir que los pasajeros califiquen a los conductores y dejen reseñas después de un viaje
+Actores: Usuario 
+
+Flujo principal:
+El pasajero accede a la aplicación e inicia sesión
+Navega a la sección "Mis viajes completados"
+Selecciona un viaje finalizado
+Ingresa una calificación en estrellas (de 1 a 5)
+Opcionalmente, escribe una reseña sobre el conductor
+Pulsa en "Enviar"
+La calificación y la reseña se guardan en el perfil del conductor
+Resultado esperado: La calificación y la reseña quedan registradas y visibles en el perfil del conductor
+Requiere de la clase "Valoracion"
+
+
+3.Ver mis valoracion y comentarios de viajes
+Descripción: Un conductor ve los mensajes y su valoracion de los viajes realizados
+Actores: Conductor
+
+Flujo principal:
+El conductor accede a la aplicación e inicia sesión
+Accede a "Mis valoraciones"
+Se muestra una lista con comentarios (si los hay) y su valoracion
+Clase necesaria: "Valoracion"
+
+
+4.Ver estado de futuros viajes
+Descripción: El usuario puede visualizar el estado de sus futuros viajes (esta confirmado o no)
+Actores: Usuario
+
+Flujo principal:
+El usuario accede a la aplicación e inicia sesión
+Navega a la sección "Mis viajes"
+Se despligan todos sus viajes y el estado de estos
+Requiere clase:"Estado del viajes"
