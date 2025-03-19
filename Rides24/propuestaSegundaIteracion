@@ -18,7 +18,7 @@ Actores: Usuario
 
 Flujo principal:
 El pasajero accede a la aplicación e inicia sesión
-Navega a la sección "Mis viajes completados"
+Accede a "Mis viajes completados"
 Selecciona un viaje finalizado
 Ingresa una calificación en estrellas (de 1 a 5)
 Opcionalmente, escribe una reseña sobre el conductor
@@ -45,6 +45,6 @@ Actores: Usuario
 
 Flujo principal:
 El usuario accede a la aplicación e inicia sesión
-Navega a la sección "Mis viajes"
+Accede la sección "Mis viajes"
 Se despligan todos sus viajes y el estado de estos
 Requiere clase:"Estado del viajes"
