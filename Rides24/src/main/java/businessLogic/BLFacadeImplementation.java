@@ -1,6 +1,8 @@
 package businessLogic;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.jws.WebMethod;
@@ -14,6 +16,7 @@ import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.AnyRidesException;
 import exceptions.NonexitstenUserException;
 import domain.User;
+import domain.Valoracion;
 import exceptions.UserAlredyExistException;
 import exceptions.RideAlreadyExistException;
 
@@ -22,6 +25,15 @@ import exceptions.RideAlreadyExistException;
  */
 @WebService(endpointInterface = "businessLogic.BLFacade")
 public class BLFacadeImplementation  implements BLFacade {
+	private User loggedUser;
+
+	public void setLoggedUser(User user) {
+	    this.loggedUser = user;
+	}
+
+	public User getLoggedUser() {
+	    return loggedUser;
+	}
 	DataAccess dbManager;
 
 	public BLFacadeImplementation()  {		
@@ -141,21 +153,96 @@ public class BLFacadeImplementation  implements BLFacade {
 	    	return user;
 	    }
 	    
-	     
-	    public Ride reserva(Ride viaje)throws AnyRidesException{
-	    	dbManager.open();
-	    	Ride reserva=dbManager.reserva(viaje);
-	    	dbManager.close();
-	    	return reserva;
+	    public Ride reserva(Ride viaje) throws AnyRidesException {
+	        dbManager.open();
+	        Ride reserva = dbManager.reserva(viaje);
+
+	        dbManager.close();
+	        return reserva;
 	    }
+	    
 	
 	 public void añadir(Ride viaje, String email)throws AnyRidesException{
 		 dbManager.open();
 		 dbManager.addReservedRide(email, viaje);
 		 dbManager.close();
 	 }
+	 
+	 
+
+	 
+	 
+	 public List<Ride> getFuturosViajes(String userEmail) {
+	     dbManager.open();
+	     List<Ride> viajes = dbManager.getFuturosViajes(userEmail);
+	     dbManager.close();
+	     return viajes;
+	 }
+	    
+	     
+	    public void addValoracion(Valoracion valoracion) {
+	        dbManager.open();
+	        dbManager.addValoracion(valoracion);
+	        dbManager.close();
+	    }
+	    
+	    
+	    public List<Valoracion> getValoraciones(String driverEmail) {
+	        dbManager.open();
+	        List<Valoracion> valoraciones = dbManager.getValoraciones(driverEmail);
+	        dbManager.close();
+	        return valoraciones;
+	    }
+
+		@Override
+		 public List<Ride> getReservedRides(String email)	{
+			
+		 dbManager.open();
+		 
+		List<Ride> l= dbManager.getReservedRides(email);
+		dbManager.close();
+			// TODO Auto-generated method stub
+		return l;
+		}
+		public Driver getDriverByUser(User user) {
+			dbManager.open();
+		    if (user == null) return null;
+		    return dbManager.findDriverByUserEmail(user.getEmail());
+		}
+
+		@Override
+		public List<Ride> getRidesByDriver(Driver conductor) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		public void updateRide(Ride ride) {
+			dbManager.open();
+		    dbManager.updateRide(ride);
+		    dbManager.close();
+		}
+		public List<Ride> getConfirmedRidesByUser(User user) {
+			dbManager.open();
+		    return dbManager.getConfirmedRidesByUser(user);
+		    
+		}
+		
+		public List<Ride> getReservedRidesByDriver(Driver driver) {
+		  dbManager.open();
+		  return dbManager.getReservedRidesByDriver(driver);
+		    }
+		}
+
+
+		
+
+
 	
 
 
-}
+
+	
+	
+
+
+
 

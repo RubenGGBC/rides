@@ -19,6 +19,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Driver;
+import domain.EstadoViaje;
 import domain.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -26,11 +27,13 @@ import exceptions.UserAlredyExistException;
 import exceptions.AnyRidesException;
 import exceptions.NonexitstenUserException;
 import domain.User;
+import domain.Valoracion;
 
 /**
  * It implements the data access to the objectDb database
  */
 public class DataAccess  {
+	private static final EstadoViaje PENDIENTE = null;
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
 
@@ -83,32 +86,10 @@ public class DataAccess  {
 		   if (month==12) { month=1; year+=1;}  
 	    
 		   
-		    //Create drivers 
-			Driver driver1=new Driver("driver1@gmail.com","Aitor Fernandez");
-			Driver driver2=new Driver("driver2@gmail.com","Ane Gaztañaga");
-			Driver driver3=new Driver("driver3@gmail.com","Test driver");
-
+		    
 			
-			//Create rides
-			driver1.addRide("Donostia", "Bilbo", UtilDate.newDate(year,month,15), 4, 7);
-			driver1.addRide("Donostia", "Gazteiz", UtilDate.newDate(year,month,6), 4, 8);
-			driver1.addRide("Bilbo", "Donostia", UtilDate.newDate(year,month,25), 4, 4);
-
-			driver1.addRide("Donostia", "Iruña", UtilDate.newDate(year,month,7), 4, 8);
 			
-			driver2.addRide("Donostia", "Bilbo", UtilDate.newDate(year,month,15), 3, 3);
-			driver2.addRide("Bilbo", "Donostia", UtilDate.newDate(year,month,25), 2, 5);
-			driver2.addRide("Eibar", "Gasteiz", UtilDate.newDate(year,month,6), 2, 5);
-
-			driver3.addRide("Bilbo", "Donostia", UtilDate.newDate(year,month,14), 1, 3);
-
 			
-						
-			db.persist(driver1);
-			db.persist(driver2);
-			db.persist(driver3);
-
-	
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
 		}
@@ -305,6 +286,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 	
 	if(viaje.getnPlaces()>0) {
 		viaje.setBetMinimum((int) (viaje.getnPlaces()-1));
+		viaje.setEstado(EstadoViaje.PENDIENTE);
 		db.merge(viaje);
 		db.getTransaction().commit();
 	}else { 
@@ -342,8 +324,152 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.getTransaction().commit();
         return user; 
     }
+   
+
+    public void addValoracion(Valoracion valoracion) {
+        db.getTransaction().begin();
+        db.persist(valoracion);
+        db.getTransaction().commit();
+    }
+
+    
+    public List<Valoracion> getValoraciones(String driverEmail) {
+        TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
+        query.setParameter("email", driverEmail);
+        return query.getResultList();
+    }
 
 
-}
+    public List<Ride> getReservedRidesF(String email) {
+        db.getTransaction().begin();
+        User user = db.find(User.class, email);
+        List<Ride> rides = user.getReservedRides();
+        db.getTransaction().commit();
+        return rides;
+    }
+    
+    public List<Ride> getFuturosViajes(String userEmail) {
+        List<Ride> futurosViajes = new ArrayList<>();
+        Date hoy = new Date(); // Fecha actual
+
+        try {
+            TypedQuery<Ride> query = db.createQuery(
+                "SELECT r FROM Ride r JOIN r.reservedRides u WHERE u.email = :email AND r.date > :hoy", 
+                Ride.class);
+            query.setParameter("email", userEmail);
+            query.setParameter("hoy", hoy);
+            
+            futurosViajes = query.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error al obtener futuros viajes: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+        }
+
+        return futurosViajes;
+    }
+    
+    public List<Valoracion> getValoracionesConductor(String conductorEmail) {
+        TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
+        query.setParameter("email", conductorEmail);
+        
+        return query.getResultList();
+    }
+    public List<Ride> getViajesConductor(String conductorEmail) {
+        TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.driver.email = :email", Ride.class);
+        query.setParameter("email", conductorEmail);
+        return query.getResultList();
+    }
+
+  
+  
+    
+    public Driver findDriverByUserEmail(String userEmail) {
+        try {
+            TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.email = :email", Driver.class);
+            query.setParameter("email", userEmail);
+            List<Driver> drivers = query.getResultList();
+            if (!drivers.isEmpty()) {
+                return drivers.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void updateRide(Ride ride) {
+        try {
+            db.getTransaction().begin();
+            db.merge(ride);
+            db.getTransaction().commit();
+        } catch (Exception e) {
+            // Si algo sale mal, hacer rollback
+            if (db.getTransaction().isActive()) {
+                db.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+        public List<Ride> getConfirmedRidesByUser(User user) {
+            try {
+                String jpql = "SELECT r FROM user r WHERE r.user = :user AND r.estado = :estado";
+                TypedQuery<Ride> query = db.createQuery(jpql, Ride.class);
+                query.setParameter("user", user);
+                query.setParameter("estado", EstadoViaje.CONFIRMADO); // EstadoViaje es un Enum
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        
+
+    }
+        public List<Ride> getReservedRidesByDriver(Driver driver) {
+            try {
+                // Recuperamos el mismo Driver desde la DB para que pertenezca al mismo EntityManager
+                Driver managedDriver = db.find(Driver.class, driver.getName()); 
+
+                if (managedDriver == null) {
+                    return new ArrayList<>(); // Si el driver no existe en la DB, devolvemos lista vacía
+                }
+
+                String jpql = "SELECT r FROM User u JOIN u.reservedRides r WHERE r.driver = :driver";
+                TypedQuery<Ride> query = db.createQuery(jpql, Ride.class);
+                query.setParameter("driver", managedDriver);
+
+                return query.getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        }
+        
+            public HashMap<User, EstadoViaje> getUserRideStatus(Driver driver) {
+                HashMap<User, EstadoViaje> userRideStatus = new HashMap<>();
+
+                // Obtener todos los usuarios
+                TypedQuery<User> query = db.createQuery("SELECT u FROM User u", User.class);
+                List<User> users = query.getResultList();
+
+                // Recorrer cada usuario y verificar sus rides reservados
+                for (User user : users) {
+                    for (Ride ride : user.getReservedRides()) {
+                        if (ride.getDriver().equals(driver)) {
+                            userRideStatus.put(user, ride.getEstado());
+                        }
+                    }
+                }
+                return userRideStatus;
+            }
+
+
+        
+        
+
+
+
+        }
+
+
 
 

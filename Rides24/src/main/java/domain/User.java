@@ -74,6 +74,9 @@ public class User implements Serializable {
 
 	public List<Ride> getReservedRides() { return reservedRides; }
     public void addReservedRide(Ride ride) { this.reservedRides.add(ride); }
+   
+    
+
 }
 	
 

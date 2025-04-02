@@ -1,7 +1,9 @@
 package businessLogic;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 //import domain.Booking;
 import domain.Ride;
@@ -14,6 +16,8 @@ import exceptions.UserAlredyExistException;
 import exceptions.AnyRidesException;
 import exceptions.NonexitstenUserException;
 import domain.User;
+import domain.Valoracion;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
  
@@ -87,6 +91,24 @@ public interface BLFacade  {
 	 public Ride reserva(Ride viaje)throws AnyRidesException;
 	 
 	 public void añadir(Ride viaje, String email)throws AnyRidesException;
+	 
+	 public List<Ride> getRidesByDriver(Driver conductor);
+	 
+	 public void addValoracion(Valoracion valoracion);
+	 
+	 public List<Valoracion> getValoraciones(String driverEmail);
+	 
+	 public List<Ride> getReservedRides(String email);
+	 
+	 public Driver getDriverByUser(User user);
+	 
+	 public void updateRide(Ride ride);
+	 public List<Ride> getReservedRidesByDriver(Driver driver);
+
+
+
+
+
 
 }
 

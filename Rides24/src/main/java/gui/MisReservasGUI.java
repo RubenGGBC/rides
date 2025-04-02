@@ -21,11 +21,11 @@ public class MisReservasGUI extends JFrame {
     private JButton jButtonClose = new JButton("Cerrar");
     
     private String[] columnNamesRides = new String[] {
-            "Conductor", "Plazas", "Precio"
+            "Salida","Destino","Conductor", "Plazas", "Precio","Estado"
     };
 
     public MisReservasGUI(User user) {
-        this.setLayout(null);
+        getContentPane().setLayout(null);
         this.setSize(new Dimension(500, 400));
         this.setTitle("Mis Reservas");
         
@@ -42,16 +42,19 @@ public class MisReservasGUI extends JFrame {
         List<Ride> rides = user.getReservedRides();
         for (Ride ride : rides) {
             Vector<Object> row = new Vector<>();
+            row.add(ride.getFrom());
+            row.add(ride.getTo());
             row.add(ride.getDriver().getName());
             row.add(ride.getnPlaces());
             row.add(ride.getPrice());
+            row.add(ride.getEstado());
             tableModelRides.addRow(row);
         }
         
-        scrollPaneRides.setBounds(new Rectangle(50, 50, 400, 250));
+        scrollPaneRides.setBounds(new Rectangle(10, 50, 464, 250));
         scrollPaneRides.setViewportView(tableRides);
         
-        this.add(scrollPaneRides);
-        this.add(jButtonClose);
+        getContentPane().add(scrollPaneRides);
+        getContentPane().add(jButtonClose);
     }
 }

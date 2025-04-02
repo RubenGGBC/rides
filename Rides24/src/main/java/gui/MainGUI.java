@@ -8,6 +8,7 @@ package gui;
 import javax.swing.*;
 
 import domain.Driver;
+import domain.Ride;
 import domain.User;
 import gui.MainGUI;
 import exceptions.UserAlredyExistException;
@@ -19,6 +20,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -105,7 +107,7 @@ public class MainGUI extends JFrame {
 		panel.add(rdbtnNewRadioButton);
 		
 		jButtonCreateQuery = new JButton();
-		jButtonCreateQuery.setBounds(20, 45, 239, 62);
+		jButtonCreateQuery.setBounds(10, 71, 239, 62);
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRide"));
 		jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -115,7 +117,7 @@ public class MainGUI extends JFrame {
 		});
 		
 		jButtonQueryQueries = new JButton();
-		jButtonQueryQueries.setBounds(10, 118, 239, 62);
+		jButtonQueryQueries.setBounds(10, 143, 239, 62);
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRides"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -129,7 +131,7 @@ public class MainGUI extends JFrame {
 		jContentPane.setLayout(null);
 		
 		usertxt = new JTextField();
-		usertxt.setBounds(485, 95, 204, 30);
+		usertxt.setBounds(512, 87, 204, 30);
 		usertxt.setText("");		jContentPane.add(usertxt);
 		usertxt.setColumns(10);
 		jContentPane.add(jLabelSelectOption);
@@ -216,48 +218,14 @@ public class MainGUI extends JFrame {
 				
 			}
 		});
-		btnVerR.setBounds(30, 395, 223, 56);
+		btnVerR.setBounds(20, 395, 239, 56);
 		jContentPane.add(btnVerR);
 		
 	
 		JLabel jLabelMsg_1 = new JLabel(""); //$NON-NLS-1$ //$NON-NLS-2$
-		jLabelMsg_1.setBounds(305, 406, 266, 56);
+		jLabelMsg_1.setBounds(450, 20, 266, 56);
 		jContentPane.add(jLabelMsg_1);
-		JButton Logrbtn = new JButton("Iniciar"); //$NON-NLS-1$ //$NON-NLS-2$
-		Logrbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					BLFacade facade = MainGUI.getBusinessLogic();
-					if(usertxt.getText().isEmpty() || psswdtxt.getText().isEmpty() || (btnUser.isSelected()==false &&  btnDriver.isSelected()==false)) {
-						System.out.println("Faltan datos");
-					}else {
-						User usuarioActual;
-						usuarioActual=facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-						if(usuarioActual.getdriver()==true) {
-							driver.setEmail(usuarioActual.getEmail());
-							driver.setName(usuarioActual.getnombre());
-						}
-						
-						if(btnDriver.isSelected()) {
-							jButtonCreateQuery.setEnabled(true);
-							jButtonQueryQueries.setEnabled(true);	
-							jbuttonSolicitarR.setEnabled(false);
-							btnVerR.setEnabled(false);
-							
-							
-						}else {
-							jButtonCreateQuery.setEnabled(false);
-							jButtonQueryQueries.setEnabled(false);	
-							jbuttonSolicitarR.setEnabled(true);
-							btnVerR.setEnabled(true);
-						}
-					}
-				} catch (NonexitstenUserException e1) {
-					jLabelMsg_1.setText(e1.getMessage());
-				}
-			}});
-		Logrbtn.setBounds(399, 298, 89, 23);
-		jContentPane.add(Logrbtn);
+		
 		
 		JButton btnRegister = new JButton("Register"); //$NON-NLS-1$ //$NON-NLS-2$
 		btnRegister.addActionListener(new ActionListener() {
@@ -281,8 +249,65 @@ public class MainGUI extends JFrame {
 		jContentPane.add(btnRegister);
 		
 		psswdtxt = new JPasswordField(); //$NON-NLS-1$ //$NON-NLS-2$
-		psswdtxt.setBounds(495, 136, 194, 30);
+		psswdtxt.setBounds(512, 128, 204, 30);
 		jContentPane.add(psswdtxt);
+		
+		JButton btnSR = new JButton("Solicitudes de reserva"); //$NON-NLS-1$ //$NON-NLS-2$
+		btnSR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				User usuarioActual = null;
+				try {
+					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
+				} catch (NonexitstenUserException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JFrame i = new ConfirmacionReservaGUI(usuarioActual);				
+				i.setVisible(true);	
+				
+			}
+		});
+		btnSR.setBounds(354, 352, 163, 43);
+		jContentPane.add(btnSR);
+		
+		JButton btnValorarC = new JButton("Valorar conductor por viajes"); //$NON-NLS-1$ //$NON-NLS-2$
+		btnValorarC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				User usuarioActual = null;
+				try {
+					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
+				} catch (NonexitstenUserException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JFrame j = new AddReviewGUI(usuarioActual);
+				j.setVisible(true);
+				
+			}
+		});
+		btnValorarC.setBounds(580, 357, 223, 33);
+		jContentPane.add(btnValorarC);
+		
+		JButton btnMisVal = new JButton("Mis Valoraciones"); //$NON-NLS-1$ //$NON-NLS-2$
+		btnMisVal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				User usuarioActual = null;
+				try {
+					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
+				} catch (NonexitstenUserException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JFrame j = new VerMisValoraciones(usuarioActual);
+				j.setVisible(true);
+			}
+		});
+		btnMisVal.setBounds(491, 412, 132, 30);
+		jContentPane.add(btnMisVal);
+		
 		
 		
 	
@@ -292,6 +317,57 @@ public class MainGUI extends JFrame {
 				System.exit(1);
 			}
 		});
+	
+	
+	JButton Logrbtn = new JButton("Iniciar"); //$NON-NLS-1$ //$NON-NLS-2$
+	Logrbtn.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				if(usertxt.getText().isEmpty() || psswdtxt.getText().isEmpty() || (btnUser.isSelected()==false &&  btnDriver.isSelected()==false)) {
+					System.out.println("Faltan datos");
+				}else {
+					User usuarioActual;
+					usuarioActual=facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
+					if(usuarioActual.getdriver()==true) {
+						driver.setEmail(usuarioActual.getEmail());
+						driver.setName(usuarioActual.getnombre());
+					}
+					
+					if(btnDriver.isSelected()) {
+						jButtonCreateQuery.setEnabled(true);
+						jButtonQueryQueries.setEnabled(true);	
+						jbuttonSolicitarR.setEnabled(false);
+						btnVerR.setEnabled(false);
+						btnSR.setEnabled(true);
+						btnValorarC.setEnabled(false);
+						btnMisVal.setEnabled(true);
+					
+						
+						jLabelMsg_1.setText("Sesion iniciada como Driver");
+
+						
+						
+					}else {
+						jButtonCreateQuery.setEnabled(false);
+						jButtonQueryQueries.setEnabled(false);	
+						jbuttonSolicitarR.setEnabled(true);
+						btnVerR.setEnabled(true);
+						btnSR.setEnabled(false);
+						btnValorarC.setEnabled(true);
+						btnMisVal.setEnabled(false);
+					
+						jLabelMsg_1.setText("Sesion iniciada como User");
+
+					}
+
+				}
+			} catch (NonexitstenUserException e1) {
+				jLabelMsg_1.setText(e1.getMessage());
+			}
+		}});
+	Logrbtn.setBounds(399, 298, 89, 23);
+	jContentPane.add(Logrbtn);
 	}
 	
 	private void paintAgain() {

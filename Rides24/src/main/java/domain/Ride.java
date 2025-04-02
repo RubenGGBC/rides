@@ -2,6 +2,10 @@ package domain;
 
 import java.io.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,9 +29,12 @@ public class Ride implements Serializable {
 	private int nPlaces;
 	private Date date;
 	private float price;
-	
+   private  HashMap<User, EstadoViaje> mapaViajes = new HashMap<>();
+
 	private Driver driver;  
-	
+    private List<User> reservedRides = new Vector<>();
+    private EstadoViaje estado = EstadoViaje.NO_RESERVADO;
+
 	public Ride(){
 		super();
 	}
@@ -186,8 +193,16 @@ public class Ride implements Serializable {
 		return rideNumber+";"+";"+from+";"+to+";"+date;  
 	}
 
+	public EstadoViaje getEstado() {
+	        return estado;
+	    }
 
-
+	public void setEstado(EstadoViaje estado) {
+	        this.estado = estado;
+	    }
+	
 
 	
+	        
+	    
 }

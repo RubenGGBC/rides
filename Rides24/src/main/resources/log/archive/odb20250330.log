@@ -1,0 +1,828 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 12:33:55 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 19836@Rufer
+
+[2025-03-30 12:33:56 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 12:33:56 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 12:33:56 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 12:33:56 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 12:33:56 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 12:33:56 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 12:33:56 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 12:33:56 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 12:33:56 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 12:33:56 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 12:33:56 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 12:33:56 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 12:43:49 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 5740@Rufer
+
+[2025-03-30 12:43:49 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 12:43:49 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 12:43:49 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 12:43:49 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 12:43:49 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 12:43:49 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 12:43:49 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 12:43:49 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 12:43:49 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 12:43:49 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 12:43:49 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 12:43:49 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 12:47:49 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 7196@Rufer
+
+[2025-03-30 12:47:49 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 12:47:49 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 12:47:49 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 12:47:49 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 12:47:49 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 12:47:49 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 12:47:49 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 12:47:49 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 12:47:49 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 12:47:49 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 12:47:49 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 12:47:49 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 16:51:39 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 5200@Rufer
+
+[2025-03-30 16:51:39 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 16:51:39 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 16:51:39 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 16:51:39 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 16:51:39 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 16:51:39 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 16:51:39 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 16:51:39 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 16:51:39 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 16:51:39 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 16:51:39 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 16:51:39 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+[2025-03-30 16:52:05 #14 type.registry] 
+New type java.lang.Object[]
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 17:33:31 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 19464@Rufer
+
+[2025-03-30 17:33:31 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 17:33:31 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 17:33:31 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 17:33:31 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 17:33:31 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 17:33:31 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 17:33:31 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 17:33:31 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 17:33:31 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 17:33:31 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 17:33:31 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 17:33:31 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 17:39:22 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 10192@Rufer
+
+[2025-03-30 17:39:22 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 17:39:22 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 17:39:22 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 17:39:22 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 17:39:22 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 17:39:22 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 17:39:22 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 17:39:23 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 17:39:23 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 17:39:23 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 17:39:23 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 17:39:23 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 17:40:38 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 27148@Rufer
+
+[2025-03-30 17:40:38 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 17:40:38 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 17:40:38 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 17:40:38 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 17:40:38 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 17:40:38 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 17:40:38 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 17:40:38 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 17:40:38 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 17:40:38 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 17:40:38 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 17:40:38 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 17:42:05 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 27888@Rufer
+
+[2025-03-30 17:42:05 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 17:42:05 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 17:42:05 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 17:42:05 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 17:42:05 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 17:42:05 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 17:42:05 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 17:42:05 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 17:42:05 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 17:42:05 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 17:42:05 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 17:42:05 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:32:28 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 18632@Rufer
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:32:41 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 10340@Rufer
+
+[2025-03-30 18:32:41 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:32:41 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:32:41 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:32:41 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:32:41 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:32:41 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:32:41 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:32:41 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:32:41 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:32:41 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:32:41 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:32:41 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:32:47 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 22232@Rufer
+
+[2025-03-30 18:32:47 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:32:47 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:32:47 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:32:47 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:32:47 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:32:47 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:32:47 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:32:47 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:32:47 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:32:47 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:32:47 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:32:47 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:40:40 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 27316@Rufer
+
+[2025-03-30 18:40:40 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:40:40 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:40:40 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:40:40 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:40:40 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:40:40 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:40:40 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:40:40 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:40:40 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:40:40 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:40:40 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:40:40 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:43:15 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 10208@Rufer
+
+[2025-03-30 18:43:15 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:43:15 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:43:15 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:43:15 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:43:15 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:43:15 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:43:15 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:43:15 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:43:15 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:43:15 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:43:15 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:43:15 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:44:58 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 29408@Rufer
+
+[2025-03-30 18:44:58 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:44:58 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:44:58 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:44:58 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:44:58 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:44:58 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:44:58 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:44:58 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:44:58 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:44:58 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:44:58 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:44:58 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 18:50:21 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 23908@Rufer
+
+[2025-03-30 18:50:21 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 18:50:21 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 18:50:21 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 18:50:21 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 18:50:21 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 18:50:21 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 18:50:21 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 18:50:21 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 18:50:21 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 18:50:21 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 18:50:21 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 18:50:21 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:01:56 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 13268@Rufer
+
+[2025-03-30 20:01:56 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:01:56 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:01:56 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:01:56 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:01:56 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:01:56 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:01:56 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:01:56 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:01:56 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:01:56 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 20:01:56 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 20:01:56 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:14:43 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 19748@Rufer
+
+[2025-03-30 20:14:44 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:14:44 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:14:44 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:14:44 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:14:44 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:14:44 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:14:44 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:14:44 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:14:44 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:14:44 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 20:14:44 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 20:14:44 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:16:51 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 19160@Rufer
+
+[2025-03-30 20:16:52 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:16:52 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:16:52 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:16:52 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:16:52 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:16:52 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:16:52 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:16:52 #9 type.registry] 
+New type domain.Valoracion
+
+[2025-03-30 20:16:52 #10 type] 
+Type domain.Valoracion is not enhanced.
+
+[2025-03-30 20:16:52 #11 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:16:52 #12 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:16:52 #13 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:17:38 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 10228@Rufer
+
+[2025-03-30 20:17:38 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:17:38 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:17:38 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:17:38 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:17:38 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:17:38 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:17:38 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:17:38 #9 type.registry] 
+New type domain.Valoracion
+
+[2025-03-30 20:17:38 #10 type] 
+Type domain.Valoracion is not enhanced.
+
+[2025-03-30 20:17:38 #11 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:17:38 #12 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:17:38 #13 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:18:12 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 5884@Rufer
+
+[2025-03-30 20:18:12 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:18:12 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:18:12 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:18:12 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:18:12 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:18:12 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:18:12 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:18:12 #9 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:18:12 #10 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:18:12 #11 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
+[2025-03-30 20:18:12 #12 type.registry] 
+New type java.util.HashMap<domain.User,java.lang.Boolean>
+
+[2025-03-30 20:18:12 #13 type.registry] 
+New type java.util.Vector<domain.User>
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-03-30 20:19:46 #1 store] 
+Database 'C:\Users\rebel\git\rides\Rides24\src\main\resources\rides.temp' is opened by 11196@Rufer
+
+[2025-03-30 20:19:46 #2 type.registry] 
+New type domain.Driver
+
+[2025-03-30 20:19:46 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-03-30 20:19:46 #4 type.registry] 
+New type domain.Ride
+
+[2025-03-30 20:19:46 #5 type] 
+Type domain.Ride is not enhanced.
+
+[2025-03-30 20:19:46 #6 type.registry] 
+New type domain.EstadoViaje
+
+[2025-03-30 20:19:46 #7 type.registry] 
+New type domain.User
+
+[2025-03-30 20:19:46 #8 type] 
+Type domain.User is not enhanced.
+
+[2025-03-30 20:19:46 #9 type.registry] 
+New type domain.Valoracion
+
+[2025-03-30 20:19:46 #10 type] 
+Type domain.Valoracion is not enhanced.
+
+[2025-03-30 20:19:46 #11 type.registry] 
+New type java.util.Vector<java.lang.Object>
+
+[2025-03-30 20:19:46 #12 type.registry] 
+New type java.util.Vector<domain.Ride>
+
+[2025-03-30 20:19:46 #13 type.registry] 
+New type java.util.HashMap<java.lang.Object,java.lang.Object>
+
