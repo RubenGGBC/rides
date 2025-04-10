@@ -2,26 +2,19 @@
 Actor: Usuario
 Resumen: Permite cargar saldo al monedero, pagar viajes como viajero y recibir pagos como conductor.
 Eventos principales:
-
 El usuario accede a su monedero.
-
 Elige cargar dinero mediante tarjeta u otro método.
-
 Realiza el pago de un viaje.
-
 El sistema descuenta automáticamente del monedero.
-
 Al completarse un viaje, el conductor recibe el dinero correspondiente.
+
 
 2. CU: Envío de correo electrónico en confirmación de reserva
 Actor: Sistema
 Resumen: Al confirmarse una reserva de viaje, el sistema envía automáticamente un correo al usuario.
 Eventos principales:
-
 El usuario solicita una reserva.
-
 El conductor confirma la solicitud.
-
 El sistema envía un correo al viajero con los detalles del viaje.
 
 3. CU: Interfaz multilingüe
@@ -30,9 +23,7 @@ Resumen: Permite al usuario seleccionar el idioma de la interfaz.
 Eventos principales:
 
 El usuario accede a la configuración.
-
 Elige el idioma (español, inglés, etc.).
-
 El sistema adapta todos los textos e interfaces al idioma seleccionado.
 
 4. Mejorar en general la UI mediante iconos e imágenes, como mínimo mejorar visualmente las valoraciones
