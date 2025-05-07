@@ -73,7 +73,6 @@ public class MonederoGUI extends JFrame {
         try {
             jbInit();
             updateSaldoDisplay();
-            updateCuentaBancariaDisplay();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -203,38 +202,7 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    private void updateCuentaBancariaDisplay() {
-        try {
-            System.out.println("Actualizando visualización de cuenta bancaria para usuario: " + currentUser.getEmail());
-            
-            Monedero monedero = businessLogic.getMonedero(currentUser.getEmail());
-            if (monedero != null) {
-                CuentaBancaria cuenta = monedero.getCuentaBancaria();
-                if (cuenta != null && cuenta.getNumerotarjeta() != null && !cuenta.getNumerotarjeta().isEmpty()) {
-                    System.out.println("Cuenta encontrada: " + cuenta.getNumerotarjeta());
-                    txtCuentaBancaria.setText(cuenta.getNumerotarjeta());
-                    
-                } else {
-                    System.out.println("No hay cuenta asociada");
-                    txtCuentaBancaria.setText("");
-                 
-                }
-            } else {
-                System.out.println("Monedero no encontrado");
-                txtCuentaBancaria.setText("");
-            }
-        } catch (MonederoNoExisteException e) {
-            System.err.println("Error al actualizar visualización: Monedero no existe - " + e.getMessage());
-            txtCuentaBancaria.setText("");
-        } catch (NonexitstenUserException e) {
-            System.err.println("Error al actualizar visualización: Usuario no existe - " + e.getMessage());
-            txtCuentaBancaria.setText("");
-        } catch (Exception e) {
-            System.err.println("Error inesperado al actualizar visualización: " + e.getMessage());
-            e.printStackTrace();
-            txtCuentaBancaria.setText("");
-        }
-    }
+
     
     /**
      * Ingresa dinero en el monedero

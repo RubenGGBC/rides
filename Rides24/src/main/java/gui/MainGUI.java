@@ -410,19 +410,19 @@ public class MainGUI extends JFrame {
         bankPanel.add(txtCuentaBancaria);
         loginPanel.add(bankPanel);
         
-        // Bank account association button
-        JPanel associatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        associatePanel.setBackground(backgroundColor);
-        
         btnAsociarCuenta = new JButton(resourceBundle.getString("Asociar"));
+        bankPanel.add(btnAsociarCuenta);
         styleButton(btnAsociarCuenta);
         btnAsociarCuenta.setEnabled(false);
         btnAsociarCuenta.addActionListener(e -> asociarCuentaBancaria());
         
+        btnAsociarCuenta.setEnabled(true);
+        
+        JPanel associatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        associatePanel.setBackground(backgroundColor);
+        
         lblCuentaAsociada = new JLabel("");
         lblCuentaAsociada.setFont(basicFont);
-        
-        associatePanel.add(btnAsociarCuenta);
         associatePanel.add(lblCuentaAsociada);
         loginPanel.add(associatePanel);
 
@@ -447,10 +447,6 @@ public class MainGUI extends JFrame {
                         driver.setEmail(usuarioActual.getEmail());
                         driver.setName(usuarioActual.getnombre());
                     }
-                    
-                    // Enable bank account association button after login
-                    btnAsociarCuenta.setEnabled(true);
-                    updateCuentaBancariaDisplay();
                     
                     if (btnDriver.isSelected()) {
                         showSuccessMessage(resourceBundle.getString("Login.LoginSuccessDriver"));
@@ -559,25 +555,19 @@ public class MainGUI extends JFrame {
         btnAñadirSaldo.setEnabled(enabled);
     }
     
-    /**
-     * Show error message
-     */
+    
     private void showErrorMessage(String message) {
         statusLabel.setText(message);
         statusLabel.setForeground(errorColor);
     }
     
-    /**
-     * Show success message
-     */
+   
     private void showSuccessMessage(String message) {
         statusLabel.setText(message);
         statusLabel.setForeground(successColor);
     }
     
-    /**
-     * Associate bank account with current user
-     */
+
     private void asociarCuentaBancaria() {
         try {
             String numeroCuenta = txtCuentaBancaria.getText().trim();
@@ -601,7 +591,6 @@ public class MainGUI extends JFrame {
             if (monedero != null && monedero.getCuentaBancaria() != null) {
                 System.out.println("Cuenta asociada exitosamente: " + monedero.getCuentaBancaria().getNumerotarjeta());
 
-                updateCuentaBancariaDisplay();
 
                 enviarCorreoAsociacionCuenta(numeroCuenta);
 
@@ -638,10 +627,8 @@ public class MainGUI extends JFrame {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(REMITENTE));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
-            // Email subject should use resource bundle
             message.setSubject(resourceBundle.getString("EmailAsociacionAsunto"));
 
-            // Email body should use resource bundle and safe account number formatting
             String cuentaSegura = numeroCuenta.substring(0, 4) + "..." + numeroCuenta.substring(numeroCuenta.length() - 4);
             String cuerpoMensaje = String.format(
                 resourceBundle.getString("EmailAsociacionMensaje"),
@@ -659,39 +646,13 @@ public class MainGUI extends JFrame {
             e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error inesperado al enviar correo de asociación de cuenta: " + e.getMessage());
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
     }
     
-    /**
-     * Update bank account display
-     */
-    private void updateCuentaBancariaDisplay() {
-        try {
-            BLFacade businessLogic = MainGUI.getBusinessLogic();
-            Monedero monedero = businessLogic.getMonedero(currentUser.getEmail());
-            
-            if (monedero != null && monedero.getCuentaBancaria() != null) {
-                String numeroCuenta = monedero.getCuentaBancaria().getNumerotarjeta();
-                String cuentaSegura = numeroCuenta.substring(0, 4) + "..." + numeroCuenta.substring(numeroCuenta.length() - 4);
-                lblCuentaAsociada.setText(resourceBundle.getString("CuentaAsociada") + ": " + cuentaSegura);
-                lblCuentaAsociada.setForeground(successColor);
-                txtCuentaBancaria.setEnabled(false);
-                btnAsociarCuenta.setEnabled(false);
-            } else {
-                lblCuentaAsociada.setText(resourceBundle.getString("SinCuentaAsociada"));
-                lblCuentaAsociada.setForeground(textColor);
-                txtCuentaBancaria.setEnabled(true);
-                btnAsociarCuenta.setEnabled(true);
-            }
-        } catch (Exception e) {
-            System.err.println("Error al actualizar estado de cuenta bancaria: " + e.getMessage());
-            lblCuentaAsociada.setText("");
-            txtCuentaBancaria.setEnabled(true);
-            btnAsociarCuenta.setEnabled(true);
-        }
-    }
     
+   
+     
     
     private void paintAgain() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Etiquetas");
@@ -708,9 +669,12 @@ public class MainGUI extends JFrame {
         lblPswd.setText(resourceBundle.getString("Login.Password"));
         lblName.setText(resourceBundle.getString("Login.Name"));
         lblType.setText(resourceBundle.getString("Login.Type"));
-        btnUser.setText(resourceBundle.getString("Login.UserType"));
+        btnUser.setText(resourceBundle.getString("Login.UserType")); 
         btnDriver.setText(resourceBundle.getString("Login.DriverType"));
         btnLogin.setText(resourceBundle.getString("Login.LoginButton"));
         btnRegister.setText(resourceBundle.getString("Login.RegisterButton"));
+        lblCuentaBancaria.setText(resourceBundle.getString("CuentaBancaria"));
+        btnAsociarCuenta.setText(resourceBundle.getString("Asociar"));
+
     }
 }
