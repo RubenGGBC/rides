@@ -9,8 +9,11 @@ import javax.swing.border.EmptyBorder;
 
 import domain.Driver;
 import domain.User;
+import domain.CuentaBancaria;
+import domain.Monedero;
 import exceptions.UserAlredyExistException;
 import exceptions.NonexitstenUserException;
+import exceptions.MonederoNoExisteException;
 import businessLogic.BLFacade;
 
 import java.awt.Color;
@@ -22,7 +25,15 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +43,11 @@ public class MainGUI extends JFrame {
     private Driver driver;
     private static final long serialVersionUID = 1L;
     private static BLFacade appFacadeInterface;
+    private User currentUser = null;
+    
+    // Email configuration
+    private static final String SMTP_HOST = "smtp.yourdomain.com";
+    private static final String REMITENTE = "noreply@carpooling.com";
     
     // Colors - Enhanced Minimal palette
     private Color primaryColor = new Color(70, 130, 180); // Steel Blue
@@ -62,11 +78,17 @@ public class MainGUI extends JFrame {
     private JRadioButton btnUser;
     private final ButtonGroup userTypeGroup = new ButtonGroup();
     
+    // Bank account fields
+    private JTextField txtCuentaBancaria;
+    private JButton btnAsociarCuenta;
+    private JLabel lblCuentaAsociada;
+    
     // Added label fields as class variables so they can be accessed in paintAgain()
     private JLabel lblEmail;
     private JLabel lblPswd;
     private JLabel lblName;
     private JLabel lblType;
+    private JLabel lblCuentaBancaria;
     private JButton btnLogin;
     private JButton btnRegister;
     
@@ -79,6 +101,8 @@ public class MainGUI extends JFrame {
     private JButton btnValorarConductor;
     private JButton btnMisValoraciones;
     private JButton btnAñadirSaldo;
+    
+    private ResourceBundle resourceBundle;
     
     public static BLFacade getBusinessLogic() {
         return appFacadeInterface;
@@ -95,8 +119,10 @@ public class MainGUI extends JFrame {
         super();
         driver = d;
         
+        resourceBundle = ResourceBundle.getBundle("Etiquetas");
+        
         this.setSize(850, 550);
-        this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") + " - " + driver.getName());
+        this.setTitle(resourceBundle.getString("MainGUI.MainTitle") + " - " + driver.getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null); // Center on screen
         
@@ -111,7 +137,7 @@ public class MainGUI extends JFrame {
         headerPanel.setBackground(primaryColor);
         headerPanel.setBorder(new EmptyBorder(8, 12, 8, 12));
         
-        JLabel titleLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle"));
+        JLabel titleLabel = new JLabel(resourceBundle.getString("MainGUI.MainTitle"));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         headerPanel.add(titleLabel, BorderLayout.WEST);
@@ -179,7 +205,7 @@ public class MainGUI extends JFrame {
             textColor
         ));
         
-        btnCreateRide = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRide"));
+        btnCreateRide = new JButton(resourceBundle.getString("MainGUI.CreateRide"));
         styleButton(btnCreateRide);
         btnCreateRide.addActionListener(e -> {
             JFrame a = new CreateRideGUI(driver);
@@ -187,14 +213,14 @@ public class MainGUI extends JFrame {
         });
         operationsPanel.add(btnCreateRide);
         
-        btnQueryRides = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRides"));
+        btnQueryRides = new JButton(resourceBundle.getString("MainGUI.QueryRides"));
         styleButton(btnQueryRides);
         btnQueryRides.addActionListener(e -> {
             JFrame a = new FindRidesGUI();
             a.setVisible(true);
         });
         
-        btnAñadirSaldo = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.AñadirSaldo")); 
+        btnAñadirSaldo = new JButton(resourceBundle.getString("MainGUI.AñadirSaldo")); 
         styleButton(btnAñadirSaldo);
         btnAñadirSaldo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -212,7 +238,7 @@ public class MainGUI extends JFrame {
         operationsPanel.add(btnAñadirSaldo);
         operationsPanel.add(btnQueryRides);
         
-        btnSolicitarReserva = new JButton("Solicitar Reserva");
+        btnSolicitarReserva = new JButton(resourceBundle.getString("MainGUI.SolicitarReserva"));
         styleButton(btnSolicitarReserva);
         btnSolicitarReserva.addActionListener(e -> {
             try {
@@ -227,7 +253,7 @@ public class MainGUI extends JFrame {
         });
         operationsPanel.add(btnSolicitarReserva);
         
-        btnVerReservas = new JButton("Ver Reservas");
+        btnVerReservas = new JButton(resourceBundle.getString("MainGUI.VerReservas"));
         styleButton(btnVerReservas);
         btnVerReservas.addActionListener(e -> {
             try {
@@ -242,7 +268,7 @@ public class MainGUI extends JFrame {
         });
         operationsPanel.add(btnVerReservas);
         
-        btnSolicitudesReserva = new JButton("Solicitudes de Reserva");
+        btnSolicitudesReserva = new JButton(resourceBundle.getString("MainGUI.SolicitudesReserva"));
         styleButton(btnSolicitudesReserva);
         btnSolicitudesReserva.addActionListener(e -> {
             try {
@@ -257,7 +283,7 @@ public class MainGUI extends JFrame {
         });
         operationsPanel.add(btnSolicitudesReserva);
         
-        btnValorarConductor = new JButton("Valorar Conductor");
+        btnValorarConductor = new JButton(resourceBundle.getString("MainGUI.ValorarConductor"));
         styleButton(btnValorarConductor);
         btnValorarConductor.addActionListener(e -> {
             try {
@@ -272,7 +298,7 @@ public class MainGUI extends JFrame {
         });
         operationsPanel.add(btnValorarConductor);
         
-        btnMisValoraciones = new JButton("Mis Valoraciones");
+        btnMisValoraciones = new JButton(resourceBundle.getString("MainGUI.MisValoraciones"));
         styleButton(btnMisValoraciones);
         btnMisValoraciones.addActionListener(e -> {
             try {
@@ -305,8 +331,6 @@ public class MainGUI extends JFrame {
         
         JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         emailPanel.setBackground(backgroundColor);
-
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Etiquetas");
 
         lblEmail = new JLabel(resourceBundle.getString("Login.Email"));
         lblEmail.setFont(basicFont);
@@ -369,6 +393,38 @@ public class MainGUI extends JFrame {
         typePanel.add(btnUser);
         typePanel.add(btnDriver);
         loginPanel.add(typePanel);
+        
+        // Bank account panel
+        JPanel bankPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bankPanel.setBackground(backgroundColor);
+        
+        lblCuentaBancaria = new JLabel(resourceBundle.getString("CuentaBancaria"));
+        lblCuentaBancaria.setFont(basicFont);
+        lblCuentaBancaria.setPreferredSize(new Dimension(100, 25));
+        
+        txtCuentaBancaria = new JTextField(15);
+        txtCuentaBancaria.setFont(basicFont);
+        txtCuentaBancaria.setToolTipText("Formato: ES + 22 dígitos");
+        
+        bankPanel.add(lblCuentaBancaria);
+        bankPanel.add(txtCuentaBancaria);
+        loginPanel.add(bankPanel);
+        
+        // Bank account association button
+        JPanel associatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        associatePanel.setBackground(backgroundColor);
+        
+        btnAsociarCuenta = new JButton(resourceBundle.getString("Asociar"));
+        styleButton(btnAsociarCuenta);
+        btnAsociarCuenta.setEnabled(false);
+        btnAsociarCuenta.addActionListener(e -> asociarCuentaBancaria());
+        
+        lblCuentaAsociada = new JLabel("");
+        lblCuentaAsociada.setFont(basicFont);
+        
+        associatePanel.add(btnAsociarCuenta);
+        associatePanel.add(lblCuentaAsociada);
+        loginPanel.add(associatePanel);
 
         // Login/Register buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -385,10 +441,16 @@ public class MainGUI extends JFrame {
                 } else {
                     User usuarioActual = facade.loguser(userTextField.getText(), 
                                 new String(passwordField.getPassword()), btnDriver.isSelected());
+                    currentUser = usuarioActual;
+                    
                     if (usuarioActual.getdriver()) {
                         driver.setEmail(usuarioActual.getEmail());
                         driver.setName(usuarioActual.getnombre());
                     }
+                    
+                    // Enable bank account association button after login
+                    btnAsociarCuenta.setEnabled(true);
+                    updateCuentaBancariaDisplay();
                     
                     if (btnDriver.isSelected()) {
                         showSuccessMessage(resourceBundle.getString("Login.LoginSuccessDriver"));
@@ -514,8 +576,123 @@ public class MainGUI extends JFrame {
     }
     
     /**
-     * Update UI language
+     * Associate bank account with current user
      */
+    private void asociarCuentaBancaria() {
+        try {
+            String numeroCuenta = txtCuentaBancaria.getText().trim();
+            if (numeroCuenta.isEmpty()) {
+                showErrorMessage(resourceBundle.getString("ErrorNumeroCuentaVacio"));
+                return;
+            }
+
+            if (!numeroCuenta.matches("^ES[0-9]{22}$")) {
+                showErrorMessage(resourceBundle.getString("ErrorFormatoIBAN"));
+                return;
+            }
+
+            CuentaBancaria cuentaBancaria = new CuentaBancaria(numeroCuenta);
+
+            System.out.println("Asociando cuenta: " + numeroCuenta + " al usuario: " + currentUser.getEmail());
+
+            BLFacade businessLogic = MainGUI.getBusinessLogic();
+            Monedero monedero = businessLogic.asociarCuentaBancaria(currentUser.getEmail(), cuentaBancaria);
+
+            if (monedero != null && monedero.getCuentaBancaria() != null) {
+                System.out.println("Cuenta asociada exitosamente: " + monedero.getCuentaBancaria().getNumerotarjeta());
+
+                updateCuentaBancariaDisplay();
+
+                enviarCorreoAsociacionCuenta(numeroCuenta);
+
+                showSuccessMessage(resourceBundle.getString("CuentaAsociadaExitoso"));
+            } else {
+                System.out.println("Error: La cuenta no se asoció correctamente");
+                showErrorMessage(resourceBundle.getString("ErrorAsociacionCuenta"));
+            }
+        } catch (MonederoNoExisteException e) {
+            System.err.println("Error: Monedero no existe - " + e.getMessage());
+            showErrorMessage(resourceBundle.getString("ErrorMonederoNoExiste"));
+        } catch (NonexitstenUserException e) {
+            System.err.println("Error: Usuario no existe - " + e.getMessage());
+            showErrorMessage(resourceBundle.getString("ErrorUsuarioNoExiste"));
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
+            showErrorMessage(resourceBundle.getString("ErrorGenerico") + ": " + e.getMessage());
+        }
+    }
+
+    /**
+     * Send confirmation email for bank account association
+     */
+    private void enviarCorreoAsociacionCuenta(String numeroCuenta) {
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.host", SMTP_HOST);
+
+            Session session = Session.getInstance(props);
+
+            String receptor = currentUser.getEmail();
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(REMITENTE));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
+            // Email subject should use resource bundle
+            message.setSubject(resourceBundle.getString("EmailAsociacionAsunto"));
+
+            // Email body should use resource bundle and safe account number formatting
+            String cuentaSegura = numeroCuenta.substring(0, 4) + "..." + numeroCuenta.substring(numeroCuenta.length() - 4);
+            String cuerpoMensaje = String.format(
+                resourceBundle.getString("EmailAsociacionMensaje"),
+                currentUser.getnombre(),
+                cuentaSegura
+            );
+
+            message.setText(cuerpoMensaje);
+
+            Transport.send(message);
+
+            System.out.println("Correo de confirmación de asociación de cuenta enviado a: " + receptor);
+        } catch (MessagingException e) {
+            System.err.println("Error al enviar correo de confirmación de asociación de cuenta: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error inesperado al enviar correo de asociación de cuenta: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Update bank account display
+     */
+    private void updateCuentaBancariaDisplay() {
+        try {
+            BLFacade businessLogic = MainGUI.getBusinessLogic();
+            Monedero monedero = businessLogic.getMonedero(currentUser.getEmail());
+            
+            if (monedero != null && monedero.getCuentaBancaria() != null) {
+                String numeroCuenta = monedero.getCuentaBancaria().getNumerotarjeta();
+                String cuentaSegura = numeroCuenta.substring(0, 4) + "..." + numeroCuenta.substring(numeroCuenta.length() - 4);
+                lblCuentaAsociada.setText(resourceBundle.getString("CuentaAsociada") + ": " + cuentaSegura);
+                lblCuentaAsociada.setForeground(successColor);
+                txtCuentaBancaria.setEnabled(false);
+                btnAsociarCuenta.setEnabled(false);
+            } else {
+                lblCuentaAsociada.setText(resourceBundle.getString("SinCuentaAsociada"));
+                lblCuentaAsociada.setForeground(textColor);
+                txtCuentaBancaria.setEnabled(true);
+                btnAsociarCuenta.setEnabled(true);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al actualizar estado de cuenta bancaria: " + e.getMessage());
+            lblCuentaAsociada.setText("");
+            txtCuentaBancaria.setEnabled(true);
+            btnAsociarCuenta.setEnabled(true);
+        }
+    }
+    
+    
     private void paintAgain() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Etiquetas");
         this.setTitle(resourceBundle.getString("MainGUI.MainTitle") + " - " + driver.getName());

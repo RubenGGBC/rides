@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,12 +22,26 @@ public class VerMisValoraciones extends JFrame {
     private JButton jButtonClose;
     private JLabel titleLabel;
 
-    private String[] columnNames = {
-            "Estrellas", "Comentario", "Usuario que valoró"
-    };
+    // ResourceBundle para la internacionalización
+    private ResourceBundle resourceBundle;
+    
+    private String[] columnNames;
 
     public VerMisValoraciones(User user) {
-        setTitle("Mis Valoraciones");
+    	 try {
+             Locale locale = Locale.getDefault(); 
+             resourceBundle = ResourceBundle.getBundle("Etiquetas", locale);
+         } catch (Exception e) {
+             System.out.println("Error loading resource bundle: " + e.getMessage());
+             resourceBundle = ResourceBundle.getBundle("Etiquetas");
+         }
+        columnNames = new String[] {
+            resourceBundle.getString("Stars"),
+            resourceBundle.getString("Comment"),
+            resourceBundle.getString("UserWhoRated")
+        };
+        
+        setTitle(resourceBundle.getString("MyRatings"));
         setSize(650, 450);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -41,7 +57,7 @@ public class VerMisValoraciones extends JFrame {
         getContentPane().setBackground(backgroundColor);
 
         // Título
-        titleLabel = new JLabel("Comentarios Recibidos", SwingConstants.CENTER);
+        titleLabel = new JLabel(resourceBundle.getString("ReceivedComments"), SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
         titleLabel.setForeground(new Color(45, 45, 45));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 0, 10));
@@ -67,7 +83,7 @@ public class VerMisValoraciones extends JFrame {
 
         scrollPaneValoraciones = new JScrollPane(tableValoraciones);
         scrollPaneValoraciones.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("Valoraciones recibidas"),
+                BorderFactory.createTitledBorder(resourceBundle.getString("ReceivedRatings")),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
@@ -90,7 +106,7 @@ public class VerMisValoraciones extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(backgroundColor);
 
-        jButtonClose = new JButton("Cerrar");
+        jButtonClose = new JButton(resourceBundle.getString("Close"));
         jButtonClose.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         jButtonClose.setFocusPainted(false);
         jButtonClose.setBackground(buttonColor);
@@ -100,5 +116,27 @@ public class VerMisValoraciones extends JFrame {
 
         buttonPanel.add(jButtonClose);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+    }
+    
+       
+    public void updateLanguage(Locale locale) {
+        resourceBundle = ResourceBundle.getBundle("Etiquetas", locale);
+        
+        setTitle(resourceBundle.getString("MyRatings"));
+        
+        titleLabel.setText(resourceBundle.getString("ReceivedComments"));
+        
+        ((javax.swing.border.TitledBorder)scrollPaneValoraciones.getBorder()).setTitle(
+                resourceBundle.getString("ReceivedRatings"));
+        
+        for (int i = 0; i < columnNames.length; i++) {
+            tableValoraciones.getColumnModel().getColumn(i).setHeaderValue(
+                    resourceBundle.getString(columnNames[i]));
+        }
+        tableValoraciones.getTableHeader().repaint();
+        
+        jButtonClose.setText(resourceBundle.getString("Close"));
+        
+        repaint();
     }
 }

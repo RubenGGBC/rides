@@ -250,3 +250,107 @@ New type domain.Valoracion
 [2025-05-07 19:27:07 #20 type] 
 Type domain.Valoracion is not enhanced.
 
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-05-07 20:48:13 #1 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1-119)
+
+[2025-05-07 20:48:13 #2 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' is opened by 30032@Rufer
+
+[2025-05-07 20:48:13 #3 type] 
+Type domain.User is not enhanced.
+
+[2025-05-07 20:48:13 #4 type] 
+Type domain.Monedero is not enhanced.
+
+[2025-05-07 20:48:13 #5 type] 
+Type domain.CuentaBancaria is not enhanced.
+
+[2025-05-07 20:48:13 #6 type] 
+Type domain.Ride is not enhanced.
+
+[2025-05-07 20:48:13 #7 type] 
+Type domain.Driver is not enhanced.
+
+[2025-05-07 20:48:13 #8 type] 
+Type domain.Valoracion is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-05-07 20:54:42 #1 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' has been recovered (tr. 120-131)
+
+[2025-05-07 20:54:42 #2 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' is opened by 30732@Rufer
+
+[2025-05-07 20:54:42 #3 type] 
+Type domain.User is not enhanced.
+
+[2025-05-07 20:54:42 #4 type] 
+Type domain.Monedero is not enhanced.
+
+[2025-05-07 20:54:42 #5 type] 
+Type domain.CuentaBancaria is not enhanced.
+
+[2025-05-07 20:54:42 #6 type] 
+Type domain.Ride is not enhanced.
+
+[2025-05-07 20:54:42 #7 type] 
+Type domain.Driver is not enhanced.
+
+[2025-05-07 20:54:42 #8 type] 
+Type domain.Valoracion is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-05-07 20:56:07 #1 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' has been recovered (tr. 132-133)
+
+[2025-05-07 20:56:07 #2 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' is opened by 15456@Rufer
+
+[2025-05-07 20:56:07 #3 type] 
+Type domain.User is not enhanced.
+
+[2025-05-07 20:56:07 #4 type] 
+Type domain.Monedero is not enhanced.
+
+[2025-05-07 20:56:07 #5 type] 
+Type domain.CuentaBancaria is not enhanced.
+
+[2025-05-07 20:56:07 #6 type] 
+Type domain.Ride is not enhanced.
+
+[2025-05-07 20:56:07 #7 type] 
+Type domain.Driver is not enhanced.
+
+[2025-05-07 20:56:07 #8 type] 
+Type domain.Valoracion is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-05-07 21:16:20 #1 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' has been recovered (tr. 134-138)
+
+[2025-05-07 21:16:20 #2 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' is opened by 7232@Rufer
+
+[2025-05-07 21:16:21 #3 type] 
+Type domain.User is not enhanced.
+
+[2025-05-07 21:16:21 #4 type] 
+Type domain.Monedero is not enhanced.
+
+[2025-05-07 21:16:21 #5 type] 
+Type domain.CuentaBancaria is not enhanced.
+
+[2025-05-07 21:16:21 #6 type] 
+Type domain.Ride is not enhanced.
+
+[2025-05-07 21:16:21 #7 type] 
+Type domain.Driver is not enhanced.
+
+[2025-05-07 21:16:21 #8 type] 
+Type domain.Valoracion is not enhanced.
+

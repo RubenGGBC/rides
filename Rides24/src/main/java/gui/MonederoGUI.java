@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-// Importaciones para envío de correo
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -39,9 +37,6 @@ import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
 import exceptions.SaldoInsuficienteException;
 
-/**
- * Interfaz gráfica para gestionar el monedero electrónico
- */
 public class MonederoGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     
@@ -68,14 +63,8 @@ public class MonederoGUI extends JFrame {
     
     // Configuración para envío de correos
     private static final String SMTP_HOST = "smtp.ehu.es";
-    private static final String REMITENTE = "cesar@cesar.com";
+    private static final String REMITENTE = "rides@rides.com";
     
-    /**
-     * Constructor de la interfaz
-     * 
-     * @param bl lógica de negocio
-     * @param user usuario actual
-     */
     public MonederoGUI(BLFacade bl, User user) {
         businessLogic = bl;
         currentUser = user;
@@ -90,10 +79,8 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    /**
-     * Inicializa los componentes de la interfaz
-     */
     private void jbInit() throws Exception {
+        // Set window title from resource bundle
         setTitle(resourceBundle.getString("Monedero"));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 400);
@@ -104,7 +91,7 @@ public class MonederoGUI extends JFrame {
         contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         
-        // Título
+        // Título con el nombre del usuario
         lblTitulo = new JLabel(resourceBundle.getString("Monedero") + " - " + currentUser.getnombre());
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setFont(TITLE_FONT);
@@ -171,38 +158,7 @@ public class MonederoGUI extends JFrame {
         });
         panelOperaciones.add(btnRetirar);
         
-        // Panel de cuenta bancaria
-        JPanel panelCuenta = new JPanel();
-        panelCuenta.setLayout(null);
-        panelCuenta.setBorder(BorderFactory.createTitledBorder(resourceBundle.getString("CuentaBancaria")));
-        panelCuenta.setBackground(BACKGROUND_COLOR);
-        panelCuenta.setBounds(10, 249, 414, 70);
-        contentPane.add(panelCuenta);
-        
-        // Etiqueta de cuenta bancaria
-        lblCuentaBancaria = new JLabel(resourceBundle.getString("NumeroCuenta") + ":");
-        lblCuentaBancaria.setFont(LABEL_FONT);
-        lblCuentaBancaria.setBounds(10, 25, 120, 25);
-        panelCuenta.add(lblCuentaBancaria);
-        
-        // Campo de texto para la cuenta bancaria
-        txtCuentaBancaria = new JTextField();
-        txtCuentaBancaria.setBounds(140, 25, 150, 25);
-        panelCuenta.add(txtCuentaBancaria);
-        
-        // Botón para asociar cuenta
-        btnAsociarCuenta = new JButton(resourceBundle.getString("Asociar"));
-        btnAsociarCuenta.setFont(LABEL_FONT);
-        btnAsociarCuenta.setBackground(BUTTON_COLOR);
-        btnAsociarCuenta.setForeground(Color.WHITE);
-        btnAsociarCuenta.setBounds(300, 25, 100, 25);
-        btnAsociarCuenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                asociarCuentaBancaria();
-            }
-        });
-        panelCuenta.add(btnAsociarCuenta);
-        
+ 
         // Botón para volver
         btnVolver = new JButton(resourceBundle.getString("Volver"));
         btnVolver.setFont(LABEL_FONT);
@@ -215,7 +171,6 @@ public class MonederoGUI extends JFrame {
         });
         contentPane.add(btnVolver);
         
-        // Configuración adicional
         setResizable(false);
         setLocationRelativeTo(null);
         
@@ -228,18 +183,13 @@ public class MonederoGUI extends JFrame {
         });
     }
     
-    /**
-     * Actualiza la visualización del saldo actual
-     */
     private void updateSaldoDisplay() {
         try {
             float saldo = businessLogic.consultarSaldo(currentUser.getEmail());
             lblSaldo.setText(DECIMAL_FORMAT.format(saldo) + " €");
         } catch (MonederoNoExisteException e) {
-            // Si no existe el monedero, mostramos 0
             lblSaldo.setText("0.00 €");
             
-            // Intentamos crear un monedero
             try {
                 businessLogic.ingresarDinero(currentUser.getEmail(), 0);
             } catch (Exception ex) {
@@ -253,9 +203,6 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    /**
-     * Actualiza la visualización de la cuenta bancaria
-     */
     private void updateCuentaBancariaDisplay() {
         try {
             System.out.println("Actualizando visualización de cuenta bancaria para usuario: " + currentUser.getEmail());
@@ -266,14 +213,11 @@ public class MonederoGUI extends JFrame {
                 if (cuenta != null && cuenta.getNumerotarjeta() != null && !cuenta.getNumerotarjeta().isEmpty()) {
                     System.out.println("Cuenta encontrada: " + cuenta.getNumerotarjeta());
                     txtCuentaBancaria.setText(cuenta.getNumerotarjeta());
-                    // Opcionalmente, deshabilitar edición si ya hay una cuenta asociada
-                    // txtCuentaBancaria.setEditable(false);
-                    // btnAsociarCuenta.setText(resourceBundle.getString("CambiarCuenta"));
+                    
                 } else {
                     System.out.println("No hay cuenta asociada");
                     txtCuentaBancaria.setText("");
-                    // txtCuentaBancaria.setEditable(true);
-                    // btnAsociarCuenta.setText(resourceBundle.getString("Asociar"));
+                 
                 }
             } else {
                 System.out.println("Monedero no encontrado");
@@ -305,16 +249,15 @@ public class MonederoGUI extends JFrame {
             
             float cantidad = Float.parseFloat(cantidadStr);
             if(currentUser.getCuenta().getNumeroRandom()<cantidad) {
-                showError("No tienes tanto saldo en la cuenta");
+                // This error message should also come from the resource bundle
+                showError(resourceBundle.getString("ErrorSaldoInsuficienteCuenta"));
                 return;
             }
             businessLogic.ingresarDinero(currentUser.getEmail(), cantidad);
             
-            // Actualizar la visualización del saldo
             updateSaldoDisplay();
             txtCantidad.setText("");
             
-            // Enviar correo de confirmación
             enviarCorreoConfirmacion(cantidad);
             
             showInfo(resourceBundle.getString("IngresoExitoso") + ": " + DECIMAL_FORMAT.format(cantidad) + " €");
@@ -331,56 +274,43 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    /**
-     * Envía un correo de confirmación con los detalles del ingreso
-     * 
-     * @param cantidad La cantidad ingresada al monedero
-     */
     private void enviarCorreoConfirmacion(float cantidad) {
         try {
-            // Configurar propiedades de correo (similar al ejemplo EnviarCorreo)
             Properties props = new Properties();
             props.put("mail.smtp.host", SMTP_HOST);
             
-            // Crear sesión sin autenticación
             Session session = Session.getInstance(props);
             
-            // Obtener el correo del usuario actual
             String receptor = currentUser.getEmail();
             
-            // Crear el mensaje de correo
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(REMITENTE));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
-            message.setSubject("Confirmación de ingreso en su Monedero");
+            // Email subject should use resource bundle
+            message.setSubject(resourceBundle.getString("EmailIngresoAsunto"));
             
-            // Formato del cuerpo del mensaje
-            String cuerpoMensaje = "Estimado/a " + currentUser.getnombre() + ":\n\n" +
-                    "Le confirmamos que se ha realizado un ingreso en su Monedero por importe de " + 
-                    DECIMAL_FORMAT.format(cantidad) + " €.\n\n" +
-                    "Su saldo actual es de " + lblSaldo.getText() + ".\n\n" +
-                    "Gracias por usar nuestros servicios.\n\n" +
-                    "Atentamente,\nEl equipo de Monedero";
+            // Email body should use resource bundle with proper formatting for the message
+            String cuerpoMensaje = String.format(
+                resourceBundle.getString("EmailIngresoMensaje"),
+                currentUser.getnombre(),
+                DECIMAL_FORMAT.format(cantidad),
+                lblSaldo.getText()
+            );
             
             message.setText(cuerpoMensaje);
             
-            // Enviar el mensaje
             Transport.send(message);
             
             System.out.println("Correo de confirmación enviado a: " + receptor);
         } catch (MessagingException e) {
             System.err.println("Error al enviar correo de confirmación: " + e.getMessage());
             e.printStackTrace();
-            // No mostramos error al usuario para no interrumpir la operación principal
         } catch (Exception e) {
             System.err.println("Error inesperado al enviar correo: " + e.getMessage());
             e.printStackTrace();
         }
     }
     
-    /**
-     * Retira dinero del monedero
-     */
     private void retirarDinero() {
         try {
             String cantidadStr = txtCantidad.getText().trim();
@@ -392,11 +322,9 @@ public class MonederoGUI extends JFrame {
             float cantidad = Float.parseFloat(cantidadStr);
             businessLogic.retirarDinero(currentUser.getEmail(), cantidad);
             
-            // Actualizar la visualización del saldo
             updateSaldoDisplay();
             txtCantidad.setText("");
             
-            // Enviar correo de confirmación de retiro
             enviarCorreoRetiro(cantidad);
             
             showInfo(resourceBundle.getString("RetiroExitoso") + ": " + DECIMAL_FORMAT.format(cantidad) + " €");
@@ -415,40 +343,31 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    /**
-     * Envía un correo de confirmación con los detalles del retiro
-     * 
-     * @param cantidad La cantidad retirada del monedero
-     */
     private void enviarCorreoRetiro(float cantidad) {
         try {
-            // Configurar propiedades de correo
             Properties props = new Properties();
             props.put("mail.smtp.host", SMTP_HOST);
             
-            // Crear sesión sin autenticación
             Session session = Session.getInstance(props);
             
-            // Obtener el correo del usuario actual
             String receptor = currentUser.getEmail();
             
-            // Crear el mensaje de correo
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(REMITENTE));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
-            message.setSubject("Confirmación de retiro de su Monedero");
+            // Email subject should use resource bundle
+            message.setSubject(resourceBundle.getString("EmailRetiroAsunto"));
             
-            // Formato del cuerpo del mensaje
-            String cuerpoMensaje = "Estimado/a " + currentUser.getnombre() + ":\n\n" +
-                    "Le confirmamos que se ha realizado un retiro de su Monedero por importe de " + 
-                    DECIMAL_FORMAT.format(cantidad) + " €.\n\n" +
-                    "Su saldo actual es de " + lblSaldo.getText() + ".\n\n" +
-                    "Gracias por usar nuestros servicios.\n\n" +
-                    "Atentamente,\nEl equipo de Monedero";
+            // Email body should use resource bundle
+            String cuerpoMensaje = String.format(
+                resourceBundle.getString("EmailRetiroMensaje"),
+                currentUser.getnombre(),
+                DECIMAL_FORMAT.format(cantidad),
+                lblSaldo.getText()
+            );
             
             message.setText(cuerpoMensaje);
             
-            // Enviar el mensaje
             Transport.send(message);
             
             System.out.println("Correo de confirmación de retiro enviado a: " + receptor);
@@ -461,131 +380,21 @@ public class MonederoGUI extends JFrame {
         }
     }
     
-    /**
-     * Asocia una cuenta bancaria al monedero
-     */
-    private void asociarCuentaBancaria() {
-        try {
-            String numeroCuenta = txtCuentaBancaria.getText().trim();
-            if (numeroCuenta.isEmpty()) {
-                showError(resourceBundle.getString("ErrorNumeroCuentaVacio"));
-                return;
-            }
-            
-            // Validación básica del formato de la cuenta bancaria (IBAN español)
-            if (!numeroCuenta.matches("^ES[0-9]{22}$")) {
-                showError(resourceBundle.getString("ErrorFormatoIBAN"));
-                return;
-            }
-            
-            // Crear la cuenta bancaria con el número proporcionado
-            CuentaBancaria cuentaBancaria = new CuentaBancaria(numeroCuenta);
-            
-            // Mostrar un mensaje de depuración
-            System.out.println("Asociando cuenta: " + numeroCuenta + " al usuario: " + currentUser.getEmail());
-            
-            // Llamar al método de la lógica de negocio
-            Monedero monedero = businessLogic.asociarCuentaBancaria(currentUser.getEmail(), cuentaBancaria);
-            
-            // Verificar que la cuenta se haya asociado correctamente
-            if (monedero != null && monedero.getCuentaBancaria() != null) {
-                System.out.println("Cuenta asociada exitosamente: " + monedero.getCuentaBancaria().getNumerotarjeta());
-                
-                // Actualizar la visualización
-                updateCuentaBancariaDisplay();
-                
-                // Enviar correo de confirmación de asociación de cuenta
-                enviarCorreoAsociacionCuenta(numeroCuenta);
-                
-                showInfo(resourceBundle.getString("CuentaAsociadaExitoso"));
-            } else {
-                System.out.println("Error: La cuenta no se asoció correctamente");
-                showError(resourceBundle.getString("ErrorAsociacionCuenta"));
-            }
-        } catch (MonederoNoExisteException e) {
-            System.err.println("Error: Monedero no existe - " + e.getMessage());
-            showError(resourceBundle.getString("ErrorMonederoNoExiste"));
-        } catch (NonexitstenUserException e) {
-            System.err.println("Error: Usuario no existe - " + e.getMessage());
-            showError(resourceBundle.getString("ErrorUsuarioNoExiste"));
-        } catch (Exception e) {
-            System.err.println("Error inesperado: " + e.getClass().getName() + " - " + e.getMessage());
-            e.printStackTrace();
-            showError(resourceBundle.getString("ErrorGenerico") + ": " + e.getMessage());
-        }
-    }
+   
+ 
     
-    /**
-     * Envía un correo de confirmación con los detalles de la asociación de cuenta
-     * 
-     * @param numeroCuenta El número de cuenta bancaria asociada
-     */
-    private void enviarCorreoAsociacionCuenta(String numeroCuenta) {
-        try {
-            // Configurar propiedades de correo
-            Properties props = new Properties();
-            props.put("mail.smtp.host", SMTP_HOST);
-            
-            // Crear sesión sin autenticación
-            Session session = Session.getInstance(props);
-            
-            // Obtener el correo del usuario actual
-            String receptor = currentUser.getEmail();
-            
-            // Crear el mensaje de correo
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(REMITENTE));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
-            message.setSubject("Confirmación de asociación de cuenta bancaria");
-            
-            // Formato del cuerpo del mensaje
-            String cuerpoMensaje = "Estimado/a " + currentUser.getnombre() + ":\n\n" +
-                    "Le confirmamos que se ha asociado la cuenta bancaria " + 
-                    numeroCuenta.substring(0, 4) + "..." + numeroCuenta.substring(numeroCuenta.length() - 4) + 
-                    " a su Monedero.\n\n" +
-                    "Ahora puede realizar operaciones entre su monedero y esta cuenta bancaria.\n\n" +
-                    "Gracias por usar nuestros servicios.\n\n" +
-                    "Atentamente,\nEl equipo de Monedero";
-            
-            message.setText(cuerpoMensaje);
-            
-            // Enviar el mensaje
-            Transport.send(message);
-            
-            System.out.println("Correo de confirmación de asociación de cuenta enviado a: " + receptor);
-        } catch (MessagingException e) {
-            System.err.println("Error al enviar correo de confirmación de asociación de cuenta: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Error inesperado al enviar correo de asociación de cuenta: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * Muestra un mensaje de error
-     */
     private void showError(String message) {
         JOptionPane.showMessageDialog(this, message, resourceBundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
     }
     
-    /**
-     * Muestra un mensaje informativo
-     */
     private void showInfo(String message) {
         JOptionPane.showMessageDialog(this, message, resourceBundle.getString("Informacion"), JOptionPane.INFORMATION_MESSAGE);
     }
     
-    /**
-     * Acciones al cerrar la ventana
-     */
     private void onClose() {
-        // Cualquier limpieza o guardado necesario al cerrar
+        // Any cleanup code would go here
     }
     
-    /**
-     * Método principal para pruebas
-     */
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -593,8 +402,6 @@ public class MonederoGUI extends JFrame {
             e.printStackTrace();
         }
         
-        // Este main es solo para pruebas, normalmente se llamaría desde otra clase
-        // MonederoGUI frame = new MonederoGUI(businessLogic, currentUser);
-        // frame.setVisible(true);
+        // Main method code for testing would go here
     }
 }
