@@ -18,13 +18,18 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
+import domain.CuentaBancaria;
 import domain.Driver;
 import domain.EstadoViaje;
+import domain.Monedero;
 import domain.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
+import exceptions.SaldoInsuficienteException;
 import exceptions.UserAlredyExistException;
 import exceptions.AnyRidesException;
+import exceptions.CantidadInvalidaException;
+import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
 import domain.User;
 import domain.Valoracion;
@@ -461,10 +466,176 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 }
                 return userRideStatus;
             }
+            
+            
+            public Monedero getMonedero(String userEmail) throws MonederoNoExisteException, NonexitstenUserException {
+                System.out.println(">> DataAccess: getMonedero => userEmail= " + userEmail);
+                
+                User user = db.find(User.class, userEmail);
+                if (user == null) {
+                    throw new NonexitstenUserException("El usuario no existe");
+                }
+                
+                Monedero monedero = user.getMonedero();
+                if (monedero == null) {
+                    throw new MonederoNoExisteException("El usuario no tiene monedero");
+                }
+                
+                return monedero;
+            }
+            public Monedero ingresarDinero(String userEmail, float cantidad) 
+                    throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
+                System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
+              
+                
+                db.getTransaction().begin();
+                
+                User user = db.find(User.class, userEmail);
+                if (user == null) {
+                    db.getTransaction().rollback();
+                    throw new NonexitstenUserException("El usuario no existe");
+                }
+                
+                Monedero monedero = user.getMonedero();
+                if (monedero == null) {
+                    // Si el usuario no tiene monedero, creamos uno
+                    monedero = new Monedero(userEmail + "_wallet");
+                    monedero.setUser(user);
+                    user.setMonedero(monedero);
+                }
+                if(user.getCuenta().getNumeroRandom()<cantidad) {
+                	throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
+                }
+                
+                monedero.ingresarDinero(cantidad);
+                db.merge(user);
+                db.getTransaction().commit();
+                
+                return monedero;
+            }
+            
+            public Monedero retirarDinero(String userEmail, float cantidad) 
+                    throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
+                System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
+                
+                if (cantidad <= 0) {
+                    throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
+                }
+                
+                db.getTransaction().begin();
+                
+                User user = db.find(User.class, userEmail);
+                if (user == null) {
+                    db.getTransaction().rollback();
+                    throw new NonexitstenUserException("El usuario no existe");
+                }
+                
+                Monedero monedero = user.getMonedero();
+                if (monedero == null) {
+                    db.getTransaction().rollback();
+                    throw new MonederoNoExisteException("El usuario no tiene monedero");
+                }
+                
+                if (!monedero.tieneSaldoSuficiente(cantidad)) {
+                    db.getTransaction().rollback();
+                    throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
+                }
+                
+                monedero.retirarDinero(cantidad);
+                db.merge(user);
+                db.getTransaction().commit();
+                
+                return monedero;
+            }
+            public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
+                    throws MonederoNoExisteException, NonexitstenUserException {
+                System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail= " + userEmail);
+                
+                db.getTransaction().begin();
+                
+                User user = db.find(User.class, userEmail);
+                Driver driver= findDriverByUserEmail(userEmail);
+                if (user == null) {
+                    db.getTransaction().rollback();
+                    throw new NonexitstenUserException("El usuario no existe");
+                }
+                
+                Monedero monedero = user.getMonedero();
+                if (monedero == null) {
+                    // Si el usuario no tiene monedero, creamos uno
+                    monedero = new Monedero(userEmail + "_wallet");
+                    monedero.setUser(user);
+                    monedero.setD(driver);
+                    user.setMonedero(monedero);
+                    driver.setMonedero(monedero);
+                }
+                
+                monedero.setCuentaBancaria(cuentaBancaria);
+                user.setCuenta(cuentaBancaria);
+                driver.setCuenta(cuentaBancaria);
+                db.merge(user);
+                db.merge(driver);
+                db.getTransaction().commit();
+                
+                return monedero;
+            }
 
-
-        
-        
+            public float consultarSaldo(String userEmail) 
+                    throws MonederoNoExisteException, NonexitstenUserException {
+                System.out.println(">> DataAccess: consultarSaldo => userEmail= " + userEmail);
+                
+                User user = db.find(User.class, userEmail);
+                if (user == null) {
+                    throw new NonexitstenUserException("El usuario no existe");
+                }
+                
+                Monedero monedero = user.getMonedero();
+                if (monedero == null) {
+                    throw new MonederoNoExisteException("El usuario no tiene monedero");
+                }
+                
+                return monedero.getSaldo();
+            }
+        public void updatearUser(User usuario) {
+        	 try {
+                 db.getTransaction().begin();
+                 db.merge(usuario);
+                 db.getTransaction().commit();
+             } catch (Exception e) {
+                 // Si algo sale mal, hacer rollback
+                 if (db.getTransaction().isActive()) {
+                     db.getTransaction().rollback();
+                 }
+                 e.printStackTrace();
+             }
+        }
+         
+        	 public void updatearDriver(Driver d) {
+            	 try {
+                     db.getTransaction().begin();
+                     db.merge(d);
+                     db.getTransaction().commit();
+                 } catch (Exception e) {
+                     // Si algo sale mal, hacer rollback
+                     if (db.getTransaction().isActive()) {
+                         db.getTransaction().rollback();
+                     }
+                     e.printStackTrace();
+        }
+        	 }
+        	 
+        	 public void cobro(Monedero mon, float cantidad) {
+        		 db.getTransaction().begin();
+        		 mon.setSaldo(mon.getSaldo()-cantidad);
+        		 if(mon.getSaldo()<0) {
+        			 //Error
+        		 }
+        		 else {
+        			 db.merge(mon);
+        			 db.getTransaction().commit();
+        			 
+        		 }
+        	 }
 
 
 

@@ -7,13 +7,18 @@ import java.util.Map;
 
 //import domain.Booking;
 import domain.Ride;
+import domain.CuentaBancaria;
 import domain.Driver;
+import domain.Monedero;
 import exceptions.RideMustBeLaterThanTodayException;
+import exceptions.SaldoInsuficienteException;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlredyExistException;
 import exceptions.AnyRidesException;
+import exceptions.CantidadInvalidaException;
+import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
 import domain.User;
 import domain.Valoracion;
@@ -25,14 +30,14 @@ import javax.jws.WebService;
  * Interface that specifies the business logic.
  */
 @WebService
-public interface BLFacade  {
+public interface BLFacade  {   
 	  
 	/**
-	 * This method returns all the cities where rides depart 
+	 * This method returns all the cities where rides depart  
 	 * @return collection of cities
 	 */
 	@WebMethod public List<String> getDepartCities();
-	
+	 
 	/**
 	 * This method returns all the arrival destinations, from all rides that depart from a given city  
 	 * 
@@ -104,11 +109,30 @@ public interface BLFacade  {
 	 
 	 public void updateRide(Ride ride);
 	 public List<Ride> getReservedRidesByDriver(Driver driver);
-
-
-
-
-
-
+	 
+	 public Monedero getMonedero(String userEmail) throws MonederoNoExisteException, NonexitstenUserException;
+	 
+	 public Monedero ingresarDinero(String userEmail, float cantidad) 
+	            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException;
+	 public Monedero retirarDinero(String userEmail, float cantidad) 
+	            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException;
+	 public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
+	            throws MonederoNoExisteException, NonexitstenUserException;
+	 public float consultarSaldo(String userEmail) 
+	            throws MonederoNoExisteException, NonexitstenUserException;
+	 public void updatearUser(User usuario);
+	 
+	 public void updatearDriver(Driver d);
+	    
+   	 public void cobro(Monedero mon, float cantidad);
 }
+
+
+
+
+
+
+
+
+
 

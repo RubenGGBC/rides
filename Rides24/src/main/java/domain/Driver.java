@@ -21,6 +21,10 @@ public class Driver implements Serializable {
     @XmlIDREF
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Ride> rides = new Vector<>();
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private CuentaBancaria cuentabanca;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Monedero monedero;
     
     public Driver() {
         super();
@@ -29,6 +33,8 @@ public class Driver implements Serializable {
     public Driver(String email, String name) {
         this.email = email;
         this.name = name;
+        this.monedero = new Monedero(email + "_wallet");
+	    this.monedero.setD(this);
     }
     
     // Getters y setters
@@ -117,4 +123,28 @@ public class Driver implements Serializable {
     public String toString(){
         return email + ";" + name + rides;
     }
+
+	public CuentaBancaria getCuenta() {
+		return cuentabanca;
+	}
+
+	public CuentaBancaria getCuentabanca() {
+		return cuentabanca;
+	}
+
+	public void setCuentabanca(CuentaBancaria cuentabanca) {
+		this.cuentabanca = cuentabanca;
+	}
+
+	public Monedero getMonedero() {
+		return monedero;
+	}
+
+	public void setMonedero(Monedero monedero) {
+		this.monedero = monedero;
+	}
+
+	public void setCuenta(CuentaBancaria cuenta) {
+		this.cuentabanca = cuenta;
+	}
 }

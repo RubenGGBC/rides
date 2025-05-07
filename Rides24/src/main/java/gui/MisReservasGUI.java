@@ -7,38 +7,54 @@ import domain.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 
 public class MisReservasGUI extends JFrame {
     private static final long serialVersionUID = 1L;
-    
-    private JTable tableRides = new JTable();
+
+    private JTable tableRides;
     private DefaultTableModel tableModelRides;
-    private JScrollPane scrollPaneRides = new JScrollPane();
-    private JButton jButtonClose = new JButton("Cerrar");
-    
-    private String[] columnNamesRides = new String[] {
-            "Salida","Destino","Conductor", "Plazas", "Precio","Estado"
+    private JScrollPane scrollPaneRides;
+    private JButton jButtonClose;
+    private JLabel titleLabel;
+
+    private String[] columnNamesRides = {
+            "Salida", "Destino", "Conductor", "Plazas", "Precio", "Estado"
     };
 
     public MisReservasGUI(User user) {
-        getContentPane().setLayout(null);
-        this.setSize(new Dimension(500, 400));
-        this.setTitle("Mis Reservas");
-        
-        jButtonClose.setBounds(new Rectangle(180, 320, 130, 30));
-        jButtonClose.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
+        setTitle("Mis Reservas");
+        setSize(600, 450);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(Color.WHITE);
+
+        // Título
+        titleLabel = new JLabel("Mis Reservas de Viajes", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        getContentPane().add(titleLabel, BorderLayout.NORTH);
+
+        // Tabla
+        tableModelRides = new DefaultTableModel(null, columnNamesRides) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
             }
-        });
-        
-        tableModelRides = new DefaultTableModel(null, columnNamesRides);
-        tableRides.setModel(tableModelRides);
-        
+        };
+
+        tableRides = new JTable(tableModelRides);
+        tableRides.setRowHeight(25);
+        tableRides.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tableRides.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tableRides.setSelectionBackground(new Color(184, 207, 229));
+        scrollPaneRides = new JScrollPane(tableRides);
+        scrollPaneRides.setBorder(BorderFactory.createTitledBorder("Reservas"));
+
+        getContentPane().add(scrollPaneRides, BorderLayout.CENTER);
+
+        // Cargar datos
         List<Ride> rides = user.getReservedRides();
         for (Ride ride : rides) {
             Vector<Object> row = new Vector<>();
@@ -50,11 +66,19 @@ public class MisReservasGUI extends JFrame {
             row.add(ride.getEstado());
             tableModelRides.addRow(row);
         }
-        
-        scrollPaneRides.setBounds(new Rectangle(10, 50, 464, 250));
-        scrollPaneRides.setViewportView(tableRides);
-        
-        getContentPane().add(scrollPaneRides);
-        getContentPane().add(jButtonClose);
+
+        // Botón Cerrar
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        buttonPanel.setBackground(Color.WHITE);
+
+        jButtonClose = new JButton("Cerrar");
+        jButtonClose.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        jButtonClose.setFocusPainted(false);
+        jButtonClose.setBackground(new Color(244, 67, 54));
+        jButtonClose.setForeground(Color.WHITE);
+        jButtonClose.addActionListener(e -> dispose());
+
+        buttonPanel.add(jButtonClose);
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 }

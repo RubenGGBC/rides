@@ -11,9 +11,14 @@ import javax.jws.WebService;
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Ride;
+import domain.CuentaBancaria;
 import domain.Driver;
+import domain.Monedero;
 import exceptions.RideMustBeLaterThanTodayException;
+import exceptions.SaldoInsuficienteException;
 import exceptions.AnyRidesException;
+import exceptions.CantidadInvalidaException;
+import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
 import domain.User;
 import domain.Valoracion;
@@ -230,7 +235,69 @@ public class BLFacadeImplementation  implements BLFacade {
 		  dbManager.open();
 		  return dbManager.getReservedRidesByDriver(driver);
 		    }
+		
+		public Monedero getMonedero(String userEmail) throws MonederoNoExisteException, NonexitstenUserException {
+		    dbManager.open();
+		    Monedero monedero = dbManager.getMonedero(userEmail);
+		    dbManager.close();
+		    return monedero;
+		
 		}
+		public Monedero ingresarDinero(String userEmail, float cantidad) 
+		        throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
+		    if (cantidad <= 0) {
+		        throw new CantidadInvalidaException("La cantidad a ingresar debe ser mayor que cero");
+		    }
+		    
+		    dbManager.open();
+		    Monedero monedero = dbManager.ingresarDinero(userEmail, cantidad);
+		    dbManager.close();
+		    return monedero;
+		}
+		public Monedero retirarDinero(String userEmail, float cantidad) 
+		        throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
+		    if (cantidad <= 0) {
+		        throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
+		    }
+		    
+		    dbManager.open();
+		    Monedero monedero = dbManager.retirarDinero(userEmail, cantidad);
+		    dbManager.close();
+		    return monedero;
+		}
+		public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
+		        throws MonederoNoExisteException, NonexitstenUserException {
+		    dbManager.open();
+		    Monedero monedero = dbManager.asociarCuentaBancaria(userEmail, cuentaBancaria);
+		    dbManager.close();
+		    return monedero;
+		}
+		public float consultarSaldo(String userEmail) 
+		        throws MonederoNoExisteException, NonexitstenUserException {
+		    dbManager.open();
+		    float saldo = dbManager.consultarSaldo(userEmail);
+		    dbManager.close();
+		    return saldo;
+		}
+		public void updatearUser(User usuario) {
+			dbManager.open();
+			dbManager.updatearUser(usuario);
+			dbManager.close();
+		}
+   	 public void updatearDriver(Driver d) {
+   		dbManager.open();
+		dbManager.updatearDriver(d);
+		dbManager.close();
+   	 }
+	 public void cobro(Monedero mon, float cantidad) {
+		 dbManager.open();
+		 dbManager.cobro(mon, cantidad);
+		 dbManager.close();
+	 }
+
+
+		
+}
 
 
 		

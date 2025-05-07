@@ -9,6 +9,10 @@ import domain.EstadoViaje;
 import domain.Ride;
 import domain.User;
 import exceptions.AnyRidesException;
+import exceptions.CantidadInvalidaException;
+import exceptions.MonederoNoExisteException;
+import exceptions.NonexitstenUserException;
+import exceptions.SaldoInsuficienteException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,228 +27,225 @@ import javax.swing.table.DefaultTableModel;
 public class SolicitarReservaGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    protected static final EstadoViaje PENDIENTE = EstadoViaje.PENDIENTE;
 
-	protected static final EstadoViaje PENDIENTE = null;
+    private JComboBox<String> jComboBoxOrigin = new JComboBox<>();
+    private DefaultComboBoxModel<String> originLocations = new DefaultComboBoxModel<>();
 
-    private JComboBox<String> jComboBoxOrigin = new JComboBox<String>();
-    DefaultComboBoxModel<String> originLocations = new DefaultComboBoxModel<String>();
-
-    private JComboBox<String> jComboBoxDestination = new JComboBox<String>();
-    DefaultComboBoxModel<String> destinationCities = new DefaultComboBoxModel<String>();
+    private JComboBox<String> jComboBoxDestination = new JComboBox<>();
+    private DefaultComboBoxModel<String> destinationCities = new DefaultComboBoxModel<>();
 
     private JLabel jLabelOrigin = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.LeavingFrom"));
     private JLabel jLabelDestination = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.GoingTo"));
-    private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideDate"));
-    private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.Rides"));
+    private JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideDate"));
+    private JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.Rides"));
 
     private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-    private JButton Reserva = new JButton("Reserva");
+    private JButton jButtonReserva = new JButton("Reservar");
 
     private JCalendar jCalendar1 = new JCalendar();
     private Calendar calendarAnt = null;
     private Calendar calendarAct = null;
     private JScrollPane scrollPaneEvents = new JScrollPane();
 
-    private List<Date> datesWithRidesCurrentMonth = new Vector<Date>();
-
+    private List<Date> datesWithRidesCurrentMonth = new Vector<>();
+ 
     private JTable tableRides = new JTable();
-
     private DefaultTableModel tableModelRides;
-
     private String[] columnNamesRides = new String[] {
-            ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.Driver"),
-            ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.NPlaces"),
-            ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.Price")
+        ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.Driver"),
+        ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.NPlaces"),
+        ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.Price")
     };
 
     public SolicitarReservaGUI(User user) {
+        setTitle(ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.FindRides"));
+        setSize(750, 550);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(Color.WHITE);
 
-        this.getContentPane().setLayout(null);
-        this.setSize(new Dimension(700, 500));
-        this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.FindRides"));
-
-        jLabelEventDate.setBounds(new Rectangle(457, 6, 140, 25));
-        jLabelEvents.setBounds(172, 229, 259, 16);
-
-        this.getContentPane().add(jLabelEventDate, null);
-        this.getContentPane().add(jLabelEvents);
-
-        jButtonClose.setBounds(new Rectangle(172, 424, 130, 30));
-
-        jButtonClose.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                jButton2_actionPerformed(e);
-            }
-        });
         BLFacade facade = MainGUI.getBusinessLogic();
-        List<String> origins = facade.getDepartCities();
-
-        for (String location : origins)
+        for (String location : facade.getDepartCities()) {
             originLocations.addElement(location);
-
-        jLabelOrigin.setBounds(new Rectangle(6, 56, 92, 20));
-        jLabelDestination.setBounds(6, 81, 61, 16);
-        getContentPane().add(jLabelOrigin);
-
-        getContentPane().add(jLabelDestination);
-
-        jComboBoxOrigin.setModel(originLocations);
-        jComboBoxOrigin.setBounds(new Rectangle(103, 50, 172, 20));
-
-        List<String> aCities = facade.getDestinationCities((String) jComboBoxOrigin.getSelectedItem());
-        for (String aciti : aCities) {
-            destinationCities.addElement(aciti);
         }
 
-        jComboBoxOrigin.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                destinationCities.removeAllElements();
-                BLFacade facade = MainGUI.getBusinessLogic();
+        JPanel panelFiltros = new JPanel(new GridBagLayout());
+        panelFiltros.setBorder(BorderFactory.createTitledBorder("Selecciona origen, destino y fecha"));
+        panelFiltros.setBackground(Color.WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-                List<String> aCities = facade.getDestinationCities((String) jComboBoxOrigin.getSelectedItem());
-                for (String aciti : aCities) {
-                    destinationCities.addElement(aciti);
-                }
-                tableModelRides.getDataVector().removeAllElements();
-                tableModelRides.fireTableDataChanged();
-            }
-        });
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelFiltros.add(jLabelOrigin, gbc);
 
+        gbc.gridx = 1;
+        jComboBoxOrigin.setModel(originLocations);
+        panelFiltros.add(jComboBoxOrigin, gbc);
+
+        // 
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panelFiltros.add(jLabelDestination, gbc);
+
+        gbc.gridx = 1;
         jComboBoxDestination.setModel(destinationCities);
-        jComboBoxDestination.setBounds(new Rectangle(103, 80, 172, 20));
-        jComboBoxDestination.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
+        panelFiltros.add(jComboBoxDestination, gbc);
 
-                paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, new Color(210, 228, 238));
+        // 
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        jCalendar1.setPreferredSize(new Dimension(225, 150));
+        panelFiltros.add(jCalendar1, gbc);
 
-                BLFacade facade = MainGUI.getBusinessLogic();
+        getContentPane().add(panelFiltros, BorderLayout.NORTH);
 
-                datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides((String) jComboBoxOrigin.getSelectedItem(), (String) jComboBoxDestination.getSelectedItem(), jCalendar1.getDate());
-                paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, Color.CYAN);
+        JPanel panelCentro = new JPanel(new BorderLayout(10, 10));
+        panelCentro.setBackground(Color.WHITE);
+
+        jLabelEvents.setHorizontalAlignment(SwingConstants.CENTER);
+        panelCentro.add(jLabelEvents, BorderLayout.NORTH);
+
+        tableModelRides = new DefaultTableModel(null, columnNamesRides);
+        tableModelRides.setColumnCount(4);
+        tableRides.setModel(tableModelRides);
+        tableRides.setRowHeight(24);
+        tableRides.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tableRides.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tableRides.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tableRides.getColumnModel().removeColumn(tableRides.getColumnModel().getColumn(3));
+
+        scrollPaneEvents.setViewportView(tableRides);
+        panelCentro.add(scrollPaneEvents, BorderLayout.CENTER);
+
+        getContentPane().add(panelCentro, BorderLayout.CENTER);
+
+        JPanel panelInferior = new JPanel();
+        panelInferior.setBackground(Color.WHITE);
+        panelInferior.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+
+        jButtonReserva.setPreferredSize(new Dimension(130, 30));
+        jButtonClose.setPreferredSize(new Dimension(130, 30));
+
+        panelInferior.add(jButtonReserva);
+        panelInferior.add(jButtonClose);
+
+        getContentPane().add(panelInferior, BorderLayout.SOUTH);
+
+        jButtonClose.addActionListener(e -> setVisible(false));
+
+        jComboBoxOrigin.addItemListener(e -> {
+            destinationCities.removeAllElements();
+            List<String> aCities = facade.getDestinationCities((String) jComboBoxOrigin.getSelectedItem());
+            for (String aciti : aCities) {
+                destinationCities.addElement(aciti);
             }
+            tableModelRides.setRowCount(0);
         });
 
-        this.getContentPane().add(jButtonClose, null);
-        this.getContentPane().add(jComboBoxOrigin, null);
-
-        this.getContentPane().add(jComboBoxDestination, null);
-
-        jCalendar1.setBounds(new Rectangle(300, 50, 225, 150));
+        jComboBoxDestination.addItemListener(e -> {
+            paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, new Color(210, 228, 238));
+            datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides(
+                (String) jComboBoxOrigin.getSelectedItem(),
+                (String) jComboBoxDestination.getSelectedItem(),
+                jCalendar1.getDate()
+            );
+            paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, Color.CYAN);
+        });
 
         jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertychangeevent) {
-
-                if (propertychangeevent.getPropertyName().equals("locale")) {
-                    jCalendar1.setLocale((Locale) propertychangeevent.getNewValue());
-                } else if (propertychangeevent.getPropertyName().equals("calendar")) {
+                if (propertychangeevent.getPropertyName().equals("calendar")) {
                     calendarAnt = (Calendar) propertychangeevent.getOldValue();
                     calendarAct = (Calendar) propertychangeevent.getNewValue();
 
-                    DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
-
                     int monthAnt = calendarAnt.get(Calendar.MONTH);
                     int monthAct = calendarAct.get(Calendar.MONTH);
-
                     if (monthAct != monthAnt) {
                         if (monthAct == monthAnt + 2) {
                             calendarAct.set(Calendar.MONTH, monthAnt + 1);
                             calendarAct.set(Calendar.DAY_OF_MONTH, 1);
                         }
-
                         jCalendar1.setCalendar(calendarAct);
-
                     }
 
                     try {
-                        tableModelRides.setDataVector(null, columnNamesRides);
-                        tableModelRides.setColumnCount(4);
+                        tableModelRides.setRowCount(0);
+                        List<Ride> rides = facade.getRides(
+                            (String) jComboBoxOrigin.getSelectedItem(),
+                            (String) jComboBoxDestination.getSelectedItem(),
+                            UtilDate.trim(jCalendar1.getDate())
+                        );
 
-                        BLFacade facade = MainGUI.getBusinessLogic();
-                        List<domain.Ride> rides = facade.getRides((String) jComboBoxOrigin.getSelectedItem(), (String) jComboBoxDestination.getSelectedItem(), UtilDate.trim(jCalendar1.getDate()));
-
-                        if (rides.isEmpty())
+                        DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
+                        if (rides.isEmpty()) {
                             jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.NoRides") + ": " + dateformat1.format(calendarAct.getTime()));
-                        else
+                        } else {
                             jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("FindRidesGUI.Rides") + ": " + dateformat1.format(calendarAct.getTime()));
-                        for (domain.Ride ride : rides) {
-                            Vector<Object> row = new Vector<Object>();
+                        }
+
+                        for (Ride ride : rides) {
+                            Vector<Object> row = new Vector<>();
                             row.add(ride.getDriver().getName());
                             row.add(ride.getnPlaces());
                             row.add(ride.getPrice());
                             row.add(ride);
                             tableModelRides.addRow(row);
                         }
-                        datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides((String) jComboBoxOrigin.getSelectedItem(), (String) jComboBoxDestination.getSelectedItem(), jCalendar1.getDate());
+
+                        datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides(
+                            (String) jComboBoxOrigin.getSelectedItem(),
+                            (String) jComboBoxDestination.getSelectedItem(),
+                            jCalendar1.getDate()
+                        );
                         paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, Color.CYAN);
 
+                        tableRides.getColumnModel().removeColumn(tableRides.getColumnModel().getColumn(3));
                     } catch (Exception e1) {
-                        e1.printStackTrace();
+                        e1.printStackTrace(); 
                     }
-                    tableRides.getColumnModel().getColumn(0).setPreferredWidth(170);
-                    tableRides.getColumnModel().getColumn(1).setPreferredWidth(30);
-                    tableRides.getColumnModel().getColumn(1).setPreferredWidth(30);
-                    tableRides.getColumnModel().removeColumn(tableRides.getColumnModel().getColumn(3));
-
                 }
             }
-
         });
 
-        this.getContentPane().add(jCalendar1, null);
-
-        scrollPaneEvents.setBounds(new Rectangle(172, 257, 346, 150));
-
-        scrollPaneEvents.setViewportView(tableRides);
-        tableModelRides = new DefaultTableModel(null, columnNamesRides);
-
-        tableRides.setModel(tableModelRides);
-
-        tableModelRides.setDataVector(null, columnNamesRides);
-        tableModelRides.setColumnCount(4);
-
-        tableRides.getColumnModel().getColumn(0).setPreferredWidth(170);
-        tableRides.getColumnModel().getColumn(1).setPreferredWidth(30);
-        tableRides.getColumnModel().getColumn(1).setPreferredWidth(30);
-
-        tableRides.getColumnModel().removeColumn(tableRides.getColumnModel().getColumn(3));
-
-        this.getContentPane().add(scrollPaneEvents, null);
-        datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides((String) jComboBoxOrigin.getSelectedItem(), (String) jComboBoxDestination.getSelectedItem(), jCalendar1.getDate());
-        paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, Color.CYAN);
-
-        JButton Reservar = new JButton((String) null);
-        Reserva.setText("Reseva");
-        Reserva.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tableRides.getSelectedRow();
-                System.out.println("Fila seleccionada: " + selectedRow);
-                System.out.println("Número de filas: " + tableRides.getRowCount());
-
-                if (selectedRow != -1 && tableRides.getRowCount() > 0) {
-                    Ride rideSeleccionada = (Ride) tableModelRides.getValueAt(selectedRow, 3);
-                    System.out.println("Ride seleccionada: " + rideSeleccionada);
-
-                    try {
-                        BLFacade facade = MainGUI.getBusinessLogic();
-                        rideSeleccionada.setEstado(EstadoViaje.PENDIENTE);
+        jButtonReserva.addActionListener(e -> {
+            int selectedRow = tableRides.getSelectedRow();
+            if (selectedRow != -1 && tableRides.getRowCount() > 0) {
+                Ride rideSeleccionada = (Ride) tableModelRides.getValueAt(selectedRow, 3);
+                try {
+                    if(user.getMonedero().getSaldo() < rideSeleccionada.getPrice()) {
+                        JOptionPane.showMessageDialog(this, "No tienes suficiente saldo", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        rideSeleccionada.setEstado(PENDIENTE);
                         facade.reserva(rideSeleccionada);
                         facade.añadir(rideSeleccionada, user.getEmail());
-                        
-
-                    } catch (AnyRidesException e1) {
-                        e1.printStackTrace();
+                        facade.cobro(user.getMonedero(), rideSeleccionada.getPrice());
+                        JOptionPane.showMessageDialog(this, "Reserva solicitada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(SolicitarReservaGUI.this,
-                            "Por favor, selecciona un viaje para reservar.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (AnyRidesException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "No se pudo realizar la reserva.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona un viaje para reservar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        // Cargar datos iniciales
+        if (jComboBoxOrigin.getItemCount() > 0 && jComboBoxDestination.getItemCount() > 0) {
+            datesWithRidesCurrentMonth = facade.getThisMonthDatesWithRides(
+                (String) jComboBoxOrigin.getSelectedItem(),
+                (String) jComboBoxDestination.getSelectedItem(),
+                jCalendar1.getDate()
+            );
+            paintDaysWithEvents(jCalendar1, datesWithRidesCurrentMonth, Color.CYAN);
+        }
 
-        Reserva.setBounds(new Rectangle(274, 419, 130, 30));
-        Reserva.setBounds(388, 424, 130, 30);
-        getContentPane().add(Reserva);
+        setVisible(true);
     }
 
     public static void paintDaysWithEvents(JCalendar jCalendar, List<Date> datesWithEventsCurrentMonth, Color color) {
@@ -263,20 +264,13 @@ public class SolicitarReservaGUI extends JFrame {
             offset += 5;
 
         for (Date d : datesWithEventsCurrentMonth) {
-
             calendar.setTime(d);
-
-            Component o = (Component) jCalendar.getDayChooser().getDayPanel()
-                    .getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
+            Component o = (Component) jCalendar.getDayChooser().getDayPanel().getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
             o.setBackground(color);
         }
 
         calendar.set(Calendar.DAY_OF_MONTH, today);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.YEAR, year);
-    }
-
-    private void jButton2_actionPerformed(ActionEvent e) {
-        this.setVisible(false);
     }
 }

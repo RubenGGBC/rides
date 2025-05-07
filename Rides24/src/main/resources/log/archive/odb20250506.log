@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-05-06 21:57:14 #1 store] 
+Database 'C:\Users\rebel\Downloads\TUMADRE\rides\Rides24\src\main\resources\rides.temp' is opened by 13800@Rufer
+
+[2025-05-06 21:57:14 #2 type] 
+Type domain.User is not enhanced.
+
+[2025-05-06 21:57:14 #3 type] 
+Type domain.Ride is not enhanced.
+
+[2025-05-06 21:57:14 #4 type] 
+Type domain.Driver is not enhanced.
+
+[2025-05-06 21:57:14 #5 type] 
+Type domain.Valoracion is not enhanced.
+
+[2025-05-06 21:57:14 #6 type] 
+Type domain.Monedero is not enhanced.
+
+[2025-05-06 21:57:14 #7 type] 
+Type domain.CuentaBancaria is not enhanced.
+

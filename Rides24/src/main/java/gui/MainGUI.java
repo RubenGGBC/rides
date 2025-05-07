@@ -4,13 +4,11 @@ package gui;
  * @author Software Engineering teachers
  */
 
-
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import domain.Driver;
-import domain.Ride;
 import domain.User;
-import gui.MainGUI;
 import exceptions.UserAlredyExistException;
 import exceptions.NonexitstenUserException;
 import businessLogic.BLFacade;
@@ -18,363 +16,524 @@ import businessLogic.BLFacade;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
 public class MainGUI extends JFrame {
-	
+    
     private Driver driver;
-	private static final long serialVersionUID = 1L;
-
-	private JPanel jContentPane = null;
-	private JButton jButtonCreateQuery = null;
-	private JButton jButtonQueryQueries = null;
-
+    private static final long serialVersionUID = 1L;
     private static BLFacade appFacadeInterface;
-	
-	public static BLFacade getBusinessLogic(){
-		return appFacadeInterface;
-	}
-	 
-	public static void setBussinessLogic (BLFacade afi){
-		appFacadeInterface=afi;
-	}
-	protected JLabel jLabelSelectOption;
-	private JRadioButton rdbtnNewRadioButton;
-	private JRadioButton rdbtnNewRadioButton_1;
-	private JRadioButton rdbtnNewRadioButton_2;
-	private JPanel panel;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JTextField usertxt;
-	private JTextField textname;
-	private JPasswordField psswdtxt;
-	
-	/**
-	 * This is the default constructor
-	 */
-	public MainGUI(Driver d) {
-		super();
+    
+    // Colors - Enhanced Minimal palette
+    private Color primaryColor = new Color(70, 130, 180); // Steel Blue
+    private Color buttonHoverColor = new Color(100, 149, 237); // Cornflower Blue
+    private Color backgroundColor = Color.WHITE;
+    private Color textColor = new Color(51, 51, 51); // Dark gray
+    private Color successColor = new Color(46, 139, 87); // Sea Green
+    private Color errorColor = new Color(220, 20, 60); // Crimson
+    
+    // Improved fonts
+    private Font basicFont = new Font("Segoe UI", Font.PLAIN, 12);
+    private Font headerFont = new Font("Segoe UI", Font.BOLD, 14);
+     
+    private JPanel contentPane;
+    protected JLabel statusLabel;
+    
+    // Language selection
+    private JRadioButton rdbtnEnglish;
+    private JRadioButton rdbtnEuskara;
+    private JRadioButton rdbtnCastellano;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
+    
+    // Login fields
+    private JTextField userTextField;
+    private JTextField nameTextField;
+    private JPasswordField passwordField;
+    private JRadioButton btnDriver;
+    private JRadioButton btnUser;
+    private final ButtonGroup userTypeGroup = new ButtonGroup();
+    
+    // Added label fields as class variables so they can be accessed in paintAgain()
+    private JLabel lblEmail;
+    private JLabel lblPswd;
+    private JLabel lblName;
+    private JLabel lblType;
+    private JButton btnLogin;
+    private JButton btnRegister;
+    
+    // Operation buttons
+    private JButton btnCreateRide;
+    private JButton btnQueryRides;
+    private JButton btnSolicitarReserva;
+    private JButton btnVerReservas;
+    private JButton btnSolicitudesReserva;
+    private JButton btnValorarConductor;
+    private JButton btnMisValoraciones;
+    private JButton btnAñadirSaldo;
+    
+    public static BLFacade getBusinessLogic() {
+        return appFacadeInterface;
+    }
+     
+    public static void setBussinessLogic(BLFacade afi) {
+        appFacadeInterface = afi;
+    }
+    
+    /**
+     * This is the default constructor
+     */
+    public MainGUI(Driver d) {
+        super();
+        driver = d;
+        
+        this.setSize(850, 550);
+        this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") + " - " + driver.getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null); // Center on screen
+        
+        contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout(10, 10));
+        contentPane.setBackground(backgroundColor);
+        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
+        setContentPane(contentPane);
+        
+        // ========== HEADER PANEL ==========
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(primaryColor);
+        headerPanel.setBorder(new EmptyBorder(8, 12, 8, 12));
+        
+        JLabel titleLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle"));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        headerPanel.add(titleLabel, BorderLayout.WEST);
+        
+        // Language panel
+        JPanel langPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        langPanel.setOpaque(false);
+        
+        rdbtnEuskara = new JRadioButton("Euskara");
+        rdbtnEuskara.setForeground(Color.WHITE);
+        rdbtnEuskara.setOpaque(false);
+        rdbtnEuskara.setFocusPainted(false);
+        rdbtnEuskara.addActionListener(e -> {
+            Locale.setDefault(new Locale("eus"));
+            paintAgain();
+        });
+        buttonGroup.add(rdbtnEuskara);
+        
+        rdbtnCastellano = new JRadioButton("Castellano");
+        rdbtnCastellano.setForeground(Color.WHITE);
+        rdbtnCastellano.setOpaque(false);
+        rdbtnCastellano.setFocusPainted(false);
+        rdbtnCastellano.addActionListener(e -> {
+            Locale.setDefault(new Locale("es"));
+            paintAgain();
+        });
+        buttonGroup.add(rdbtnCastellano);
+        rdbtnCastellano.setSelected(true);
+        
+        rdbtnEnglish = new JRadioButton("English");
+        rdbtnEnglish.setForeground(Color.WHITE);
+        rdbtnEnglish.setOpaque(false);
+        rdbtnEnglish.setFocusPainted(false);
+        rdbtnEnglish.addActionListener(e -> {
+            Locale.setDefault(new Locale("en"));
+            paintAgain();
+        });
+        buttonGroup.add(rdbtnEnglish);
+        
+        langPanel.add(rdbtnEuskara);
+        langPanel.add(rdbtnCastellano);
+        langPanel.add(rdbtnEnglish);
+        
+        headerPanel.add(langPanel, BorderLayout.EAST);
+        contentPane.add(headerPanel, BorderLayout.NORTH);
+        
+        // ========== CENTER PANEL ==========
+        JPanel centerPanel = new JPanel(new BorderLayout(15, 15));
+        centerPanel.setBackground(backgroundColor);
+        
+        // Status message
+        statusLabel = new JLabel(""); 
+        statusLabel.setFont(basicFont);
+        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // ========== OPERATIONS PANEL ==========
+        JPanel operationsPanel = new JPanel(new GridLayout(0, 1, 0, 8));
+        operationsPanel.setBackground(backgroundColor);
+        operationsPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true),
+            "Operaciones",
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.DEFAULT_POSITION,
+            headerFont,
+            textColor
+        ));
+        
+        btnCreateRide = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRide"));
+        styleButton(btnCreateRide);
+        btnCreateRide.addActionListener(e -> {
+            JFrame a = new CreateRideGUI(driver);
+            a.setVisible(true);
+        });
+        operationsPanel.add(btnCreateRide);
+        
+        btnQueryRides = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRides"));
+        styleButton(btnQueryRides);
+        btnQueryRides.addActionListener(e -> {
+            JFrame a = new FindRidesGUI();
+            a.setVisible(true);
+        });
+        
+        btnAñadirSaldo = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.AñadirSaldo")); 
+        styleButton(btnAñadirSaldo);
+        btnAñadirSaldo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    BLFacade facade = MainGUI.getBusinessLogic();
+                    User usuarioActual = facade.loguser(userTextField.getText(), 
+                            new String(passwordField.getPassword()), btnDriver.isSelected());
+                    JFrame i = new MonederoGUI(facade, usuarioActual);                
+                    i.setVisible(true);
+                } catch (NonexitstenUserException e1) {
+                    showErrorMessage(e1.getMessage());
+                }
+            }
+        });
+        operationsPanel.add(btnAñadirSaldo);
+        operationsPanel.add(btnQueryRides);
+        
+        btnSolicitarReserva = new JButton("Solicitar Reserva");
+        styleButton(btnSolicitarReserva);
+        btnSolicitarReserva.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                User usuarioActual = facade.loguser(userTextField.getText(), 
+                        new String(passwordField.getPassword()), btnDriver.isSelected());
+                JFrame i = new SolicitarReservaGUI(usuarioActual);                
+                i.setVisible(true);
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+        operationsPanel.add(btnSolicitarReserva);
+        
+        btnVerReservas = new JButton("Ver Reservas");
+        styleButton(btnVerReservas);
+        btnVerReservas.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                User usuarioActual = facade.loguser(userTextField.getText(), 
+                        new String(passwordField.getPassword()), btnDriver.isSelected());
+                JFrame c = new MisReservasGUI(usuarioActual);
+                c.setVisible(true);
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+        operationsPanel.add(btnVerReservas);
+        
+        btnSolicitudesReserva = new JButton("Solicitudes de Reserva");
+        styleButton(btnSolicitudesReserva);
+        btnSolicitudesReserva.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                User usuarioActual = facade.loguser(userTextField.getText(), 
+                        new String(passwordField.getPassword()), btnDriver.isSelected());
+                JFrame i = new ConfirmacionReservaGUI(usuarioActual);                
+                i.setVisible(true);
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+        operationsPanel.add(btnSolicitudesReserva);
+        
+        btnValorarConductor = new JButton("Valorar Conductor");
+        styleButton(btnValorarConductor);
+        btnValorarConductor.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                User usuarioActual = facade.loguser(userTextField.getText(), 
+                        new String(passwordField.getPassword()), btnDriver.isSelected());
+                JFrame j = new AddReviewGUI(usuarioActual);
+                j.setVisible(true);
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+        operationsPanel.add(btnValorarConductor);
+        
+        btnMisValoraciones = new JButton("Mis Valoraciones");
+        styleButton(btnMisValoraciones);
+        btnMisValoraciones.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                User usuarioActual = facade.loguser(userTextField.getText(), 
+                        new String(passwordField.getPassword()), btnDriver.isSelected());
+                JFrame j = new VerMisValoraciones(usuarioActual);
+                j.setVisible(true);
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+        operationsPanel.add(btnMisValoraciones);
+        
+        // Disable all buttons until login
+        setButtonsEnabled(false);
+        
+        // ========== LOGIN PANEL ==========
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
+        loginPanel.setBackground(backgroundColor);
+        loginPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true),
+            "Acceso",
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.DEFAULT_POSITION,
+            headerFont,
+            textColor
+        ));
+        
+        JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        emailPanel.setBackground(backgroundColor);
 
-		driver=d;
-		
-		// this.setSize(271, 295);
-		this.setSize(926, 544);
-		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
-		jLabelSelectOption.setBounds(10, 0, 239, 62);
-		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
-		jLabelSelectOption.setForeground(Color.BLACK);
-		jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		rdbtnNewRadioButton = new JRadioButton("English");
-		rdbtnNewRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("en"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();				}
-		});
-		buttonGroup.add(rdbtnNewRadioButton);
-		
-		rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Locale.setDefault(new Locale("eus"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();				}
-		});
-		buttonGroup.add(rdbtnNewRadioButton_1);
-		
-		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
-		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("es"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();
-			}
-		});
-		buttonGroup.add(rdbtnNewRadioButton_2);
-	
-		panel = new JPanel();
-		panel.setBounds(10, 246, 239, 62);
-		panel.add(rdbtnNewRadioButton_1);
-		panel.add(rdbtnNewRadioButton_2);
-		panel.add(rdbtnNewRadioButton);
-		
-		jButtonCreateQuery = new JButton();
-		jButtonCreateQuery.setBounds(10, 71, 239, 62);
-		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRide"));
-		jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new CreateRideGUI(driver);
-				a.setVisible(true);
-			}
-		});
-		
-		jButtonQueryQueries = new JButton();
-		jButtonQueryQueries.setBounds(10, 143, 239, 62);
-		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRides"));
-		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new FindRidesGUI();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Etiquetas");
 
-				a.setVisible(true);
-			}
-		});
-	
-		jContentPane = new JPanel();
-		jContentPane.setLayout(null);
-		
-		usertxt = new JTextField();
-		usertxt.setBounds(512, 87, 204, 30);
-		usertxt.setText("");		jContentPane.add(usertxt);
-		usertxt.setColumns(10);
-		jContentPane.add(jLabelSelectOption);
-		jContentPane.add(jButtonCreateQuery);
-		jContentPane.add(jButtonQueryQueries);
-		jContentPane.add(panel);
-		
-		
-		setContentPane(jContentPane);
-		
-		JLabel Userlbl = new JLabel("Introduce tu email"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
-		Userlbl.setBounds(337, 95, 138, 14);
-		jContentPane.add(Userlbl);
-		 
-		JLabel psdlbl = new JLabel("Introduce tu contraseña"); //$NON-NLS-1$ //$NON-NLS-2$
-		psdlbl.setBounds(329, 142, 146, 14);
-		jContentPane.add(psdlbl);
-		
-		
-		JLabel lblName = new JLabel("Introduce tu nombre, solo si vas a registrarte"); //$NON-NLS-1$ //$NON-NLS-2$
-		lblName.setBounds(277, 191, 240, 14);
-		jContentPane.add(lblName);
-		
-		textname = new JTextField();
-		textname.setBounds(512, 183, 204, 31);
-		jContentPane.add(textname);
-		textname.setColumns(10);
-		
-		JRadioButton btnDriver = new JRadioButton("Driver"); //$NON-NLS-1$ //$NON-NLS-2$
-		
-		btnDriver.setBounds(580, 239, 109, 23);
-		jContentPane.add(btnDriver);
-		
-		JRadioButton btnUser = new JRadioButton("Usuario"); //$NON-NLS-1$ //$NON-NLS-2$
-		btnUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnDriver.setSelected(false);
-				
-				
-			
-		}});
-		btnUser.setBounds(408, 239, 109, 23);
-		jContentPane.add(btnUser);
-		
-		btnDriver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnUser.setSelected(false);
-				
-			}
-		});
-		JButton jbuttonSolicitarR = new JButton();
-		jbuttonSolicitarR.setText("SolicitarReserva");
-		jbuttonSolicitarR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BLFacade facade = MainGUI.getBusinessLogic();
-				User usuarioActual = null;
-				try {
-					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-				} catch (NonexitstenUserException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JFrame i = new SolicitarReservaGUI(usuarioActual);				
-				i.setVisible(true);	
-				
-			}
-		});
-		jbuttonSolicitarR.setBounds(20, 322, 239, 62);
-		jContentPane.add(jbuttonSolicitarR);
-		
-		JButton btnVerR = new JButton("VER RESERVAS");//$NON-NLS-1$ //$NON-NLS-2$
-		btnVerR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				User usuarioActual = null;
-				BLFacade facade = MainGUI.getBusinessLogic();
-				try {
-					usuarioActual=facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-				} catch (NonexitstenUserException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JFrame c =new MisReservasGUI(usuarioActual);
-				c.setVisible(true);
-				
-			}
-		});
-		btnVerR.setBounds(20, 395, 239, 56);
-		jContentPane.add(btnVerR);
-		
-	
-		JLabel jLabelMsg_1 = new JLabel(""); //$NON-NLS-1$ //$NON-NLS-2$
-		jLabelMsg_1.setBounds(450, 20, 266, 56);
-		jContentPane.add(jLabelMsg_1);
-		
-		
-		JButton btnRegister = new JButton("Register"); //$NON-NLS-1$ //$NON-NLS-2$
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					BLFacade facade = MainGUI.getBusinessLogic();
-					if(usertxt.getText().isEmpty() || psswdtxt.getText().equals(null) || (btnUser.isSelected()==false &&  btnDriver.isSelected()==false) || textname.getText().isEmpty() ) {
-						jLabelMsg_1.setText("Faltan datos");
-					}else {
-						facade.createUser(usertxt.getText(), psswdtxt.getText(),btnUser.isSelected() || btnDriver.isSelected(),textname.getText());
-						jLabelMsg_1.setText("Se ha crado la cuenta");
-					}
-				} catch (UserAlredyExistException e1) {
-					// TODO Auto-generated catch block
-					jLabelMsg_1.setText(e1.getMessage());
-				}
-			}
-		});
-			
-		btnRegister.setBounds(572, 298, 99, 23);
-		jContentPane.add(btnRegister);
-		
-		psswdtxt = new JPasswordField(); //$NON-NLS-1$ //$NON-NLS-2$
-		psswdtxt.setBounds(512, 128, 204, 30);
-		jContentPane.add(psswdtxt);
-		
-		JButton btnSR = new JButton("Solicitudes de reserva"); //$NON-NLS-1$ //$NON-NLS-2$
-		btnSR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BLFacade facade = MainGUI.getBusinessLogic();
-				User usuarioActual = null;
-				try {
-					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-				} catch (NonexitstenUserException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JFrame i = new ConfirmacionReservaGUI(usuarioActual);				
-				i.setVisible(true);	
-				
-			}
-		});
-		btnSR.setBounds(354, 352, 163, 43);
-		jContentPane.add(btnSR);
-		
-		JButton btnValorarC = new JButton("Valorar conductor por viajes"); //$NON-NLS-1$ //$NON-NLS-2$
-		btnValorarC.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BLFacade facade = MainGUI.getBusinessLogic();
-				User usuarioActual = null;
-				try {
-					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-				} catch (NonexitstenUserException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JFrame j = new AddReviewGUI(usuarioActual);
-				j.setVisible(true);
-				
-			}
-		});
-		btnValorarC.setBounds(580, 357, 223, 33);
-		jContentPane.add(btnValorarC);
-		
-		JButton btnMisVal = new JButton("Mis Valoraciones"); //$NON-NLS-1$ //$NON-NLS-2$
-		btnMisVal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BLFacade facade = MainGUI.getBusinessLogic();
-				User usuarioActual = null;
-				try {
-					usuarioActual = facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-				} catch (NonexitstenUserException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JFrame j = new VerMisValoraciones(usuarioActual);
-				j.setVisible(true);
-			}
-		});
-		btnMisVal.setBounds(491, 412, 132, 30);
-		jContentPane.add(btnMisVal);
-		
-		
-		
-	
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(1);
-			}
-		});
-	
-	
-	JButton Logrbtn = new JButton("Iniciar"); //$NON-NLS-1$ //$NON-NLS-2$
-	Logrbtn.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			try {
-				BLFacade facade = MainGUI.getBusinessLogic();
-				if(usertxt.getText().isEmpty() || psswdtxt.getText().isEmpty() || (btnUser.isSelected()==false &&  btnDriver.isSelected()==false)) {
-					System.out.println("Faltan datos");
-				}else {
-					User usuarioActual;
-					usuarioActual=facade.loguser(usertxt.getText(), psswdtxt.getText(), btnDriver.isSelected());
-					if(usuarioActual.getdriver()==true) {
-						driver.setEmail(usuarioActual.getEmail());
-						driver.setName(usuarioActual.getnombre());
-					}
-					
-					if(btnDriver.isSelected()) {
-						jButtonCreateQuery.setEnabled(true);
-						jButtonQueryQueries.setEnabled(true);	
-						jbuttonSolicitarR.setEnabled(false);
-						btnVerR.setEnabled(false);
-						btnSR.setEnabled(true);
-						btnValorarC.setEnabled(false);
-						btnMisVal.setEnabled(true);
-					
-						
-						jLabelMsg_1.setText("Sesion iniciada como Driver");
+        lblEmail = new JLabel(resourceBundle.getString("Login.Email"));
+        lblEmail.setFont(basicFont);
+        lblEmail.setPreferredSize(new Dimension(100, 25));
+        userTextField = new JTextField(15);
+        userTextField.setFont(basicFont);
 
-						
-						
-					}else {
-						jButtonCreateQuery.setEnabled(false);
-						jButtonQueryQueries.setEnabled(false);	
-						jbuttonSolicitarR.setEnabled(true);
-						btnVerR.setEnabled(true);
-						btnSR.setEnabled(false);
-						btnValorarC.setEnabled(true);
-						btnMisVal.setEnabled(false);
-					
-						jLabelMsg_1.setText("Sesion iniciada como User");
+        emailPanel.add(lblEmail);
+        emailPanel.add(userTextField);
+        loginPanel.add(emailPanel);
 
-					}
+        // Password field
+        JPanel pswdPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pswdPanel.setBackground(backgroundColor);
 
-				}
-			} catch (NonexitstenUserException e1) {
-				jLabelMsg_1.setText(e1.getMessage());
-			}
-		}});
-	Logrbtn.setBounds(399, 298, 89, 23);
-	jContentPane.add(Logrbtn);
-	}
-	
-	private void paintAgain() {
-		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
-		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRides"));
-		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRide"));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ " - driver :"+driver.getName());
-	}
-} // @jve:decl-index=0:visual-constraint="0,0"
+        lblPswd = new JLabel(resourceBundle.getString("Login.Password"));
+        lblPswd.setFont(basicFont);
+        lblPswd.setPreferredSize(new Dimension(100, 25));
+        passwordField = new JPasswordField(15);
+        passwordField.setFont(basicFont);
 
+        pswdPanel.add(lblPswd);
+        pswdPanel.add(passwordField);
+        loginPanel.add(pswdPanel);
+
+        // Name field (for registration)
+        JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        namePanel.setBackground(backgroundColor);
+
+        lblName = new JLabel(resourceBundle.getString("Login.Name"));
+        lblName.setFont(basicFont);
+        lblName.setPreferredSize(new Dimension(100, 25));
+        nameTextField = new JTextField(15);
+        nameTextField.setFont(basicFont);
+
+        namePanel.add(lblName);
+        namePanel.add(nameTextField);
+        loginPanel.add(namePanel);
+
+        // User type selection
+        JPanel typePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        typePanel.setBackground(backgroundColor);
+
+        lblType = new JLabel(resourceBundle.getString("Login.Type"));
+        lblType.setFont(basicFont);
+        lblType.setPreferredSize(new Dimension(100, 25));
+
+        btnUser = new JRadioButton(resourceBundle.getString("Login.UserType"));
+        btnUser.setBackground(backgroundColor);
+        btnUser.setFont(basicFont);
+
+        btnDriver = new JRadioButton(resourceBundle.getString("Login.DriverType"));
+        btnDriver.setBackground(backgroundColor);
+        btnDriver.setFont(basicFont);
+
+        userTypeGroup.add(btnUser);
+        userTypeGroup.add(btnDriver);
+
+        typePanel.add(lblType);
+        typePanel.add(btnUser);
+        typePanel.add(btnDriver);
+        loginPanel.add(typePanel);
+
+        // Login/Register buttons
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        btnPanel.setBackground(backgroundColor);
+
+        btnLogin = new JButton(resourceBundle.getString("Login.LoginButton"));
+        styleButton(btnLogin);
+        btnLogin.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                if (userTextField.getText().isEmpty() || passwordField.getPassword().length == 0 || 
+                    (!btnUser.isSelected() && !btnDriver.isSelected())) {
+                    showErrorMessage(resourceBundle.getString("Login.MissingLoginData"));
+                } else {
+                    User usuarioActual = facade.loguser(userTextField.getText(), 
+                                new String(passwordField.getPassword()), btnDriver.isSelected());
+                    if (usuarioActual.getdriver()) {
+                        driver.setEmail(usuarioActual.getEmail());
+                        driver.setName(usuarioActual.getnombre());
+                    }
+                    
+                    if (btnDriver.isSelected()) {
+                        showSuccessMessage(resourceBundle.getString("Login.LoginSuccessDriver"));
+                        // Enable driver-specific buttons
+                        btnCreateRide.setEnabled(true);
+                        btnQueryRides.setEnabled(true);
+                        btnSolicitarReserva.setEnabled(false);
+                        btnVerReservas.setEnabled(false);
+                        btnSolicitudesReserva.setEnabled(true);
+                        btnValorarConductor.setEnabled(false);
+                        btnMisValoraciones.setEnabled(true);
+                        btnAñadirSaldo.setEnabled(true);
+                    } else {
+                        showSuccessMessage(resourceBundle.getString("Login.LoginSuccessUser"));
+                        // Enable user-specific buttons
+                        btnCreateRide.setEnabled(false);
+                        btnQueryRides.setEnabled(false);
+                        btnSolicitarReserva.setEnabled(true);
+                        btnVerReservas.setEnabled(true);
+                        btnSolicitudesReserva.setEnabled(false);
+                        btnValorarConductor.setEnabled(true);
+                        btnMisValoraciones.setEnabled(false);
+                        btnAñadirSaldo.setEnabled(true);
+                    }
+                }
+            } catch (NonexitstenUserException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+
+        btnRegister = new JButton(resourceBundle.getString("Login.RegisterButton"));
+        styleButton(btnRegister);
+        btnRegister.addActionListener(e -> {
+            try {
+                BLFacade facade = MainGUI.getBusinessLogic();
+                if (userTextField.getText().isEmpty() || passwordField.getPassword().length == 0 || 
+                    (!btnUser.isSelected() && !btnDriver.isSelected()) || nameTextField.getText().isEmpty()) {
+                    showErrorMessage(resourceBundle.getString("Login.MissingRegisterData"));
+                } else {
+                    facade.createUser(userTextField.getText(), new String(passwordField.getPassword()), 
+                                      btnUser.isSelected() || btnDriver.isSelected(), nameTextField.getText());
+                    showSuccessMessage(resourceBundle.getString("Login.RegisterSuccess"));
+                }
+            } catch (UserAlredyExistException e1) {
+                showErrorMessage(e1.getMessage());
+            }
+        });
+
+        btnPanel.add(btnLogin);
+        btnPanel.add(btnRegister);
+        loginPanel.add(btnPanel);
+
+        // Add message label
+        JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        messagePanel.setBackground(backgroundColor);
+        messagePanel.add(statusLabel);
+        loginPanel.add(messagePanel);
+
+        // Add panels to center
+        centerPanel.add(operationsPanel, BorderLayout.WEST);
+        centerPanel.add(loginPanel, BorderLayout.EAST);
+        contentPane.add(centerPanel, BorderLayout.CENTER);
+
+        // Add window listener
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(1);
+            }
+        });
+    }
+    
+    /**
+     * Apply consistent style to button
+     */
+    private void styleButton(JButton button) {
+        button.setFont(basicFont);
+        button.setBackground(primaryColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(true);
+        button.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
+        
+        // Add rollover effect
+        button.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if (model.isRollover()) {
+                button.setBackground(buttonHoverColor);
+            } else {
+                button.setBackground(primaryColor);
+            }
+        });
+    }
+    
+    /**
+     * Set enabled state for all buttons
+     */
+    private void setButtonsEnabled(boolean enabled) {
+        btnCreateRide.setEnabled(enabled);
+        btnQueryRides.setEnabled(enabled);
+        btnSolicitarReserva.setEnabled(enabled);
+        btnVerReservas.setEnabled(enabled);
+        btnSolicitudesReserva.setEnabled(enabled);
+        btnValorarConductor.setEnabled(enabled);
+        btnMisValoraciones.setEnabled(enabled);
+        btnAñadirSaldo.setEnabled(enabled);
+    }
+    
+    /**
+     * Show error message
+     */
+    private void showErrorMessage(String message) {
+        statusLabel.setText(message);
+        statusLabel.setForeground(errorColor);
+    }
+    
+    /**
+     * Show success message
+     */
+    private void showSuccessMessage(String message) {
+        statusLabel.setText(message);
+        statusLabel.setForeground(successColor);
+    }
+    
+    /**
+     * Update UI language
+     */
+    private void paintAgain() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Etiquetas");
+        this.setTitle(resourceBundle.getString("MainGUI.MainTitle") + " - " + driver.getName());
+        btnCreateRide.setText(resourceBundle.getString("MainGUI.CreateRide"));
+        btnQueryRides.setText(resourceBundle.getString("MainGUI.QueryRides"));
+        btnAñadirSaldo.setText(resourceBundle.getString("MainGUI.AñadirSaldo"));
+        btnSolicitarReserva.setText(resourceBundle.getString("MainGUI.SolicitarReserva"));
+        btnVerReservas.setText(resourceBundle.getString("MainGUI.VerReservas"));
+        btnSolicitudesReserva.setText(resourceBundle.getString("MainGUI.SolicitudesReserva"));
+        btnValorarConductor.setText(resourceBundle.getString("MainGUI.ValorarConductor"));
+        btnMisValoraciones.setText(resourceBundle.getString("MainGUI.MisValoraciones"));
+        lblEmail.setText(resourceBundle.getString("Login.Email"));
+        lblPswd.setText(resourceBundle.getString("Login.Password"));
+        lblName.setText(resourceBundle.getString("Login.Name"));
+        lblType.setText(resourceBundle.getString("Login.Type"));
+        btnUser.setText(resourceBundle.getString("Login.UserType"));
+        btnDriver.setText(resourceBundle.getString("Login.DriverType"));
+        btnLogin.setText(resourceBundle.getString("Login.LoginButton"));
+        btnRegister.setText(resourceBundle.getString("Login.RegisterButton"));
+    }
+}
