@@ -20,7 +20,6 @@ import javax.swing.table.JTableHeader;
 public class FindRidesGUI extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    // Custom colors to match the screenshot
     private final Color BLUE_HEADER = new Color(70, 130, 180);
     private final Color BLUE_BUTTON = new Color(70, 130, 180);
     private final Color WHITE_TEXT = Color.WHITE;
