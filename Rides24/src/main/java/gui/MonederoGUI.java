@@ -360,7 +360,6 @@ public class MonederoGUI extends JFrame {
     }
     
     private void onClose() {
-        // Any cleanup code would go here
     }
     
     public static void main(String[] args) {
@@ -370,6 +369,5 @@ public class MonederoGUI extends JFrame {
             e.printStackTrace();
         }
         
-        // Main method code for testing would go here
     }
 }

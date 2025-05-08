@@ -45,11 +45,10 @@ public class MainGUI extends JFrame {
     private static BLFacade appFacadeInterface;
     private User currentUser = null;
     
-    // Email configuration
-    private static final String SMTP_HOST = "smtp.yourdomain.com";
-    private static final String REMITENTE = "noreply@carpooling.com";
+    private static final String SMTP_HOST = "smtp.ehu.es";
+    private static final String REMITENTE = "rides@rides.com";
     
-    // Colors - Enhanced Minimal palette
+    
     private Color primaryColor = new Color(70, 130, 180); // Steel Blue
     private Color buttonHoverColor = new Color(100, 149, 237); // Cornflower Blue
     private Color backgroundColor = Color.WHITE;
@@ -57,14 +56,12 @@ public class MainGUI extends JFrame {
     private Color successColor = new Color(46, 139, 87); // Sea Green
     private Color errorColor = new Color(220, 20, 60); // Crimson
     
-    // Improved fonts
     private Font basicFont = new Font("Segoe UI", Font.PLAIN, 12);
     private Font headerFont = new Font("Segoe UI", Font.BOLD, 14);
      
     private JPanel contentPane;
     protected JLabel statusLabel;
     
-    // Language selection
     private JRadioButton rdbtnEnglish;
     private JRadioButton rdbtnEuskara;
     private JRadioButton rdbtnCastellano;
@@ -78,12 +75,10 @@ public class MainGUI extends JFrame {
     private JRadioButton btnUser;
     private final ButtonGroup userTypeGroup = new ButtonGroup();
     
-    // Bank account fields
     private JTextField txtCuentaBancaria;
     private JButton btnAsociarCuenta;
     private JLabel lblCuentaAsociada;
     
-    // Added label fields as class variables so they can be accessed in paintAgain()
     private JLabel lblEmail;
     private JLabel lblPswd;
     private JLabel lblName;
@@ -92,7 +87,6 @@ public class MainGUI extends JFrame {
     private JButton btnLogin;
     private JButton btnRegister;
     
-    // Operation buttons
     private JButton btnCreateRide;
     private JButton btnQueryRides;
     private JButton btnSolicitarReserva;

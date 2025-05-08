@@ -6,17 +6,12 @@ import javax.persistence.Id;
 
 @Entity
 public class CuentaBancaria {
-    
-    private int fechacaducidad;
-    private int CVV;
-    
-    @Id
-    private String numerotarjeta;
-    private int numeroRandom;
+ @Id
+ private String numerotarjeta;
+ private int numeroRandom;
     
    
-    public CuentaBancaria() {
-        // JPA requires a no-args constructor
+ public CuentaBancaria() {
         Random rand = new Random();
         this.numeroRandom = rand.nextInt(1000);
     }
@@ -26,23 +21,6 @@ public class CuentaBancaria {
         Random rand = new Random();
         this.numeroRandom = rand.nextInt(1000);
         this.numerotarjeta = numero;
-    }
-    
-    // Getters and setters
-    public int getFechacaducidad() {
-        return fechacaducidad;
-    }
-    
-    public void setFechacaducidad(int fechacaducidad) {
-        this.fechacaducidad = fechacaducidad;
-    }
-    
-    public int getCVV() {
-        return CVV;
-    }
-    
-    public void setCVV(int cVV) {
-        CVV = cVV;
     }
     
     public String getNumerotarjeta() {
