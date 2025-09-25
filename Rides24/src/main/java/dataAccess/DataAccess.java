@@ -294,9 +294,9 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 		viaje.setEstado(EstadoViaje.PENDIENTE);
 		db.merge(viaje);
 		db.getTransaction().commit();
-	}else { 
+	}else {
 		db.getTransaction().commit();
-		throw new AnyRidesException ("No quedan plazas en el viaje");
+		throw new AnyRidesException ("Nof quedan plazas en el viaje");
 	}
 	return viaje;
 	
@@ -514,37 +514,37 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 return monedero;
             }
             
-            public Monedero retirarDinero(String userEmail, float cantidad) 
+            public Monedero retirarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-                
+
                 if (cantidad <= 0) {
                     throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
                 }
-                
+
                 db.getTransaction().begin();
-                
+
                 User user = db.find(User.class, userEmail);
                 if (user == null) {
                     db.getTransaction().rollback();
                     throw new NonexitstenUserException("El usuario no existe");
                 }
-                
+
                 Monedero monedero = user.getMonedero();
                 if (monedero == null) {
                     db.getTransaction().rollback();
                     throw new MonederoNoExisteException("El usuario no tiene monedero");
                 }
-                
+
                 if (!monedero.tieneSaldoSuficiente(cantidad)) {
                     db.getTransaction().rollback();
                     throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
                 }
-                
+
                 monedero.retirarDinero(cantidad);
                 db.merge(user);
                 db.getTransaction().commit();
-                
+
                 return monedero;
             }
             public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 

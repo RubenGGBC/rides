@@ -1,16 +1,15 @@
 package testOperations;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import configuration.ConfigXML;
+import domain.Driver;
+import domain.Ride;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-import configuration.ConfigXML;
-import domain.Driver;
-import domain.Ride;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class TestDataAccess {
@@ -66,12 +65,19 @@ public class TestDataAccess {
 		} else 
 		return false;
     }
+	
+	public Driver getDriver(String driverEmail) {
+		System.out.println(">> TestDataAccess: getDriver "+driverEmail);
+		Driver d = db.find(Driver.class, driverEmail);
+		
+		return d;
+    }
 	public Driver createDriver(String email, String name) {
-		System.out.println(">> TestDataAccess: addDriver");
+		System.out.println(">> TestDataAccess: createDriver");
 		Driver driver=null;
 			db.getTransaction().begin();
 			try {
-			    driver=new Driver(name,email);
+			    driver=new Driver(email,name);;
 				db.persist(driver);
 				db.getTransaction().commit();
 			}
@@ -93,8 +99,10 @@ public class TestDataAccess {
 				try {
 					 driver = db.find(Driver.class, email);
 					if (driver==null)
-						driver=new Driver(name,email);
+						driver=new Driver(email,name);
 				    driver.addRide(from, to, date, nPlaces, price);
+				    db.persist(driver);
+				    System.out.println("Stored: "+driver);
 					db.getTransaction().commit();
 					return driver;
 					
@@ -102,7 +110,7 @@ public class TestDataAccess {
 				catch (Exception e){
 					e.printStackTrace();
 				}
-				return null;
+				return driver;
 	    }
 		
 		

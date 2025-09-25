@@ -130,7 +130,7 @@ public class AddReviewGUI extends JFrame {
                 int rating = ratingSlider.getValue();
                 String review = reviewTextArea.getText();
 
-                if (selectedRide != null && !review.isBlank()) {
+                if (selectedRide != null) {
                     Valoracion val = new Valoracion(rating, review, user, selectedRide.getDriver());
                     facade.addValoracion(val);
                     JOptionPane.showMessageDialog(null, resourceBundle.getString("AddReview.Success"));

@@ -1,92 +1,81 @@
 
-(domain.Event#equals(Ljava/lang/Object;)ZF
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javay y("startingBlock*¡
-2H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java‚
- ‚("R
+}testOperations.TestDataAccess#removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Ldomain/Ride;h
+^/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/test/java/testOperations/TestDataAccess.javau u("3*œ
+2y y(•’
+z z((
+%3domain.Ride"[domain.Driver#removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Ldomain/Ride;*0
+
+__unknown_file (
+
+ddomain.Driver*6
+
+__unknown_file (
+
+fromjava.lang.String*4
+
+__unknown_file (
+
+tojava.lang.String*4
+
+__unknown_file (
+
+datejava.util.Date2@removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)U
+S
+z z()
+rdomain.Ride"__id*/
+
+__unknown_file (
+
+%3domain.Ride"
+| |(
+
+rdomain.Ride*‰
+3v v(	Q
+O
+v v(
+%0java.io.PrintStream"__id*"
+
+__unknown_file (
+""àÝ
+v v(6
+
+%1void"0java.io.PrintStream#println(Ljava/lang/String;)V*7
+
+__unknown_file (
+
+%0java.io.PrintStream*=
+
+__unknown_file (!
+>> TestDataAccess: removeRide2println(Ljava/lang/String;)J
 H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java‚ ‚(
-""*ˆ
-3H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java€ €(…
-‚
-H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java€ €(
-otherdomain.Event"__id*
-
-objjava.lang.Object
-Œ
-H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java (
-%2java.lang.Integer"__id*!*
-domain.Event"
-eventNumber–
-“
-H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java (&
-%3java.lang.Integer"__id*(*&
-
-otherdomain.Event"
-eventNumber*
+w w(+
+ddomain.Driver"__id*"
+
+__unknown_file (
+""p
+n
+x x(
+%2boolean"	__compare*
+x x(
+
+!=* 
+x x(
+
+ddomain.Driver*
+x
+ x(
+""*
 2
-1*ð
-startingBlockF
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javay y("
-
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javax x(
-
-%4"
-__annotate*
-java.lang.Override*
-
-objjava.lang.Objecty
-w
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javay y(!
-objjava.lang.Object"__annotation*
-
-%4*	
-5
-6
-8*
-4F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java
- ("P
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java (
-""*¾
-5F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java~ ~(®«
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java~ ~(
-%0java.lang.Class",java.lang.Object#getClass()Ljava/lang/Class;*
-domain.Event2
-getClass()·´
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java~ ~("
-%1java.lang.Class",java.lang.Object#getClass()Ljava/lang/Class;*
-
-objjava.lang.Object2
-getClass()*
-3
-4*
-6F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java}
- }("P
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java} }(
-""*
-8F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java{
- {("P
-F
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.java{ {(
-""*¡
-1H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javaƒ	 ƒ("R
-H
-</Users/iturrioz/git/Bets2021/src/main/java/domain/Event.javaƒ ƒ(
-"":
-objjava.lang.ObjectB
-domain.Event
+1*!
+1 ("
+ (
+"":%
+u u(&
+emailjava.lang.String:$
+u' u(3
+fromjava.lang.String:"
+u4 u(>
+tojava.lang.String:"
+u? u(H
+datejava.util.DateB!
+testOperations.TestDataAccessH

@@ -1,16 +1,19 @@
 
-3configuration.ConfigXML#getUser()Ljava/lang/String;Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java9 9("1*ã
-1Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java:	 :(›
-˜
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java:	 :(
-%0java.lang.String"__id*%*#
-configuration.ConfigXML"
-user"m
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java: :(
-
-%0java.lang.StringB
-configuration.ConfigXML
+,domain.Driver#getMonedero()Ldomain/Monedero;Z
+N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.java‹ ‹("1* 
+1
+Œ	 Œ(h
+f
+
+Œ	 Œ(
+%0domain.Monedero"__id*;
+
+__unknown_file (*
+domain.Driver"
+
+monedero"%
+
+Œ Œ(
+
+%0domain.MonederoB
+domain.DriverH

@@ -1,16 +1,18 @@
 
-5configuration.ConfigXML#getLocale()Ljava/lang/String;Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java1 1("1*å
-1Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java2	 2(
-š
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java2	 2(
-%0java.lang.String"__id*'*%
-configuration.ConfigXML"
-locale"m
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java2 2(
-
-%0java.lang.StringB
-configuration.ConfigXML
+5domain.Driver#getCuentabanca()Ldomain/CuentaBancaria;Z
+N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.javaƒ ƒ(%"1*¯
+1
+„	 „(q
+o
+
+„	 „(
+%0domain.CuentaBancaria"__id*>
+
+__unknown_file ("* 
+domain.Driver"
+cuentabanca"+
+
+„ „(
+
+%0domain.CuentaBancariaB
+domain.DriverH

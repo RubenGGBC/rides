@@ -1,17 +1,36 @@
 
-/domain.Question#getQuestion()Ljava/lang/String;I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.javaH H("1*«
-1I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.javaI	 I(è
-å
-I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.javaI	 I(
-%0java.lang.String"__id*!*
-domain.Question"
+KdataAccess.DataAccess#getReservedRidesF(Ljava/lang/String;)Ljava/util/List;b
+V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.java‹ ‹('"1*â
+1
+› ›(
+M
+K
 
-question"e
-I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.javaI I(
-
-%0java.lang.StringB
-domain.Question
+ﬁ ﬁ(/
+userdomain.User"__id*"
+
+__unknown_file (
+""úô
+
+ﬂ ﬂ(2
+%0java.util.List".domain.User#getReservedRides()Ljava/util/List;*1
+
+__unknown_file (
+
+userdomain.User2getReservedRides()a
+_
+
+ﬂ ﬂ(3
+ridesjava.util.List"__id*2
+
+__unknown_file (
+
+%0java.util.List"'
+
+· ·(
+
+ridesjava.util.List:'
+
+‹( ‹(4
+emailjava.lang.StringB
+dataAccess.DataAccessH

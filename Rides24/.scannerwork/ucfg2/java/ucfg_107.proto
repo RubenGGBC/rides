@@ -1,16 +1,15 @@
 
-;configuration.ConfigXML#getDatabaseNode()Ljava/lang/String;S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java¦ ¦("1*ñ
-1S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java§	 §(¥
-¢
-S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java§	 §(
-%0java.lang.String"__id*-*+
-configuration.ConfigXML"
-databaseNode"o
-S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java§ §(
+(domain.User#getEmail()Ljava/lang/String;V
+L/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/User.java0 0("1*—
+11	 1(b
+`
+1	 1(
+%0java.lang.String"__id*6
+
+__unknown_file (*
+domain.User"
+email"$
+1 1(
 
-%0java.lang.StringB
-configuration.ConfigXML
+%0java.lang.StringB
+domain.UserH

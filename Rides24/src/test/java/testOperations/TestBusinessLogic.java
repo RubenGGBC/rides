@@ -1,10 +1,11 @@
 package testOperations;
 //
-import java.util.Date;
 
 import configuration.ConfigXML;
 import domain.Driver;
 import domain.Ride;
+
+import java.util.Date;
 
 public class TestBusinessLogic {
 	TestDataAccess dbManagerTest;

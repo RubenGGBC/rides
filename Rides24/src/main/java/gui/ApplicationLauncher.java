@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.net.URL;
 import java.util.Locale;
 
+import java.util.logging.Logger;
+
 import javax.swing.UIManager;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -16,13 +18,13 @@ import businessLogic.BLFacadeImplementation;
 
 public class ApplicationLauncher { 
 	
-	
+	static Logger logger = Logger.getLogger(ApplicationLauncher.class.getName());
 	
 	public static void main(String[] args) {
 
 		ConfigXML c=ConfigXML.getInstance();
 	
-		System.out.println(c.getLocale());
+		logger.info(c.getLocale());
 		
 		Locale.setDefault(new Locale(c.getLocale()));
 		

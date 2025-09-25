@@ -1,7 +1,7 @@
-organization=jononekin
-projectKey=Bets20201
+organization=mockito-de-junit
+projectKey=mockito-de-junit_ridesis2
 serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.12534
-dashboardUrl=https://sonarcloud.io/dashboard?id=Bets20201
-ceTaskId=AXTACu1jZg8dIi10qivb
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXTACu1jZg8dIi10qivb
+serverVersion=8.0.0.67388
+dashboardUrl=https://sonarcloud.io/dashboard?id=mockito-de-junit_ridesis2
+ceTaskId=AZloW96NtUz_55mZ01me
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZloW96NtUz_55mZ01me
