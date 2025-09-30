@@ -1,12 +1,12 @@
 
 RdataAccess.DataAccess#getValoracionesConductor(Ljava/lang/String;)Ljava/util/List;b
-V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaù ù(4"1*%
+V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaÿ ÿ(4"1*%
 1
-ú' ú()"
+€' €()"
 
-ý ý(%
+ƒ ƒ(%
 "":0
 
-ù5 ù(J"
+ÿ5 ÿ(J"
 conductorEmailjava.lang.StringB
 dataAccess.DataAccessH

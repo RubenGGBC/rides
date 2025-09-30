@@ -14,7 +14,7 @@ import domain.Monedero;
 import exceptions.UserAlredyExistException;
 import exceptions.NonexitstenUserException;
 import exceptions.MonederoNoExisteException;
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 
 import java.awt.Color;
 import java.awt.Font;

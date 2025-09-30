@@ -1,127 +1,7 @@
 
-)domain.Driver#equals(Ljava/lang/Object;)ZX
-N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.javaS S("startingBlock*!
-2Y Y("
-Y Y(
-""*≈
-3X X(çä
-X X(
-%2java.lang.Class",java.lang.Object#getClass()Ljava/lang/Class;*-
-
-__unknown_file (
-domain.Driver2
-getClass()ïí
-X X((
-%3java.lang.Class",java.lang.Object#getClass()Ljava/lang/Class;*5
-
-__unknown_file (
-
-objjava.lang.Object2
-getClass()Ö
-Ç
-X X((
-%4boolean"	__compare*
-X X(
-!=*#
-X X(
-
-%2java.lang.Class*#
-X X((
-
-%3java.lang.Class*
-2
-1*Ñ
-startingBlockS S(%ä
-á
-R R(
-%8"
-__annotate*2
-
-__unknown_file (
-java.lang.Override*5
-
-__unknown_file (
-
-objjava.lang.ObjectW
-U
-S! S($
-objjava.lang.Object"__annotation*"
-
-__unknown_file (
-
-%8*
-7*!
-4W W("
-W W(
-""*å
-5V V(u
-s
-V V(
-%1boolean"	__compare*
-V V(
-==*%
-V V(
-
-objjava.lang.Object*
-V V(
-""*
-3
-4*!
-6U U("
-U U(
-""*ò
-7T T(Ä
-~
-T T(
-%0boolean"	__compare*
-T T(
-==*
-T T(
-domain.Driver*%
-T T(
-
-objjava.lang.Object*
-5
-6*÷
-1Z  Z(#a
-_
-Z Z($
-otherdomain.Driver"__id*5
-
-__unknown_file (
-
-objjava.lang.Objectd
-b
-[( [(-
-%5java.lang.String"__id*8
-
-__unknown_file (*
-domain.Driver"
-emailk
-i
-[/ [(:
-%6java.lang.String"__id*?
-
-__unknown_file (#*!
-
-otherdomain.Driver"
-email¸
-˘
-[ [(;
-%7boolean"?java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z*1
-
-__unknown_file ("
-java.util.Objects*4
-
-__unknown_file (
-
-%5java.lang.String*4
-
-__unknown_file (
-
-%6java.lang.String"
-[ [(<
-"":#
-S S($
-objjava.lang.ObjectB
-domain.DriverHX
+(__sonar_lambda_1$retirarDineroCajaBlancab
+X/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/test/java/retirarDineroCajaBlanca.java% %(X"1*!
+1%# %(."
+%# %(X
+""B
+	!Unknown!

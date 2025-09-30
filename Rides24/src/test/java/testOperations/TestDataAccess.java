@@ -1,8 +1,7 @@
 package testOperations;
 
 import configuration.ConfigXML;
-import domain.Driver;
-import domain.Ride;
+import domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -54,7 +53,8 @@ public class TestDataAccess {
 		System.out.println("TestDataAccess closed");
 	}
 
-	public boolean removeDriver(String driverEmail) {
+	//Metodo corregido de sonar Ruben H,C
+    public boolean removeDriver(String driverEmail) {
 		System.out.println(">> TestDataAccess: removeRide");
 		Driver d = db.find(Driver.class, driverEmail);
 		if (d!=null) {
@@ -62,8 +62,9 @@ public class TestDataAccess {
 			db.remove(d);
 			db.getTransaction().commit();
 			return true;
-		} else 
-		return false;
+		} else {
+            return false;
+        }
     }
 	
 	public Driver getDriver(String driverEmail) {
@@ -135,9 +136,55 @@ public class TestDataAccess {
 			return null;
 
 		}
+        public User getUser(String email) {
+        return db.find(User.class, email);
+        }
+        public void nousuario(String email, String password, String name){
+         db.persist(null);
+        }
+        public void crearUserconMonederoSinDinero(String email, String password, String name,int dinerocuenta){
+         User prueba = new User(email, password, false, name);
+         CuentaBancaria cuenta = new CuentaBancaria("1234567890");
+         Monedero monedero = new Monedero();
+         prueba.setCuenta(cuenta);
+         prueba.getCuenta().setNumeroRandom(dinerocuenta);
+         prueba.setMonedero(monedero);
+         db.persist(prueba);
+        }
+        public void crearUsersinMonedero(String email, String password, String name, float dinero) {
+            User prueba = new User(email, password, false, name);
+            CuentaBancaria cuenta = new CuentaBancaria("1234567890");
+            prueba.setCuenta(cuenta);
+            prueba.getCuenta().setNumeroRandom(20);
+            db.persist(prueba);
+        }
+        public void crearUsersinMonederoDineroEnCuenta(String email, String password, String name, int dinero) {
+        User prueba = new User(email, password, false, name);
+         CuentaBancaria cuenta = new CuentaBancaria("1234567890");
+         prueba.setCuenta(cuenta);
+         prueba.getCuenta().setNumeroRandom(dinero);
+         db.getTransaction().begin();
+         db.persist(prueba);
+         db.getTransaction().commit();
+        
 
 
-		
+        }
+
+        
+        public void removeUser(String email) {
+            User user = db.find(User.class, email);
+            if (user != null) {
+                db.getTransaction().begin();
+                db.remove(user);
+                db.getTransaction().commit();
+            }
+        }
+        
+        public boolean existMonedero(String email) {
+            User user = db.find(User.class, email);
+            return user != null && user.getMonedero() != null;
+        }
 }
 
 

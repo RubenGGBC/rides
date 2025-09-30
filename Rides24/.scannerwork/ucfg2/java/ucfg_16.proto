@@ -1,12 +1,19 @@
 
 IdataAccess.DataAccess#getValoraciones(Ljava/lang/String;)Ljava/util/List;b
-V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaÕ Õ(+"1*%
+V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaÛ Û(+"1*z
 1
-Ö' Ö()"
+Ü' Ü()S
+Q
 
-Ø Ø(%
+Ý Ý(&
+%0java.lang.String"__id*%
+
+__unknown_file (	
+email"
+
+Þ Þ(%
 "":-
 
-Õ, Õ(>
+Û, Û(>
 driverEmailjava.lang.StringB
 dataAccess.DataAccessH

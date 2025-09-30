@@ -1,10 +1,10 @@
 package gui;
 
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 import configuration.UtilDate;
 
 import com.toedter.calendar.JCalendar;
-import domain.Ride;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -308,7 +308,6 @@ public class FindRidesGUI extends JFrame {
 			// the empty days before day 1 of month, and all the days previous to each day.
 			// That number of components is calculated with "offset" and is different in
 			// English and Spanish
-			//			    		  Component o=(Component) jCalendar.getDayChooser().getDayPanel().getComponent(i+offset);; 
 			Component o = (Component) jCalendar.getDayChooser().getDayPanel()
 					.getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
 			o.setBackground(color);

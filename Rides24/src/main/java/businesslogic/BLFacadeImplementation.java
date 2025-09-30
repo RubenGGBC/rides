@@ -1,9 +1,7 @@
-package businessLogic;
-import java.util.ArrayList;
+package businesslogic;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -28,8 +26,9 @@ import exceptions.RideAlreadyExistException;
 /**
  * It implements the business logic as a web service.
  */
-@WebService(endpointInterface = "businessLogic.BLFacade")
+@WebService(endpointInterface = "businesslogic.BLFacade")
 public class BLFacadeImplementation  implements BLFacade {
+	private static final Logger logger = Logger.getLogger(BLFacadeImplementation.class.getName());
 	private User loggedUser;
 
 	public void setLoggedUser(User user) {
@@ -40,9 +39,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	    return loggedUser;
 	}
 	DataAccess dbManager;
-
+//Error sonar arreglado ruben M,M
 	public BLFacadeImplementation()  {		
-		System.out.println("Creating BLFacadeImplementation instance");
+		logger.info("Creating BLFacadeImplementation instance");
 		
 		
 		    dbManager=new DataAccess();
@@ -53,10 +52,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
     public BLFacadeImplementation(DataAccess da)  {
-		
+		//Error sonnar arreglado ruben M,L
 		System.out.println("Creating BLFacadeImplementation instance with DataAccess parameter");
-		ConfigXML c=ConfigXML.getInstance();
-		
+
 		dbManager=da;		
 	}
     

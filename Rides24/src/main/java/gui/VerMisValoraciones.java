@@ -8,7 +8,7 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 import domain.Driver;
 import domain.User;
 import domain.Valoracion;

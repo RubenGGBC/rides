@@ -1,18 +1,18 @@
 
 KdataAccess.DataAccess#getReservedRidesF(Ljava/lang/String;)Ljava/util/List;b
-V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaÜ Ü('"1*‰
+V/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/dataAccess/DataAccess.javaâ â('"1*‰
 1
-Ý Ý(
+ã ã(
 M
 K
 
-Þ Þ(/
+ä ä(/
 userdomain.User"__id*"
 
 __unknown_file (
 ""œ™
 
-ß ß(2
+å å(2
 %0java.util.List".domain.User#getReservedRides()Ljava/util/List;*1
 
 __unknown_file (
@@ -20,17 +20,17 @@ K
 userdomain.User2getReservedRides()a
 _
 
-ß ß(3
+å å(3
 ridesjava.util.List"__id*2
 
 __unknown_file (
 
 %0java.util.List"'
 
-á á(
+ç ç(
 
 ridesjava.util.List:'
 
-Ü( Ü(4
+â( â(4
 emailjava.lang.StringB
 dataAccess.DataAccessH

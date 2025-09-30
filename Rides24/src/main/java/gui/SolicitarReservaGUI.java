@@ -1,6 +1,6 @@
 package gui;
 
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 import configuration.UtilDate;
 
 import com.toedter.calendar.JCalendar;
@@ -9,14 +9,9 @@ import domain.EstadoViaje;
 import domain.Ride;
 import domain.User;
 import exceptions.AnyRidesException;
-import exceptions.CantidadInvalidaException;
-import exceptions.MonederoNoExisteException;
-import exceptions.NonexitstenUserException;
-import exceptions.SaldoInsuficienteException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
 import java.util.*;

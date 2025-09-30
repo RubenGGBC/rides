@@ -13,7 +13,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 import configuration.UtilDate;
 import domain.Driver;
 import domain.Ride;
@@ -209,10 +209,8 @@ public class CreateRideGUI extends JFrame {
                 Ride r = facade.createRide(fieldOrigin.getText(), fieldDestination.getText(), 
                                          UtilDate.trim(jCalendar.getDate()), inputSeats, price, driver.getEmail());
                 jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.RideCreated"));
-
-            } catch (RideMustBeLaterThanTodayException e1) {
-                jLabelMsg.setText(e1.getMessage());
-            } catch (RideAlreadyExistException e1) {
+            //error sonar ruben arreglado A,L
+            } catch (RideMustBeLaterThanTodayException | RideAlreadyExistException e1) {
                 jLabelMsg.setText(e1.getMessage());
             }
     }

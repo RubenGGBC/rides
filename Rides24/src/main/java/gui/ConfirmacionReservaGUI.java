@@ -1,13 +1,10 @@
 package gui;
 
-import businessLogic.BLFacade;
+import businesslogic.BLFacade;
 import domain.Driver;
 import domain.EstadoViaje;
 import domain.Ride;
 import domain.User;
-import exceptions.CantidadInvalidaException;
-import exceptions.MonederoNoExisteException;
-import exceptions.NonexitstenUserException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

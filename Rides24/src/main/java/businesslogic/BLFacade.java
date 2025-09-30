@@ -1,11 +1,8 @@
-package businessLogic;
+package businesslogic;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-//import domain.Booking;
+//Metodo arreglado de sonnar Ruben M,M
 import domain.Ride;
 import domain.CuentaBancaria;
 import domain.Driver;
@@ -13,8 +10,6 @@ import domain.Monedero;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.SaldoInsuficienteException;
 import exceptions.RideAlreadyExistException;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlredyExistException;
 import exceptions.AnyRidesException;
 import exceptions.CantidadInvalidaException;
@@ -30,7 +25,7 @@ import javax.jws.WebService;
  * Interface that specifies the business logic.
  */
 @WebService
-public interface BLFacade  {   
+public interface BLFacade  {
 	  
 	/**
 	 * This method returns all the cities where rides depart  

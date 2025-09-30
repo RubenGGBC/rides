@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.net.URL;
 import java.util.Locale;
 
@@ -13,8 +12,8 @@ import javax.xml.ws.Service;
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Driver;
-import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
+import businesslogic.BLFacade;
+import businesslogic.BLFacadeImplementation;
 
 public class ApplicationLauncher { 
 	
@@ -30,6 +29,12 @@ public class ApplicationLauncher {
 		
 		System.out.println("Locale: "+Locale.getDefault());
 		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			System.out.println("Error setting Look and Feel: " + e.getMessage());
+		}
+		
 	    Driver driver=new Driver("driver3@gmail.com","Test Driver");
 
 		
@@ -40,7 +45,6 @@ public class ApplicationLauncher {
 		try {
 			
 			BLFacade appFacadeInterface;
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 			
 			if (c.isBusinessLogicLocal()) {
 			

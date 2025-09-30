@@ -1,7 +1,7 @@
 /**
  * Package with the business logic of the application.
  */
-package businessLogic;
+package businesslogic;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -31,10 +31,11 @@ public class BusinessLogicServer extends JDialog {
 	/**
 	 * 
 	 */
+    //Metodo sonnar corregido Ruben H,I
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	JTextArea textArea;
-	BLFacade server;
+    transient BLFacade server;
 	String service;
 
 	public static void main(String[] args) {

@@ -2,8 +2,7 @@ package gui;
 
 import javax.swing.*;
 
-import businessLogic.BLFacade;
-import domain.Driver;
+import businesslogic.BLFacade;
 import domain.EstadoViaje;
 import domain.Ride;
 import domain.User;

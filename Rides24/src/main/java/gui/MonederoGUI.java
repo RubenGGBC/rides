@@ -28,9 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
-import businessLogic.BLFacade;
-import domain.CuentaBancaria;
-import domain.Monedero;
+import businesslogic.BLFacade;
 import domain.User;
 import exceptions.CantidadInvalidaException;
 import exceptions.MonederoNoExisteException;

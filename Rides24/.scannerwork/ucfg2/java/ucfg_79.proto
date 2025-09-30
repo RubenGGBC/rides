@@ -1,26 +1,61 @@
 
- domain.Driver#%field_initializer
-__unknown_file ("1*×
-1 (‡„
-X
-N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.java# (+
-%0java.util.Vector"java.util.Vector¥
-¢
-X
-N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.java (-
-%1"java.util.Vector#<init>()V*$
- (
-
-%0java.util.Vector¥
-¢
-X
-N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.java (.
-domain.Driver"
-rides"__id*$
- (
-
-%0java.util.Vector"n
-W
-N/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/main/java/domain/Driver.java –(
-implicit returnB
-domain.Driver
+@testOperations.TestDataAccess#existMonedero(Ljava/lang/String;)Zj
+^/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/test/java/testOperations/TestDataAccess.java¸ ¸($"3*¨
+2
+º# º('”‘
+
+º# º(5
+%1domain.Monedero"*domain.User#getMonedero()Ldomain/Monedero;*1
+
+__unknown_file (
+
+userdomain.User2getMonedero(){
+y
+
+º# º(=
+%2boolean"	__compare*
+
+º6 º(8
+!=*%
+
+º# º(5
+
+%1domain.Monedero*
+
+º9 º(=
+""*
+1*á
+3
+¹ ¹(M
+K
+
+¹ ¹(3
+userdomain.User"__id*"
+
+__unknown_file (
+""y
+w
+
+º º(
+%0boolean"	__compare*
+
+º º(
+!=*#
+
+º º(
+
+userdomain.User*
+
+º º(
+""*
+2
+1*%
+1
+º º(>"
+
+º º(>
+"":'
+
+¸% ¸(1
+emailjava.lang.StringB!
+testOperations.TestDataAccessHX

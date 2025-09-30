@@ -1,9 +1,9 @@
 
-}testOperations.TestDataAccess#removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Ldomain/Ride;h
-^/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/test/java/testOperations/TestDataAccess.javau u("3*ú
-2y y(ïí
-z z((
-%3domain.Ride"[domain.Driver#removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Ldomain/Ride;*0
+ptestOperations.TestDataAccess#existRide(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Zh
+^/Users/ruffini/IdeaProjects/IS2/rides/Rides24/src/test/java/testOperations/TestDataAccess.javav v("3*±
+2z z(çä
+z z(+
+%3boolean"Sdomain.Driver#doesRideExists(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Z*0
 
 __unknown_file (
 
@@ -19,63 +19,56 @@
 
 __unknown_file (
 
-datejava.util.Date2@removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)U
-S
-z z()
-rdomain.Ride"__id*/
-
-__unknown_file (
-
-%3domain.Ride"
-| |(
-
-rdomain.Ride*â
-3v v(	Q
+datejava.util.Date2DdoesRideExists(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)"
+z z(,
+""*à
+3w w(	Q
 O
-v v(
+w w(
 %0java.io.PrintStream"__id*"
 
 __unknown_file (
-""‡›
-v v(6
+""ﬂ‹
+w w(5
 
 %1void"0java.io.PrintStream#println(Ljava/lang/String;)V*7
 
 __unknown_file (
 
-%0java.io.PrintStream*=
+%0java.io.PrintStream*<
 
-__unknown_file (!
->> TestDataAccess: removeRide2println(Ljava/lang/String;)J
+__unknown_file ( 
+>> TestDataAccess: existRide2println(Ljava/lang/String;)J
 H
-w w(+
+x x(+
 ddomain.Driver"__id*"
 
 __unknown_file (
 ""p
 n
-x x(
+y y(
 %2boolean"	__compare*
-x x(
+y y(
 
 !=* 
-x x(
+y y(
 
 ddomain.Driver*
-x
- x(
+y
+ y(
 ""*
 2
 1*!
-1 ("
- (
+1|
+ |("
+| |(
 "":%
-u u(&
+v v((
 emailjava.lang.String:$
-u' u(3
+v) v(5
 fromjava.lang.String:"
-u4 u(>
+v6 v(@
 tojava.lang.String:"
-u? u(H
+vA v(J
 datejava.util.DateB!
-testOperations.TestDataAccessH
+testOperations.TestDataAccessHX

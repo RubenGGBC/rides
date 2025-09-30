@@ -1,6 +1,5 @@
 package gui;
 
-import businessLogic.BLFacade;
 import domain.Ride;
 import domain.User;
 

@@ -1,6 +1,8 @@
 package dataAccess;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.net.NoRouteToHostException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -37,8 +39,11 @@ import domain.Valoracion;
 /**
  * It implements the data access to the objectDb database
  */
+
+//Fallo sonnar arreglado ruben A,H, este error ha solucionado 5 errores, soy la cabra
 public class DataAccess  {
 	private static final EstadoViaje PENDIENTE = null;
+	private static final String EMAIL_PARAM = "email";
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
 
@@ -48,53 +53,54 @@ public class DataAccess  {
      public DataAccess()  {
 		if (c.isDatabaseInitialized()) {
 			String fileName=c.getDbFilename();
-
+            //Metodo sonnar Ruben M,C
 			File fileToDelete= new File(fileName);
-			if(fileToDelete.delete()){
+			try {
+				Files.delete(fileToDelete.toPath());
 				File fileToDeleteTemp= new File(fileName+"$");
-				fileToDeleteTemp.delete();
+				Files.delete(fileToDeleteTemp.toPath());
 
 				  System.out.println("File deleted");
-				} else {
+			} catch (IOException e) {
 				  System.out.println("Operation failed");
-				}
+			}
 		}
 		open();
 		if  (c.isDatabaseInitialized())initializeDB();
-		
+
 		System.out.println("DataAccess created => isDatabaseLocal: "+c.isDatabaseLocal()+" isDatabaseInitialized: "+c.isDatabaseInitialized());
 
 		close();
 
 	}
-     
+
     public DataAccess(EntityManager db) {
     	this.db=db;
     }
 
-	
-	
+
+
 	/**
 	 * This is the data access method that initializes the database with some events and questions.
 	 * This method is invoked by the business logic (constructor of BLFacadeImplementation) when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
-	 */	
+	 */
 	public void initializeDB(){
-		
+
 		db.getTransaction().begin();
 
 		try {
 
 		   Calendar today = Calendar.getInstance();
-		   
+
 		   int month=today.get(Calendar.MONTH);
 		   int year=today.get(Calendar.YEAR);
-		   if (month==12) { month=1; year+=1;}  
-	    
-		   
-		    
-			
-			
-			
+		   if (month==12) { month=1; year+=1;}
+
+
+
+
+
+
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
 		}
@@ -102,41 +108,41 @@ public class DataAccess  {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * This method returns all the cities where rides depart 
+	 * This method returns all the cities where rides depart
 	 * @return collection of cities
 	 */
 	public List<String> getDepartCities(){
 			TypedQuery<String> query = db.createQuery("SELECT DISTINCT r.from FROM Ride r ORDER BY r.from", String.class);
 			List<String> cities = query.getResultList();
 			return cities;
-		
+
 	}
 	/**
-	 * This method returns all the arrival destinations, from all rides that depart from a given city  
-	 * 
+	 * This method returns all the arrival destinations, from all rides that depart from a given city
+	 *
 	 * @param from the depart location of a ride
 	 * @return all the arrival destinations
 	 */
 	public List<String> getArrivalCities(String from){
 		TypedQuery<String> query = db.createQuery("SELECT DISTINCT r.to FROM Ride r WHERE r.from=?1 ORDER BY r.to",String.class);
 		query.setParameter(1, from);
-		List<String> arrivingCities = query.getResultList(); 
+		List<String> arrivingCities = query.getResultList();
 		return arrivingCities;
-		
+
 	}
 	/**
 	 * This method creates a ride for a driver
-	 * 
+	 *
 	 * @param from the origin location of a ride
 	 * @param to the destination location of a ride
-	 * @param date the date of the ride 
+	 * @param date the date of the ride
 	 * @param nPlaces available seats
 	 * @param driverEmail to which ride is added
-	 * 
+	 *
 	 * @return the created ride, or null, or an exception
-	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
+	 * @throws RideMustBeLaterThanTodayException if the ride date is before today
  	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
 	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverEmail) throws  RideAlreadyExistException, RideMustBeLaterThanTodayException {
@@ -146,7 +152,7 @@ public class DataAccess  {
 				throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
 			}
 			db.getTransaction().begin();
-			
+
 			Driver driver = db.find(Driver.class, driverEmail);
 			if (driver.doesRideExists(from, to, date)) {
 				db.getTransaction().commit();
@@ -154,7 +160,7 @@ public class DataAccess  {
 			}
 			Ride ride = driver.addRide(from, to, date, nPlaces, price);
 			//next instruction can be obviated
-			db.persist(driver); 
+			db.persist(driver);
 			db.getTransaction().commit();
 
 			return ride;
@@ -163,23 +169,23 @@ public class DataAccess  {
 			db.getTransaction().commit();
 			return null;
 		}
-		
-		
+
+
 	}
-	
+
 	/**
-	 * This method retrieves the rides from two locations on a given date 
-	 * 
+	 * This method retrieves the rides from two locations on a given date
+	 *
 	 * @param from the origin location of a ride
 	 * @param to the destination location of a ride
-	 * @param date the date of the ride 
+	 * @param date the date of the ride
 	 * @return collection of rides
 	 */
 	public List<Ride> getRides(String from, String to, Date date) {
 		System.out.println(">> DataAccess: getRides=> from= "+from+" to= "+to+" date "+date);
 
-		List<Ride> res = new ArrayList<>();	
-		TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date=?3",Ride.class);   
+		List<Ride> res = new ArrayList<>();
+		TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date=?3",Ride.class);
 		query.setParameter(1, from);
 		query.setParameter(2, to);
 		query.setParameter(3, date);
@@ -189,24 +195,24 @@ public class DataAccess  {
 		  }
 	 	return res;
 	}
-	
+
 	/**
 	 * This method retrieves from the database the dates a month for which there are events
 	 * @param from the origin location of a ride
-	 * @param to the destination location of a ride 
-	 * @param date of the month for which days with rides want to be retrieved 
+	 * @param to the destination location of a ride
+	 * @param date of the month for which days with rides want to be retrieved
 	 * @return collection of rides
 	 */
 	public List<Date> getThisMonthDatesWithRides(String from, String to, Date date) {
 		System.out.println(">> DataAccess: getEventsMonth");
-		List<Date> res = new ArrayList<>();	
-		
+		List<Date> res = new ArrayList<>();
+
 		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
 		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
-				
-		
-		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date BETWEEN ?3 and ?4",Date.class);   
-		
+
+
+		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date BETWEEN ?3 and ?4",Date.class);
+
 		query.setParameter(1, from);
 		query.setParameter(2, to);
 		query.setParameter(3, firstDayMonthDate);
@@ -217,10 +223,10 @@ public class DataAccess  {
 		  }
 	 	return res;
 	}
-	
+
 
 public void open(){
-		
+
 		String fileName=c.getDbFilename();
 		if (c.isDatabaseLocal()) {
 			emf = Persistence.createEntityManagerFactory("objectdb:"+fileName);
@@ -235,7 +241,7 @@ public void open(){
     	   }
 		System.out.println("DataAccess opened => isDatabaseLocal: "+c.isDatabaseLocal());
 
-		
+
 	}
 
 	public void close(){
@@ -245,7 +251,7 @@ public void open(){
 	public void createUser(String email, String password, boolean driver, String nombre) throws UserAlredyExistException {
 		db.getTransaction().begin();
 		User user=new User(email,password,driver,nombre);
-		
+
 		if (db.find(User.class,email)!=null) {
 			db.getTransaction().commit();
 			throw new UserAlredyExistException("Ya existe un usuario con ese email");
@@ -258,15 +264,15 @@ public void open(){
 				db.persist(conductor);
 			}
 		System.out.println(">> DataAccess: createUser=> email= "+email+" tipo= "+tipo+" nombre= "+ nombre);
-		db.persist(user); 
+		db.persist(user);
 		db.getTransaction().commit();
 
 		}
-	
+
 }
 
 public User loguser(String email, String password, boolean driver) throws NonexitstenUserException {
-	
+
 	db.getTransaction().begin();
 
 	User puser = db.find(User.class,email);
@@ -288,7 +294,7 @@ public User loguser(String email, String password, boolean driver) throws Nonexi
 
 public Ride reserva(Ride viaje)throws AnyRidesException{
 	db.getTransaction().begin();
-	
+
 	if(viaje.getnPlaces()>0) {
 		viaje.setBetMinimum((int) (viaje.getnPlaces()-1));
 		viaje.setEstado(EstadoViaje.PENDIENTE);
@@ -299,37 +305,37 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 		throw new AnyRidesException ("Nof quedan plazas en el viaje");
 	}
 	return viaje;
-	
+
 }
 
     public List<Ride> getReservedRides(String email) {
         db.getTransaction().begin();
-        
-        User user = db.find(User.class, email); 
-        
+
+        User user = db.find(User.class, email);
+
         List<Ride> reservedRides = null;
         if (user != null) {
             reservedRides = user.getReservedRides();
         }
-        
+
         db.getTransaction().commit();
-        return reservedRides; 
+        return reservedRides;
     }
 
- 
+
     public User addReservedRide(String email, Ride ride) {
         db.getTransaction().begin();
 
-        User user = db.find(User.class, email); 
+        User user = db.find(User.class, email);
         if (user != null) {
-            user.addReservedRide(ride); 
-            db.merge(user); 
+            user.addReservedRide(ride);
+            db.merge(user);
         }
 
         db.getTransaction().commit();
-        return user; 
+        return user;
     }
-   
+
 
     public void addValoracion(Valoracion valoracion) {
         db.getTransaction().begin();
@@ -337,10 +343,10 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.getTransaction().commit();
     }
 
-    
+
     public List<Valoracion> getValoraciones(String driverEmail) {
         TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
-        query.setParameter("email", driverEmail);
+        query.setParameter(EMAIL_PARAM, driverEmail);
         return query.getResultList();
     }
 
@@ -352,18 +358,18 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.getTransaction().commit();
         return rides;
     }
-    
+
     public List<Ride> getFuturosViajes(String userEmail) {
         List<Ride> futurosViajes = new ArrayList<>();
         Date hoy = new Date(); // Fecha actual
 
         try {
             TypedQuery<Ride> query = db.createQuery(
-                "SELECT r FROM Ride r JOIN r.reservedRides u WHERE u.email = :email AND r.date > :hoy", 
+                "SELECT r FROM Ride r JOIN r.reservedRides u WHERE u.email = :email AND r.date > :hoy",
                 Ride.class);
             query.setParameter("email", userEmail);
             query.setParameter("hoy", hoy);
-            
+
             futurosViajes = query.getResultList();
         } catch (Exception e) {
             System.out.println("Error al obtener futuros viajes: " + e.getMessage());
@@ -373,11 +379,11 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
         return futurosViajes;
     }
-    
+
     public List<Valoracion> getValoracionesConductor(String conductorEmail) {
         TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
         query.setParameter("email", conductorEmail);
-        
+
         return query.getResultList();
     }
     public List<Ride> getViajesConductor(String conductorEmail) {
@@ -386,9 +392,9 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         return query.getResultList();
     }
 
-  
-  
-    
+
+
+
     public Driver findDriverByUserEmail(String userEmail) {
         try {
             TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.email = :email", Driver.class);
@@ -486,16 +492,11 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
             public Monedero ingresarDinero(String userEmail, float cantidad) 
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
                 System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-              
-                
                 db.getTransaction().begin();
-                
                 User user = db.find(User.class, userEmail);
                 if (user == null) {
                     db.getTransaction().rollback();
-                    throw new NonexitstenUserException("El usuario no existe");
-                }
-                
+                    throw new NonexitstenUserException("El usuario no existe");}
                 Monedero monedero = user.getMonedero();
                 if (monedero == null) {
                     // Si el usuario no tiene monedero, creamos uno
@@ -506,8 +507,8 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 if(user.getCuenta().getNumeroRandom()<cantidad) {
                 	throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
                 }
-                
                 monedero.ingresarDinero(cantidad);
+                user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
                 db.merge(user);
                 db.getTransaction().commit();
                 
@@ -542,6 +543,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 }
 
                 monedero.retirarDinero(cantidad);
+                user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() + cantidad));
                 db.merge(user);
                 db.getTransaction().commit();
 
