@@ -91,11 +91,11 @@ public interface BLFacade  {
 
 	public void createUser(String email,String password,boolean driver, String nombre)throws UserAlredyExistException;
 	
-	 public User loguser(String email, String password, boolean driver) throws NonexitstenUserException;
+	 public User logUser(String email, String password, boolean driver) throws NonexitstenUserException;
 	
 	 public Ride reserva(Ride viaje)throws AnyRidesException;
 	 
-	 public void añadir(Ride viaje, String email)throws AnyRidesException;
+	 public void addRide(Ride viaje, String email)throws AnyRidesException;
 	 
 	 public List<Ride> getRidesByDriver(Driver conductor);
 	 

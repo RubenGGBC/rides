@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -30,6 +31,7 @@ import exceptions.RideAlreadyExistException;
  */
 @WebService(endpointInterface = "businessLogic.BLFacade")
 public class BLFacadeImplementation  implements BLFacade {
+	private static final Logger logger = Logger.getLogger(BLFacadeImplementation.class.getName());
 	private User loggedUser;
 
 	public void setLoggedUser(User user) {
@@ -42,19 +44,16 @@ public class BLFacadeImplementation  implements BLFacade {
 	DataAccess dbManager;
 
 	public BLFacadeImplementation()  {		
-		System.out.println("Creating BLFacadeImplementation instance");
+		logger.info("Creating BLFacadeImplementation instance");
 		
 		
 		    dbManager=new DataAccess();
-		    
-		//dbManager.close();
-
 		
 	}
 	
     public BLFacadeImplementation(DataAccess da)  {
 		
-		System.out.println("Creating BLFacadeImplementation instance with DataAccess parameter");
+		logger.info("Creating BLFacadeImplementation instance with DataAccess parameter");
 		ConfigXML c=ConfigXML.getInstance();
 		
 		dbManager=da;		
@@ -97,7 +96,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		Ride ride=dbManager.createRide(from, to, date, nPlaces, price, driverEmail);		
 		dbManager.close();
 		return ride;
-   };
+   }
 	
    /**
     * {@inheritDoc}
@@ -148,10 +147,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	 		dbManager.createUser(email, password, driver, nombre);
 	 		dbManager.close();
 	 	
-	    };
+	    }
 	    
 	     
-	    public User loguser(String email, String password, boolean driver) throws NonexitstenUserException{
+	    public User logUser(String email, String password, boolean driver) throws NonexitstenUserException{
 	    	dbManager.open();
 	    	User user=dbManager.loguser(email, password, driver);
 	    	dbManager.close();
@@ -167,7 +166,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	    }
 	    
 	
-	 public void añadir(Ride viaje, String email)throws AnyRidesException{
+	 public void addRide(Ride viaje, String email)throws AnyRidesException{
 		 dbManager.open();
 		 dbManager.addReservedRide(email, viaje);
 		 dbManager.close();

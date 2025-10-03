@@ -220,7 +220,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     BLFacade facade = MainGUI.getBusinessLogic();
-                    User usuarioActual = facade.loguser(userTextField.getText(), 
+                    User usuarioActual = facade.logUser(userTextField.getText(), 
                             new String(passwordField.getPassword()), btnDriver.isSelected());
                     JFrame i = new MonederoGUI(facade, usuarioActual);                
                     i.setVisible(true);
@@ -237,7 +237,7 @@ public class MainGUI extends JFrame {
         btnSolicitarReserva.addActionListener(e -> {
             try {
                 BLFacade facade = MainGUI.getBusinessLogic();
-                User usuarioActual = facade.loguser(userTextField.getText(), 
+                User usuarioActual = facade.logUser(userTextField.getText(), 
                         new String(passwordField.getPassword()), btnDriver.isSelected());
                 JFrame i = new SolicitarReservaGUI(usuarioActual);                
                 i.setVisible(true);
@@ -252,7 +252,7 @@ public class MainGUI extends JFrame {
         btnVerReservas.addActionListener(e -> {
             try {
                 BLFacade facade = MainGUI.getBusinessLogic();
-                User usuarioActual = facade.loguser(userTextField.getText(), 
+                User usuarioActual = facade.logUser(userTextField.getText(), 
                         new String(passwordField.getPassword()), btnDriver.isSelected());
                 JFrame c = new MisReservasGUI(usuarioActual);
                 c.setVisible(true);
@@ -267,7 +267,7 @@ public class MainGUI extends JFrame {
         btnSolicitudesReserva.addActionListener(e -> {
             try {
                 BLFacade facade = MainGUI.getBusinessLogic();
-                User usuarioActual = facade.loguser(userTextField.getText(), 
+                User usuarioActual = facade.logUser(userTextField.getText(), 
                         new String(passwordField.getPassword()), btnDriver.isSelected());
                 JFrame i = new ConfirmacionReservaGUI(usuarioActual);                
                 i.setVisible(true);
@@ -282,7 +282,7 @@ public class MainGUI extends JFrame {
         btnValorarConductor.addActionListener(e -> {
             try {
                 BLFacade facade = MainGUI.getBusinessLogic();
-                User usuarioActual = facade.loguser(userTextField.getText(), 
+                User usuarioActual = facade.logUser(userTextField.getText(), 
                         new String(passwordField.getPassword()), btnDriver.isSelected());
                 JFrame j = new AddReviewGUI(usuarioActual);
                 j.setVisible(true);
@@ -297,7 +297,7 @@ public class MainGUI extends JFrame {
         btnMisValoraciones.addActionListener(e -> {
             try {
                 BLFacade facade = MainGUI.getBusinessLogic();
-                User usuarioActual = facade.loguser(userTextField.getText(), 
+                User usuarioActual = facade.logUser(userTextField.getText(), 
                         new String(passwordField.getPassword()), btnDriver.isSelected());
                 JFrame j = new VerMisValoraciones(usuarioActual);
                 j.setVisible(true);
@@ -433,7 +433,7 @@ public class MainGUI extends JFrame {
                     (!btnUser.isSelected() && !btnDriver.isSelected())) {
                     showErrorMessage(resourceBundle.getString("Login.MissingLoginData"));
                 } else {
-                    User usuarioActual = facade.loguser(userTextField.getText(), 
+                    User usuarioActual = facade.logUser(userTextField.getText(), 
                                 new String(passwordField.getPassword()), btnDriver.isSelected());
                     currentUser = usuarioActual;
                     

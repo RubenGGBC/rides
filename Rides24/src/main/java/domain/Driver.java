@@ -3,7 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,7 +20,7 @@ public class Driver implements Serializable {
     private String name; 
     @XmlIDREF
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<Ride> rides = new Vector<>();
+    private List<Ride> rides = new ArrayList<>();
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private CuentaBancaria cuentabanca;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

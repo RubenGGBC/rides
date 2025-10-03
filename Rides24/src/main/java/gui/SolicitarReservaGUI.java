@@ -223,7 +223,7 @@ public class SolicitarReservaGUI extends JFrame {
                     else {
                         rideSeleccionada.setEstado(PENDIENTE);
                         facade.reserva(rideSeleccionada);
-                        facade.añadir(rideSeleccionada, user.getEmail());
+                        facade.addRide(rideSeleccionada, user.getEmail());
                         facade.cobro(user.getMonedero(), rideSeleccionada.getPrice());
                         JOptionPane.showMessageDialog(this, "Reserva solicitada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     }

@@ -1,16 +1,170 @@
 
-3configuration.ConfigXML#getUser()Ljava/lang/String;Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java9 9("1*ã
-1Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java:	 :(›
-˜
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java:	 :(
-%0java.lang.String"__id*%*#
-configuration.ConfigXML"
-user"m
-Q
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java: :(
+[domain.Driver#removeRide(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;)Ldomain/Ride;f
+\/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Driver.javaa a("11*ž
+2p p(c
+a
+p p(
+%11java.util.List"__id*8
+
+__unknown_file (*
+domain.Driver"
+rides‰
+†
+p p(
+%12domain.Ride"__arrayRemove*3
+
+__unknown_file (
+
+%11java.util.List*"
+
+__unknown_file (
+"""
+q q(
+
+rdomain.Ride*ž
+6i i(…‚
+i* i(5
+%9java.util.Date"%domain.Ride#getDate()Ljava/util/Date;*.
+
+__unknown_file (
+
+rdomain.Ride2	getDate()û
+ø
+i i(<
+%10boolean"?java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z*1
+
+__unknown_file ("
+java.util.Objects*2
+
+__unknown_file (
+
+%9java.util.Date*4
+
+__unknown_file (
 
-%0java.lang.StringB
-configuration.ConfigXML
+datejava.util.Date*	
+2
+9
+1*¢
+7h h(…‚
+h* h(3
+%7java.lang.String"%domain.Ride#getTo()Ljava/lang/String;*.
+
+__unknown_file (
+
+rdomain.Ride2getTo()ü
+ù
+h h(8
+%8boolean"?java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z*1
+
+__unknown_file ("
+java.util.Objects*4
+
+__unknown_file (
+
+%7java.lang.String*4
+
+__unknown_file (
+
+tojava.lang.String*
+2
+6
+9
+1*ê
+8f f(b
+`
+f f(
+%3java.util.List"__id*8
+
+__unknown_file (*
+domain.Driver"
+rides„
+
+f f( 
+%4domain.Ride"
+__arrayGet*2
+
+__unknown_file (
+
+%3java.util.List*"
+
+__unknown_file (
+""U
+S
+f f( 
+rdomain.Ride"__id*/
+
+__unknown_file (
+
+%4domain.Ride‰†
+g* g(5
+%5java.lang.String"'domain.Ride#getFrom()Ljava/lang/String;*.
+
+__unknown_file (
+
+rdomain.Ride2	getFrom()þ
+û
+g g(<
+%6boolean"?java.util.Objects#equals(Ljava/lang/Object;Ljava/lang/Object;)Z*1
+
+__unknown_file ("
+java.util.Objects*4
+
+__unknown_file (
+
+%5java.lang.String*6
+
+__unknown_file (
+
+fromjava.lang.String*
+2
+7
+9
+1*Ñ
+9e e(b
+`
+e! e(&
+%0java.util.List"__id*8
+
+__unknown_file (*
+domain.Driver"
+rideski
+e! e(-	
+%1int"java.util.List#size()I*2
+
+__unknown_file (
+
+%0java.util.List2size()f
+d
+e e(-
+%2boolean"	__compare*
+e e( 
+<*
+e e(
+""*
+e! e(-
+	
+%1int*	
+2
+8
+1*c
+11b b(H
+F
+d d(
+rdomain.Ride"__id*"
+
+__unknown_file (
+""*	
+2
+9
+1*!
+1s s("
+s s(
+"":$
+a a('
+fromjava.lang.String:"
+a( a(2
+tojava.lang.String:"
+a3 a(<
+datejava.util.DateB
+domain.DriverH

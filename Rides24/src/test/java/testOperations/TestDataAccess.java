@@ -51,7 +51,9 @@ public class TestDataAccess {
 		
 	}
 	public void close(){
-		db.close();
+		if (db != null) {
+			db.close();
+		}
 		System.out.println("TestDataAccess closed");
 	}
 
@@ -64,7 +66,7 @@ public class TestDataAccess {
 			db.getTransaction().commit();
 			return true;
 		} else 
-		return false;
+			return false;
     }
 	public Driver createDriver(String email, String name) {
 		System.out.println(">> TestDataAccess: addDriver");
@@ -112,7 +114,7 @@ public class TestDataAccess {
 			if (d!=null) {
 				return d.doesRideExists(from, to, date);
 			} else 
-			return false;
+				return false;
 		}
 		public Ride removeRide(String email, String from, String to, Date date ) {
 			System.out.println(">> TestDataAccess: removeRide");
@@ -124,7 +126,7 @@ public class TestDataAccess {
 				return r;
 
 			} else 
-			return null;
+				return null;
 
 		}
 

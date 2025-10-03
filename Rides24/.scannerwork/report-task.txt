@@ -1,7 +1,7 @@
-organization=jononekin
-projectKey=Bets20201
+organization=rubenggbc
+projectKey=rubenggbc_fr
 serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.12534
-dashboardUrl=https://sonarcloud.io/dashboard?id=Bets20201
-ceTaskId=AXTACu1jZg8dIi10qivb
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXTACu1jZg8dIi10qivb
+serverVersion=8.0.0.68212
+dashboardUrl=https://sonarcloud.io/dashboard?id=rubenggbc_fr
+ceTaskId=AZmq1KnkHCinQ9d9-do7
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZmq1KnkHCinQ9d9-do7

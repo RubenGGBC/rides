@@ -1,16 +1,59 @@
 
-?configuration.ConfigXML#getDataBaseOpenMode()Ljava/lang/String;S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java¢ ¢(""1*ı
-1S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java£	 £(©
-¶
-S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java£	 £(
-%0java.lang.String"__id*1*/
-configuration.ConfigXML"
-dataBaseOpenMode"o
-S
-G/Users/iturrioz/git/Bets2021/src/main/java/configuration/ConfigXML.java£ £(
-
-%0java.lang.StringB
-configuration.ConfigXML
+domain.Ride#%field_initializer
+__unknown_file ("1*˜
+1 (ïí
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java 8  (A
+%0java.util.HashMap"java.util.HashMap≥
+∞
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java 4  (C
+%1"java.util.HashMap#<init>()V*%
+ (
+
+%0java.util.HashMapµ
+≤
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java   (D
+domain.Ride"
+
+mapaViajes"__id*%
+ (
+
+%0java.util.HashMapôñ
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java#+ #(6
+%2java.util.ArrayList"java.util.ArrayList∑
+¥
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java#' #(8
+%3"java.util.ArrayList#<init>()V*'
+ (
+
+%2java.util.ArrayList∫
+∑
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java# #(9 
+domain.Ride"
+reservedRides"__id*'
+ (
+
+%2java.util.ArrayListù
+ö
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java$! $(9
+%4domain.EstadoViaje"__id*
+ (
+""≤
+Ø
+d
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java$ $(:
+domain.Ride"
+estado"__id*&
+ (
+
+%4domain.EstadoViaje"z
+c
+Z/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/domain/Ride.java –(
+implicit returnB
+domain.Ride

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,7 +32,7 @@ public class Ride implements Serializable {
    private  HashMap<User, EstadoViaje> mapaViajes = new HashMap<>();
 
 	private Driver driver;  
-    private List<User> reservedRides = new Vector<>();
+    private List<User> reservedRides = new ArrayList<>();
     private EstadoViaje estado = EstadoViaje.NO_RESERVADO;
 
 	public Ride(){

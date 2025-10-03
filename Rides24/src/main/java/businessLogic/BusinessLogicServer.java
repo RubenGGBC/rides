@@ -5,11 +5,13 @@ package businessLogic;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.logging.Logger;
 
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import configuration.ConfigXML;
@@ -27,6 +29,7 @@ import java.awt.event.WindowEvent;
  * It runs the business logic server as a separate process.
  */
 public class BusinessLogicServer extends JDialog {
+	private static final Logger logger = Logger.getLogger(BusinessLogicServer.class.getName());
 
 	/**
 	 * 
@@ -40,7 +43,7 @@ public class BusinessLogicServer extends JDialog {
 	public static void main(String[] args) {
 		try {
 			BusinessLogicServer dialog = new BusinessLogicServer();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,14 +74,9 @@ public class BusinessLogicServer extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						textArea.append("\n\n\nClosing the server... ");
-					    
-							//server.close();
-						
-						System.exit(1);
-					}
+				okButton.addActionListener(e -> {
+					textArea.append("\n\n\nClosing the server... ");
+					System.exit(1);
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -98,26 +96,7 @@ public class BusinessLogicServer extends JDialog {
 		}
 		else {
 		try {
-
-			try{
-				
-				if (!c.isDatabaseLocal()) {
-					System.out.println("\nWARNING: Please be sure ObjectdbManagerServer is launched\n           in machine: "+c.getDatabaseNode()+" port: "+c.getDatabasePort()+"\n");	
-				}
-				
-				service= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName();
-				
-				Endpoint.publish(service, new BLFacadeImplementation());
-				
-				
-			}
-			catch (Exception e) {
-				System.out.println("Error in BusinessLogicServer: "+e.toString());
-				textArea.append("\nYou should have not launched DBManagerServer...\n");
-				textArea.append("\n\nOr maybe there is a BusinessLogicServer already launched...\n");
-				throw e;
-			}
-			
+			startBusinessLogicService(c);
 			textArea.append("Running service at:\n\t" + service);
 			textArea.append("\n\n\nPress button to exit this server... ");
 			
@@ -126,6 +105,23 @@ public class BusinessLogicServer extends JDialog {
 		  }
 
 	  }
+	}
+	
+	private void startBusinessLogicService(ConfigXML c) throws Exception {
+		if (!c.isDatabaseLocal()) {
+			logger.warning("Please be sure ObjectdbManagerServer is launched in machine: "+c.getDatabaseNode()+" port: "+c.getDatabasePort());	
+		}
+		
+		service= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName();
+		
+		try {
+			Endpoint.publish(service, new BLFacadeImplementation());
+		} catch (Exception e) {
+			logger.severe("Error in BusinessLogicServer: "+e.toString());
+			textArea.append("\nYou should have not launched DBManagerServer...\n");
+			textArea.append("\n\nOr maybe there is a BusinessLogicServer already launched...\n");
+			throw e;
+		}
 	}
 }
 

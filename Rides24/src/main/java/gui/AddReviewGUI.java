@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AddReviewGUI extends JFrame {
+    private static final String SANS_SERIF_FONT = "SansSerif";
     private User user;
     private JComboBox<Ride> rideComboBox;
     private JSlider ratingSlider;
@@ -59,7 +60,7 @@ public class AddReviewGUI extends JFrame {
         add(contentPanel, BorderLayout.CENTER);
 
         JLabel titleLabel = new JLabel(resourceBundle.getString("AddReview.Title"));
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titleLabel.setFont(new Font(SANS_SERIF_FONT, Font.BOLD, 20));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setForeground(new Color(33, 47, 61));
         contentPanel.add(titleLabel);
@@ -68,7 +69,7 @@ public class AddReviewGUI extends JFrame {
 
         // Rides
         JLabel rideLabel = new JLabel(resourceBundle.getString("AddReview.SelectRide"));
-        rideLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        rideLabel.setFont(new Font(SANS_SERIF_FONT, Font.PLAIN, 14));
         contentPanel.add(rideLabel);
 
         BLFacade facade = MainGUI.getBusinessLogic();
@@ -87,7 +88,7 @@ public class AddReviewGUI extends JFrame {
 
         // Rating
         JLabel ratingLabel = new JLabel(resourceBundle.getString("AddReview.Rating"));
-        ratingLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        ratingLabel.setFont(new Font(SANS_SERIF_FONT, Font.PLAIN, 14));
         contentPanel.add(ratingLabel);
 
         ratingSlider = new JSlider(1, 5, 3);
@@ -101,7 +102,7 @@ public class AddReviewGUI extends JFrame {
 
         // Comment
         JLabel commentLabel = new JLabel(resourceBundle.getString("AddReview.WriteReview"));
-        commentLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        commentLabel.setFont(new Font(SANS_SERIF_FONT, Font.PLAIN, 14));
         contentPanel.add(commentLabel);
 
         reviewTextArea = new JTextArea(4, 20);
@@ -119,7 +120,7 @@ public class AddReviewGUI extends JFrame {
         submitButton.setBackground(new Color(60, 179, 113));
         submitButton.setForeground(Color.WHITE);
         submitButton.setFocusPainted(false);
-        submitButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        submitButton.setFont(new Font(SANS_SERIF_FONT, Font.BOLD, 14));
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitButton.setPreferredSize(new Dimension(200, 40));
 
@@ -130,7 +131,7 @@ public class AddReviewGUI extends JFrame {
                 int rating = ratingSlider.getValue();
                 String review = reviewTextArea.getText();
 
-                if (selectedRide != null && !review.isBlank()) {
+                if (selectedRide != null) {
                     Valoracion val = new Valoracion(rating, review, user, selectedRide.getDriver());
                     facade.addValoracion(val);
                     JOptionPane.showMessageDialog(null, resourceBundle.getString("AddReview.Success"));

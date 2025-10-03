@@ -1,9 +1,19 @@
 
- domain.Question#getBetMinimum()FI
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.java^ ^("1*£
-1I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.java_	 _("S
-I
-?/Users/iturrioz/git/Bets2021/src/main/java/domain/Question.java_ _(
-""B
-domain.Question
+RdataAccess.DataAccess#getValoracionesConductor(Ljava/lang/String;)Ljava/util/List;p
+d/Users/ruffini/IdeaProjects/IS2/rides/ridesSinPart2/Rides24/src/main/java/dataAccess/DataAccess.javaú ú(4"1*z
+1
+û' û()S
+Q
+
+ü ü(*
+%0java.lang.String"__id*%
+
+__unknown_file (	
+email"
+
+þ þ(%
+"":0
+
+ú5 ú(J"
+conductorEmailjava.lang.StringB
+dataAccess.DataAccessH

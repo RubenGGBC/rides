@@ -39,6 +39,7 @@ import domain.Valoracion;
  */
 public class DataAccess  {
 	private static final EstadoViaje PENDIENTE = null;
+	private static final String EMAIL_PARAMETER = "email";
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
 
@@ -251,7 +252,7 @@ public void open(){
 			throw new UserAlredyExistException("Ya existe un usuario con ese email");
 		}else {
 			String tipo = "Driver";
-			if(driver==false) {
+			if(!driver) {
 			tipo = "Cliente";
 			}else {
 				Driver conductor=new Driver(email,nombre);
@@ -275,7 +276,7 @@ public User loguser(String email, String password, boolean driver) throws Nonexi
 		throw new NonexitstenUserException("El usuario no existe");
 	}else {
 	String tipo = "Driver";
-	if(driver==false) {
+	if(!driver) {
 	tipo = "Cliente";
 	}
 	System.out.println(">> DataAccess: Log in count=> email= "+email+"; tipo: "+tipo);
@@ -340,7 +341,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
     
     public List<Valoracion> getValoraciones(String driverEmail) {
         TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
-        query.setParameter("email", driverEmail);
+        query.setParameter(EMAIL_PARAMETER, driverEmail);
         return query.getResultList();
     }
 
@@ -361,7 +362,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
             TypedQuery<Ride> query = db.createQuery(
                 "SELECT r FROM Ride r JOIN r.reservedRides u WHERE u.email = :email AND r.date > :hoy", 
                 Ride.class);
-            query.setParameter("email", userEmail);
+            query.setParameter(EMAIL_PARAMETER, userEmail);
             query.setParameter("hoy", hoy);
             
             futurosViajes = query.getResultList();
@@ -376,13 +377,13 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
     
     public List<Valoracion> getValoracionesConductor(String conductorEmail) {
         TypedQuery<Valoracion> query = db.createQuery("SELECT v FROM Valoracion v WHERE v.conductor.email = :email", Valoracion.class);
-        query.setParameter("email", conductorEmail);
+        query.setParameter(EMAIL_PARAMETER, conductorEmail);
         
         return query.getResultList();
     }
     public List<Ride> getViajesConductor(String conductorEmail) {
         TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.driver.email = :email", Ride.class);
-        query.setParameter("email", conductorEmail);
+        query.setParameter(EMAIL_PARAMETER, conductorEmail);
         return query.getResultList();
     }
 
@@ -392,7 +393,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
     public Driver findDriverByUserEmail(String userEmail) {
         try {
             TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.email = :email", Driver.class);
-            query.setParameter("email", userEmail);
+            query.setParameter(EMAIL_PARAMETER, userEmail);
             List<Driver> drivers = query.getResultList();
             if (!drivers.isEmpty()) {
                 return drivers.get(0);
