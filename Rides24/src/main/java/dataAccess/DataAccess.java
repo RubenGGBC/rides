@@ -240,6 +240,14 @@ public void open(){
 	}
 
 	public void close(){
+		// Verificar si hay una transacción activa antes de cerrar
+		try {
+			if (db.getTransaction().isActive()) {
+				db.getTransaction().rollback();
+			}
+		} catch (Exception e) {
+			// Ignorar errores de rollback al cerrar
+		}
 		db.close();
 		System.out.println("DataAcess closed");
 	}
@@ -484,69 +492,86 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 
                 return monedero;
             }
-            public Monedero ingresarDinero(String userEmail, float cantidad) 
+            public Monedero ingresarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
                 System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-              
-                
+
                 db.getTransaction().begin();
-                
-                User user = db.find(User.class, userEmail);
-                if (user == null) {
-                    db.getTransaction().rollback();
-                    throw new NonexitstenUserException("El usuario no existe");
+
+                try {
+                    User user = db.find(User.class, userEmail);
+                    if (user == null) {
+                        throw new NonexitstenUserException("El usuario no existe");
+                    }
+
+                    Monedero monedero = user.getMonedero();
+                    if (monedero == null) {
+                        // Si el usuario no tiene monedero, creamos uno
+                        monedero = new Monedero(userEmail + "_wallet");
+                        monedero.setUser(user);
+                        user.setMonedero(monedero);
+                    }
+                    if(user.getCuenta().getNumeroRandom()<cantidad) {
+                        throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
+                    }
+
+                    monedero.ingresarDinero(cantidad);
+                    user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
+                    db.merge(user);
+                    db.getTransaction().commit();
+
+                    return monedero;
+                } catch (NonexitstenUserException | CantidadInvalidaException e) {
+                    // Hacer rollback y relanzar la excepción correcta
+                    try {
+                        db.getTransaction().rollback();
+                    } catch (Exception rollbackEx) {
+                        // Ignorar cualquier error de rollback, preservar excepción original
+                    }
+                    throw e;
                 }
-                
-                Monedero monedero = user.getMonedero();
-                if (monedero == null) {
-                    // Si el usuario no tiene monedero, creamos uno
-                    monedero = new Monedero(userEmail + "_wallet");
-                    monedero.setUser(user);
-                    user.setMonedero(monedero);
-                }
-                if(user.getCuenta().getNumeroRandom()<cantidad) {
-                	throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
-                }
-                
-                monedero.ingresarDinero(cantidad);
-                db.merge(user);
-                db.getTransaction().commit();
-                
-                return monedero;
             }
             
-            public Monedero retirarDinero(String userEmail, float cantidad) 
+            public Monedero retirarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-                
+
                 if (cantidad <= 0) {
                     throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
                 }
-                
+
                 db.getTransaction().begin();
-                
-                User user = db.find(User.class, userEmail);
-                if (user == null) {
-                    db.getTransaction().rollback();
-                    throw new NonexitstenUserException("El usuario no existe");
+
+                try {
+                    User user = db.find(User.class, userEmail);
+                    if (user == null) {
+                        throw new NonexitstenUserException("El usuario no existe");
+                    }
+
+                    Monedero monedero = user.getMonedero();
+                    if (monedero == null) {
+                        throw new MonederoNoExisteException("El usuario no tiene monedero");
+                    }
+
+                    if (!monedero.tieneSaldoSuficiente(cantidad)) {
+                        throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
+                    }
+
+                    monedero.retirarDinero(cantidad);
+                    user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() + cantidad));
+                    db.merge(user);
+                    db.getTransaction().commit();
+
+                    return monedero;
+                } catch (NonexitstenUserException | MonederoNoExisteException | SaldoInsuficienteException e) {
+                    // Hacer rollback y relanzar la excepción correcta
+                    try {
+                        db.getTransaction().rollback();
+                    } catch (Exception rollbackEx) {
+                        // Ignorar cualquier error de rollback, preservar excepción original
+                    }
+                    throw e;
                 }
-                
-                Monedero monedero = user.getMonedero();
-                if (monedero == null) {
-                    db.getTransaction().rollback();
-                    throw new MonederoNoExisteException("El usuario no tiene monedero");
-                }
-                
-                if (!monedero.tieneSaldoSuficiente(cantidad)) {
-                    db.getTransaction().rollback();
-                    throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
-                }
-                
-                monedero.retirarDinero(cantidad);
-                db.merge(user);
-                db.getTransaction().commit();
-                
-                return monedero;
             }
             public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
                     throws MonederoNoExisteException, NonexitstenUserException {

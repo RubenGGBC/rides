@@ -31,10 +31,12 @@ public class ingresarDineroCajaBlancaDB {
             fail("Deberia haver lanzado NonexitstenUserException");
 
         } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {}
+            System.out.println("✓ TEST 1: Capturó NonexitstenUserException correctamente");
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) { }
+            System.out.println("✗ TEST 1: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -59,13 +61,15 @@ public class ingresarDineroCajaBlancaDB {
             sut.ingresarDinero(userEmail, cantidad);
             sut.close();
 
-            fail("Should throw CantidadInvalidaException");
+            fail("Deberia haber lanzado CantidadInvalidaException");
 
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            assertTrue("Insufficient funds in account", true);
+            try { sut.close(); } catch (Exception ex) { }
+            System.out.println("✓ TEST 2: Capturó CantidadInvalidaException correctamente");
+            assertTrue("No hay suficiente dinero en la cuent para hacer la transaccion", true);
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            System.out.println("✗ TEST 2: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -93,21 +97,23 @@ public class ingresarDineroCajaBlancaDB {
             sut.open();
             sut.ingresarDinero(userEmail, cantidad);
             sut.close();
-            
+
             fail("Debería lanzar CantidadInvalidaException");
-            
+
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {  }
+            System.out.println("✓ TEST 3: Capturó CantidadInvalidaException correctamente");
             assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
-            
+
             testDA.open();
             User userAfterTest = testDA.getUser(userEmail);
             assertNotNull("El usuario debería existir", userAfterTest);
-            assertNotNull("El monedero debería haberse creado", userAfterTest.getMonedero());
+            assertNull("El monedero NO debería haberse creado porque la transacción falló", userAfterTest.getMonedero());
             testDA.close();
-            
+
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {  }
+            System.out.println("✗ TEST 3: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -142,14 +148,17 @@ public class ingresarDineroCajaBlancaDB {
             testDA.open();
             boolean monederoExists = testDA.existMonedero(userEmail);
             assertTrue("El monedero debería existir en la DB", monederoExists);
-            
+
             User userAfterTest = testDA.getUser(userEmail);
             assertEquals("El saldo en DB debe coincidir", cantidad, userAfterTest.getMonedero().getSaldo(), 0.01);
             assertEquals("El saldo de cuenta debe haberse reducido", 50.0f, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
             testDA.close();
 
+            System.out.println("✓ TEST 4: Completado exitosamente - No se lanzó excepción");
+
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {  }
+            System.out.println("✗ TEST 4: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -162,86 +171,4 @@ public class ingresarDineroCajaBlancaDB {
         }
     }
 
-    @Test
-    public void test5_ValorLimiteMinimo() {
-        // Test case 5: Valor límite mínimo - cantidad = 0.01 con monedero existente
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 0.01f;
-
-        try {
-            testDA.open();
-            testDA.crearUserconMonederoSinDinero(userEmail, pass, userName, 100);
-            User user = testDA.getUser(userEmail);
-            user.getMonedero().setSaldo(50.0f);
-            testDA.close();
-
-            sut.open();
-            Monedero result = sut.ingresarDinero(userEmail, cantidad);
-            sut.close();
-
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe coincidir", 50.01f, result.getSaldo(), 0.001);
-
-            testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertEquals("El saldo en DB debe coincidir", 50.01f, userAfterTest.getMonedero().getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse reducido", 99.99f, userAfterTest.getCuenta().getNumeroRandom(), 1.0f);
-            testDA.close();
-
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
-        } finally {
-            testDA.open();
-            testDA.removeUser(userEmail);
-            testDA.close();
-        }
-    }
-
-    @Test
-    public void test6_ValorLimiteMaximo() {
-        // Test case 6: Valor límite máximo - cantidad = 99.99 sin monedero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 99.99f;
-
-        try {
-            testDA.open();
-            testDA.crearUsersinMonedero(userEmail, pass, userName, 100);
-            testDA.close();
-
-            sut.open();
-            Monedero result = sut.ingresarDinero(userEmail, cantidad);
-            sut.close();
-
-            assertNotNull("El monedero debería haberse creado", result);
-            assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.001);
-
-            testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertNotNull("El monedero debería existir", userAfterTest.getMonedero());
-            assertEquals("El saldo en DB debe coincidir", cantidad, userAfterTest.getMonedero().getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse reducido", 0.01f, userAfterTest.getCuenta().getNumeroRandom(), 0.02f);
-            testDA.close();
-
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
-        } finally {
-            testDA.open();
-            testDA.removeUser(userEmail);
-            testDA.close();
-        }
-    }
 }

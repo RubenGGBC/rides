@@ -1,4 +1,4 @@
-import businesslogic.blfacade;
+import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Driver;
 import gui.MainGUI;
@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.util.*;
 
 public class RidesMockTest {
-    static blfacade appFacadeInterface = Mockito.mock(blfacade.class);
+    static BLFacade appFacadeInterface = Mockito.mock(BLFacade.class);
     public static void main(String args[]) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         MainGUI sut = new MainGUI(new Driver("Jon", "jon@gmail.com"));
         MainGUI.setBussinessLogic(appFacadeInterface);

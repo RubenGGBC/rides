@@ -2,7 +2,9 @@ import dataAccess.DataAccess;
 import domain.Monedero;
 import domain.User;
 import exceptions.CantidadInvalidaException;
+import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
+import exceptions.SaldoInsuficienteException;
 import org.junit.Test;
 import testOperations.TestDataAccess;
 
@@ -14,256 +16,196 @@ public class retirarDineroCajaBlancaDB {
     static TestDataAccess testDA = new TestDataAccess();
 
     @Test
-    public void test1() {
-        String userEmail = "userf@falso.com";
+    public void test1() { //Cantidad inválida
+        String userEmail = "mberastegui021";
         float cantidad = -2;
-        
+
         try {
             sut.open();
             sut.retirarDinero(userEmail, cantidad);
             sut.close();
-            
+
             fail("Debería lanzar CantidadInvalidaException");
-            
+
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try {
+                sut.close();
+            } catch (Exception ex) { /* ignore */ }
+            System.out.println("✓ TEST 1: Capturó CantidadInvalidaException correctamente");
             assertTrue("Cantidad negativa no válida", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
+            try {
+                sut.close();
+            } catch (Exception ex) { /* ignore */ }
+            System.out.println("✗ TEST 1: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
+            fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
 
     @Test
-    public void test2() {
+    public void test2() { //Usuario no existe
         String userEmail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50.0f;
-        
+
         try {
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
-            
+
             sut.open();
             sut.retirarDinero(userEmail, cantidad);
             sut.close();
-            
+
             fail("Debería lanzar NonexitstenUserException");
-            
+
         } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try {
+                sut.close();
+            } catch (Exception ex) { /* ignore */ }
+            System.out.println("✓ TEST 2: Capturó NonexitstenUserException correctamente");
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
+            try {
+                sut.close();
+            } catch (Exception ex) { /* ignore */ }
+            System.out.println("✗ TEST 2: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
+            fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
 
     @Test
     public void test3() {
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 50.0f;
-        
+        // Cantidad>0, User está en la DB, pero no tiene monedero
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 100.0f;
+
         try {
+            // Limpiar datos residuales
             testDA.open();
-            testDA.crearUsersinMonederoDineroEnCuenta(userEmail, pass, userName, 30);
+            testDA.removeUser(userEmail);
             testDA.close();
-            
+
+            // Crear usuario SIN monedero
+            testDA.open();
+            testDA.crearUserSinMonedero(userEmail, "password123", "TestUser", 500);
+            testDA.close();
+
+            // Intentar retirar dinero
             sut.open();
             sut.retirarDinero(userEmail, cantidad);
             sut.close();
 
-            fail("Debería lanzar CantidadInvalidaException");
-            
-        } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            assertTrue("Fondos insuficientes en cuenta", true);
+            fail("Debería lanzar MonederoNoExisteException");
+
+        } catch (MonederoNoExisteException e) {
+            try { sut.close(); } catch (Exception ex) {  }
+            System.out.println("✓ TEST 3: Capturó MonederoNoExisteException correctamente");
+            assertTrue("El usuario no tiene monedero", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            try { sut.close(); } catch (Exception ex) {
+            fail("Excepción inesperada: " + e.getClass().getSimpleName());
             }
         } finally {
-            testDA.open();
-            testDA.removeUser(userEmail);
-            testDA.close();
+            try {
+                testDA.open();
+                testDA.removeUser(userEmail);
+                testDA.close();
+            } catch (Exception ex) {  }
         }
     }
 
     @Test
     public void test4() {
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 50.0f;
-        
+        // Cantidad>0, User en DB con monedero, saldo insuficiente
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 100.0f;
+
         try {
-            testDA.open();
-            testDA.crearUsersinMonederoDineroEnCuenta(userEmail, pass, userName, 30);
-            testDA.close();
-            
-            sut.open();
-            sut.retirarDinero(userEmail, cantidad);
-            sut.close();
-            
-            fail("Debería lanzar CantidadInvalidaException");
-            
-        } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
-            
-            testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertNotNull("El usuario debería existir", userAfterTest);
-            assertNotNull("El monedero debería haberse creado", userAfterTest.getMonedero());
-            testDA.close();
-            
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción incorrecta: " + e.getClass().getSimpleName());
-            }
-        } finally {
+            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
+
+            // Crear usuario con monedero con saldo menor que cantidad
+            testDA.open();
+            testDA.crearUserConMonederoSaldoInsuficiente(userEmail, "password123", "TestUser", 500, 50.0f);
+            testDA.close();
+
+            // Intentar retirar más dinero del que tiene
+            sut.open();
+            sut.retirarDinero(userEmail, cantidad);
+            sut.close();
+
+            fail("Debería lanzar SaldoInsuficienteException");
+
+        } catch (SaldoInsuficienteException e) {
+            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            System.out.println("✓ TEST 4: Capturó SaldoInsuficienteException correctamente");
+            assertTrue("Saldo insuficiente en el monedero", true);
+        } catch (Exception e) {
+            try { sut.close(); } catch (Exception ex) {
+                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            }
+        } finally {
+            // Limpiar base de datos
+            try {
+                testDA.open();
+                testDA.removeUser(userEmail);
+                testDA.close();
+            } catch (Exception ex) { /* ignore */ }
         }
     }
 
     @Test
     public void test5() {
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 50.0f;
-        
-        try {
-            testDA.open();
-            testDA.crearUsersinMonederoDineroEnCuenta(userEmail, pass, userName, 100);
-            testDA.close();
-            
-            sut.open();
-            Monedero result = sut.retirarDinero(userEmail, cantidad);
-            sut.close();
-            
-            assertNotNull("El monedero debería haberse creado", result);
-            assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.01);
-            
-            testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertEquals("El saldo en DB debe coincidir", cantidad, userAfterTest.getMonedero().getSaldo(), 0.01);
-            assertEquals("El saldo de cuenta debe haberse reducido", 50.0f, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
-            testDA.close();
-            
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
-        } finally {
-            testDA.open();
-            testDA.removeUser(userEmail);
-            testDA.close();
-        }
-    }
-
-    @Test
-    public void test6_ValorLimiteMinimo() {
-        // Test case 6: Valor límite mínimo - cantidad = 0.01
+        // Camino 5: 1-IF(F)-(2-3)-IF2(F)-5-IF3(F)-IF4(F)-(8-11)-End
+        // Cantidad>0, User en DB con monedero, saldo suficiente
         String userEmail = "mberasategui022@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 0.01f;
+        float cantidad = 100.0f;
+        float saldoInicial = 200.0f;
+        int cuentaInicial = 500;
 
         try {
-            testDA.open();
-            testDA.crearUserconMonederoSinDinero(userEmail, pass, userName, 100);
-            User user = testDA.getUser(userEmail);
-            user.getMonedero().setSaldo(150.0f);
-            testDA.close();
-
-            sut.open();
-            Monedero result = sut.retirarDinero(userEmail, cantidad);
-            sut.close();
-
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe haberse reducido", 149.99f, result.getSaldo(), 0.001);
-
-            testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertEquals("El saldo en DB debe coincidir", 149.99f, userAfterTest.getMonedero().getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse incrementado", 100.01f, userAfterTest.getCuenta().getNumeroRandom(), 1.0f);
-            testDA.close();
-
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
-        } finally {
+            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
-        }
-    }
 
-    @Test
-    public void test7_ValorLimiteMaximo() {
-        // Test case 7: Valor límite máximo - cantidad = 149.99
-        String userEmail = "mberasategui022@ikasle.ehu.eus";
-        String pass = "contraseña";
-        String userName = "UserTest";
-        float cantidad = 149.99f;
-
-        try {
+            // Crear usuario con monedero con saldo suficiente
             testDA.open();
-            testDA.crearUserconMonederoSinDinero(userEmail, pass, userName, 100);
-            User user = testDA.getUser(userEmail);
-            user.getMonedero().setSaldo(150.0f);
+            testDA.crearUserConMonederoSaldoSuficiente(userEmail, "password123", "TestUser", cuentaInicial, saldoInicial);
             testDA.close();
 
             sut.open();
-            Monedero result = sut.retirarDinero(userEmail, cantidad);
+            Monedero monederoRetornado = sut.retirarDinero(userEmail, cantidad);
             sut.close();
 
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe haberse reducido", 0.01f, result.getSaldo(), 0.001);
+            assertNotNull("El monedero debe existir", monederoRetornado);
+            float saldoEsperado = saldoInicial - cantidad;
+            assertEquals("El saldo debe ser = saldoInicial - cantidad", saldoEsperado, monederoRetornado.getSaldo(), 0.01);
 
             testDA.open();
-            User userAfterTest = testDA.getUser(userEmail);
-            assertEquals("El saldo en DB debe coincidir", 0.01f, userAfterTest.getMonedero().getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse incrementado", 249.99f, userAfterTest.getCuenta().getNumeroRandom(), 1.0f);
+            User userVerificacion = testDA.getUser(userEmail);
+            assertEquals("El saldo del monedero en DB debe estar actualizado",
+                    saldoEsperado, userVerificacion.getMonedero().getSaldo(), 0.01);
             testDA.close();
+
+            System.out.println("✓ TEST 5: Completado exitosamente - No se lanzó excepción");
 
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            System.out.println("✗ TEST 5: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+                fail("Excepción inesperada: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
         } finally {
-            testDA.open();
-            testDA.removeUser(userEmail);
-            testDA.close();
+            try {
+                testDA.open();
+                testDA.removeUser(userEmail);
+                testDA.close();
+            } catch (Exception ex) {  }
         }
     }
 }

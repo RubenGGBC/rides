@@ -28,9 +28,9 @@ public class User implements Serializable {
 	private String nombre; 
 	@OneToMany(fetch = FetchType.EAGER)
     private List<Ride> reservedRides;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private CuentaBancaria cuentabanca;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Monedero monedero;
 
 
