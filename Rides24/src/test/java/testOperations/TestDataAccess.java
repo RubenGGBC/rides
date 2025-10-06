@@ -50,7 +50,7 @@ public class TestDataAccess {
     }
     public void close(){
         db.close();
-        System.out.println("TestDataAccess closed");
+        System.out.println("TestDataAccess clsed");
     }
 
     //Metodo corregido de sonar Ruben H,C
