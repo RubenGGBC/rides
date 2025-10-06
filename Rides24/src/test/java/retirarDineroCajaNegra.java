@@ -52,7 +52,7 @@ public class retirarDineroCajaNegra {
 
     @Test
     public void testCajaNegra1() { // Caso exitoso - Usuario con monedero y saldo suficiente (retira 100€ de 120€)
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         int cantidad = 100;
 
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
@@ -79,7 +79,7 @@ public class retirarDineroCajaNegra {
 
     @Test
     public void testCajaNegra2() {// Cantidad inválida (negativa)
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         int cantidad = -5;
 
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
@@ -143,7 +143,7 @@ public class retirarDineroCajaNegra {
 
     @Test
     public void testCajaNegra5() {// Usuario sin monedero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         int cantidad = 50;
 
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
@@ -167,7 +167,7 @@ public class retirarDineroCajaNegra {
 
     @Test
     public void testCajaNegra6() { //Saldo insuficiente
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         int cantidad = 50;
 
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
@@ -179,7 +179,7 @@ public class retirarDineroCajaNegra {
         monedero.setSaldo(20.0f);
         usuarioFalso.setMonedero(monedero);
 
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso)
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
 
 
         try {
@@ -192,6 +192,167 @@ public class retirarDineroCajaNegra {
             assertNotNull("El monedero debería existir", usuarioFalso.getMonedero());
         } catch (Exception e) {
             fail("Excepción incorrecta: " + e.getClass().getSimpleName());
+        }
+    }
+
+    // ==================== VALORES LÍMITE ====================
+
+    @Test
+    public void testValorLimite1() { // Cantidad excede saldo por 0.01 (150.01 vs 150.0)
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 150.01f;
+
+        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+        usuarioFalso.setCuenta(cuentaFalsa);
+        usuarioFalso.getCuenta().setNumeroRandom(100);
+        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+        monederoFalso.setSaldo(150.0f);
+        usuarioFalso.setMonedero(monederoFalso);
+
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+        try {
+            sut.retirarDinero(userEmail, cantidad);
+            fail("Debería lanzar SaldoInsuficienteException");
+
+        } catch (SaldoInsuficienteException e) {
+            assertEquals("Saldo insuficiente en el monedero", e.getMessage());
+        } catch (Exception e) {
+            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
+        }
+    }
+
+    @Test
+    public void testValorLimite2() { // Cantidad exacta al saldo (150.0 vs 150.0)
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 150.0f;
+
+        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+        usuarioFalso.setCuenta(cuentaFalsa);
+        usuarioFalso.getCuenta().setNumeroRandom(100);
+        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+        monederoFalso.setSaldo(150.0f);
+        usuarioFalso.setMonedero(monederoFalso);
+
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+        try {
+            Monedero result = sut.retirarDinero(userEmail, cantidad);
+
+            assertNotNull("El monedero debería existir", result);
+            assertEquals("El saldo del monedero debe ser 0", 0.0f, result.getSaldo(), 0.01);
+            assertEquals("El saldo de cuenta debe haberse incrementado", 250.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+
+        } catch (Exception e) {
+            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+        }
+    }
+
+    @Test
+        public void testValorLimite3() { // Cantidad justo por debajo del saldo (149.99 vs 150.0)
+            String userEmail = "mberasategui022@ikasle.ehu.eus";
+            float cantidad = 149.99f;
+
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+            monederoFalso.setSaldo(150.0f);
+            usuarioFalso.setMonedero(monederoFalso);
+
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+            try {
+                Monedero result = sut.retirarDinero(userEmail, cantidad);
+
+                assertNotNull("El monedero debería existir", result);
+                assertEquals("El saldo del monedero debe ser 0.01", 0.01f, result.getSaldo(), 0.001);
+                assertEquals("El saldo de cuenta debe haberse incrementado", 249.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+
+            } catch (Exception e) {
+                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            }
+        }
+
+        @Test
+        public void testValorLimite4() { // Cantidad mínima positiva (0.01)
+            String userEmail = "mberasategui022@ikasle.ehu.eus";
+            float cantidad = 0.01f;
+
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+            monederoFalso.setSaldo(150.0f);
+            usuarioFalso.setMonedero(monederoFalso);
+
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+            try {
+                Monedero result = sut.retirarDinero(userEmail, cantidad);
+
+                assertNotNull("El monedero debería existir", result);
+                assertEquals("El saldo del monedero debe ser 149.99", 149.99f, result.getSaldo(), 0.001);
+                assertEquals("El saldo de cuenta debe haberse incrementado", 100.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+
+            } catch (Exception e) {
+                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            }
+        }
+
+    @Test
+    public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 0.0f;
+
+        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+        usuarioFalso.setCuenta(cuentaFalsa);
+        usuarioFalso.getCuenta().setNumeroRandom(100);
+        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+        monederoFalso.setSaldo(150.0f);
+        usuarioFalso.setMonedero(monederoFalso);
+
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+        try {
+            sut.retirarDinero(userEmail, cantidad);
+            fail("Debería lanzar CantidadInvalidaException");
+
+        } catch (CantidadInvalidaException e) {
+            assertEquals("La cantidad a retirar debe ser mayor que cero", e.getMessage());
+        } catch (Exception e) {
+            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
+        }
+    }
+
+    @Test
+    public void testValorLimite6() { // Cantidad negativa mínima (-0.01)
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = -0.01f;
+
+        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+        usuarioFalso.setCuenta(cuentaFalsa);
+        usuarioFalso.getCuenta().setNumeroRandom(100);
+        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+        monederoFalso.setSaldo(150.0f);
+        usuarioFalso.setMonedero(monederoFalso);
+
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+
+        try {
+            sut.retirarDinero(userEmail, cantidad);
+            fail("Debería lanzar CantidadInvalidaException");
+
+        } catch (CantidadInvalidaException e) {
+            assertEquals("La cantidad a retirar debe ser mayor que cero", e.getMessage());
+        } catch (Exception e) {
+            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
 }

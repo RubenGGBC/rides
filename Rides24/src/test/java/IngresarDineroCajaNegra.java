@@ -118,7 +118,7 @@ public class IngresarDineroCajaNegra {
         
         try {
             sut.ingresarDinero(userEmail, cantidad);
-            fail("Debería lanzar CantidadInvalidaException");
+            fail("Debería lanzar CantidadInvalidaException, pero no salta debido a que no se comprueba la cantidad negativa");
             
         } catch (CantidadInvalidaException e) {
             fail("ERROR: El test debería fallar - Se esperaba que NO se lance CantidadInvalidaException pero sí se lanzó: " + e.getMessage());
@@ -195,58 +195,157 @@ public class IngresarDineroCajaNegra {
     }
 
     @Test
-    public void testCajaNegra7_ValorLimiteMinimo() {
-        // Test case 7: Valor límite mínimo - cantidad = 0.01 con monedero existente
+    public void testCajaNegra7_ValoresLimite_ConMonedero() {
+        // Test case 7: Todos los valores límite con monedero existente
         String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 0.01f;
+        float[] valoresLimite = {0.01f, 0.0f, -0.01f, 100.01f, 100.0f, 99.99f};
         
-        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
-        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
-        usuarioFalso.setCuenta(cuentaFalsa);
-        usuarioFalso.getCuenta().setNumeroRandom(100);
-        Monedero monedero = new Monedero(userEmail + "_wallet");
-        monedero.setSaldo(50.0f);
-        monedero.setUser(usuarioFalso);
-        usuarioFalso.setMonedero(monedero);
-        
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
-        
-        try {
-            Monedero result = sut.ingresarDinero(userEmail, cantidad);
+        for (float cantidad : valoresLimite) {
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            Monedero monedero = new Monedero(userEmail + "_wallet");
+            monedero.setSaldo(50.0f);
+            monedero.setUser(usuarioFalso);
+            usuarioFalso.setMonedero(monedero);
             
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe coincidir", 50.01f, result.getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse reducido", 99.99f, usuarioFalso.getCuenta().getNumeroRandom(), 1.0f);
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
             
-        } catch (Exception e) {
-            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            if (cantidad == 0.01f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería existir", result);
+                    assertEquals("El saldo del monedero debe coincidir", 50.01f, result.getSaldo(), 0.001);
+                    assertEquals("El saldo de cuenta debe haberse reducido", 99.99f, usuarioFalso.getCuenta().getNumeroRandom(), 1.0f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 0.01: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 0.0f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería existir", result);
+                    assertEquals("El saldo del monedero no debe cambiar", 50.0f, result.getSaldo(), 0.01);
+                    assertEquals("El saldo de cuenta no debe cambiar", 100.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                } catch (Exception e) {
+                    assertTrue("Puede lanzar excepción por cantidad cero", true);
+                }
+            } else if (cantidad == -0.01f) {
+                try {
+                    sut.ingresarDinero(userEmail, cantidad);
+                    fail("DEBERÍA lanzar CantidadInvalidaException para cantidad negativa, pero no lo hace - BUG DETECTADO");
+                } catch (CantidadInvalidaException e) {
+                    assertTrue("Excepción correcta para cantidad negativa", true);
+                } catch (Exception e) {
+                    fail("Lanzó excepción incorrecta para cantidad negativa: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 100.01f) {
+                try {
+                    sut.ingresarDinero(userEmail, cantidad);
+                    fail("Debería lanzar CantidadInvalidaException");
+                } catch (CantidadInvalidaException e) {
+                    assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
+                } catch (Exception e) {
+                    fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 100.0f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería existir", result);
+                    assertEquals("El saldo del monedero debe actualizarse", 150.0f, result.getSaldo(), 0.01);
+                    assertEquals("El saldo de cuenta debe quedar en 0", 0.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 100.0: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 99.99f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería existir", result);
+                    assertEquals("El saldo del monedero debe actualizarse", 149.99f, result.getSaldo(), 0.01);
+                    assertEquals("El saldo de cuenta debe haberse reducido", 0.01f, usuarioFalso.getCuenta().getNumeroRandom(), 0.02f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 99.99: " + e.getClass().getSimpleName());
+                }
+            }
         }
     }
 
     @Test
-    public void testCajaNegra8_ValorLimiteMaximo() {
-        // Test case 8: Valor límite máximo - cantidad = 99.99 sin monedero
+    public void testCajaNegra8_ValoresLimite_SinMonedero() {
+        // Test case 8: Todos los valores límite sin monedero
         String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 99.99f;
+        float[] valoresLimite = {0.01f, 0.0f, -0.01f, 100.01f, 100.0f, 99.99f};
         
-        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
-        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
-        usuarioFalso.setCuenta(cuentaFalsa);
-        usuarioFalso.getCuenta().setNumeroRandom(100);
-        // Sin monedero inicial
-        
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
-        
-        try {
-            Monedero result = sut.ingresarDinero(userEmail, cantidad);
+        for (float cantidad : valoresLimite) {
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            // Sin monedero inicial
             
-            assertNotNull("El monedero debería haberse creado", result);
-            assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.001);
-            assertNotNull("El monedero debería existir", usuarioFalso.getMonedero());
-            assertEquals("El saldo de cuenta debe haberse reducido", 0.01f, usuarioFalso.getCuenta().getNumeroRandom(), 0.02f);
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
             
-        } catch (Exception e) {
-            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            if (cantidad == 0.01f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería haberse creado", result);
+                    assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.001);
+                    assertNotNull("El monedero debería existir", usuarioFalso.getMonedero());
+                    assertEquals("El saldo de cuenta debe haberse reducido", 99.99f, usuarioFalso.getCuenta().getNumeroRandom(), 1.0f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 0.01: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 0.0f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería haberse creado", result);
+                    assertEquals("El saldo del monedero debe ser 0", 0.0f, result.getSaldo(), 0.01);
+                    assertEquals("El saldo de cuenta no debe cambiar", 100.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                } catch (Exception e) {
+                    assertTrue("Puede lanzar excepción por cantidad cero", true);
+                }
+            } else if (cantidad == -0.01f) {
+                try {
+                    sut.ingresarDinero(userEmail, cantidad);
+                    fail("DEBERÍA lanzar CantidadInvalidaException para cantidad negativa, pero no lo hace - BUG DETECTADO");
+                } catch (CantidadInvalidaException e) {
+                    assertTrue("Excepción correcta para cantidad negativa", true);
+                } catch (Exception e) {
+                    fail("Lanzó excepción incorrecta para cantidad negativa: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 100.01f) {
+                try {
+                    sut.ingresarDinero(userEmail, cantidad);
+                    fail("Debería lanzar CantidadInvalidaException");
+                } catch (CantidadInvalidaException e) {
+                    assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
+                    assertNotNull("El monedero se crea antes de la validación", usuarioFalso.getMonedero());
+                    assertEquals("El saldo del monedero debe ser 0", 0.0f, usuarioFalso.getMonedero().getSaldo(), 0.01);
+                    assertEquals("El saldo de cuenta no debe cambiar", 100.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                } catch (Exception e) {
+                    fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 100.0f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería haberse creado", result);
+                    assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.01);
+                    assertNotNull("El monedero debería existir", usuarioFalso.getMonedero());
+                    assertEquals("El saldo de cuenta debe quedar en 0", 0.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 100.0: " + e.getClass().getSimpleName());
+                }
+            } else if (cantidad == 99.99f) {
+                try {
+                    Monedero result = sut.ingresarDinero(userEmail, cantidad);
+                    assertNotNull("El monedero debería haberse creado", result);
+                    assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.001);
+                    assertNotNull("El monedero debería existir", usuarioFalso.getMonedero());
+                    assertEquals("El saldo de cuenta debe haberse reducido", 0.01f, usuarioFalso.getCuenta().getNumeroRandom(), 0.02f);
+                } catch (Exception e) {
+                    fail("Excepción inesperada para 99.99: " + e.getClass().getSimpleName());
+                }
+            }
         }
     }
 }

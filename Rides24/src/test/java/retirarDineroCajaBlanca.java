@@ -55,7 +55,7 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test1() { // Cantidad inválida
-        String userEmail = "userf@falso.com";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = -2;
 
         try {
@@ -71,8 +71,8 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test2() { //Usuario no existe
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 50.0f;
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = 100.0f;
 
         Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
 
@@ -89,15 +89,16 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test3() { // Usuario sin monedero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
-        float cantidad = 50.0f;
+        float cantidad = 100.0f;
 
         User usuarioFalso = new User(userEmail, pass, false, userName);
         CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
         usuarioFalso.setCuenta(cuentaFalsa);
         usuarioFalso.getCuenta().setNumeroRandom(30);
+        usuarioFalso.setMonedero(null);
 
         Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
 
@@ -107,18 +108,22 @@ public class retirarDineroCajaBlanca {
 
         } catch (MonederoNoExisteException e) {
             assertTrue("El usuario no tiene monedero", true);
-        } catch (Exception e) {
-            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+        } catch (SaldoInsuficienteException e) {
+            throw new RuntimeException(e);
+        } catch (NonexitstenUserException e) {
+            throw new RuntimeException(e);
+        } catch (CantidadInvalidaException e) {
+            throw new RuntimeException(e);
         }
     }
 
 
     @Test
     public void test4() { //Saldo insuficiente
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
-        float cantidad = 50.0f;
+        float cantidad = 100.0f;
 
         User usuarioFalso = new User(userEmail, pass, false, userName);
         CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
@@ -146,17 +151,17 @@ public class retirarDineroCajaBlanca {
     @Test
     public void test5() {
         // Test case 5: Caso exitoso - retiro de dinero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
-        float cantidad = 50.0f;
+        float cantidad = 100.0f;
 
         User usuarioFalso = new User(userEmail, pass, false, userName);
         CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
         usuarioFalso.setCuenta(cuentaFalsa);
         usuarioFalso.getCuenta().setNumeroRandom(100);
         Monedero monedero = new Monedero(userEmail + "_wallet");
-        monedero.setSaldo(50.0f); // Saldo exacto
+        monedero.setSaldo(100.0f); // Saldo exacto
         usuarioFalso.setMonedero(monedero);
 
         Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
@@ -166,7 +171,7 @@ public class retirarDineroCajaBlanca {
 
             assertNotNull("El monedero debería existir", result);
             assertEquals("El saldo del monedero debe coincidir", 0.0f, result.getSaldo(), 0.01);
-            assertEquals("El saldo de cuenta debe haberse incrementado", 150.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01);
+            assertEquals("El saldo de cuenta debe haberse incrementado", 200.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.00f);
 
         } catch (Exception e) {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
