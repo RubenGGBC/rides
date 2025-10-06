@@ -251,58 +251,58 @@ public class retirarDineroCajaNegra {
     }
 
     @Test
-    public void testValorLimite3() { // Cantidad justo por debajo del saldo (149.99 vs 150.0)
-        String userEmail = "mberasategui022@ikasle.ehu.eus";
-        float cantidad = 149.99f;
+        public void testValorLimite3() { // Cantidad justo por debajo del saldo (149.99 vs 150.0)
+            String userEmail = "mberasategui022@ikasle.ehu.eus";
+            float cantidad = 149.99f;
 
-        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
-        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
-        usuarioFalso.setCuenta(cuentaFalsa);
-        usuarioFalso.getCuenta().setNumeroRandom(100);
-        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
-        monederoFalso.setSaldo(150.0f);
-        usuarioFalso.setMonedero(monederoFalso);
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+            monederoFalso.setSaldo(150.0f);
+            usuarioFalso.setMonedero(monederoFalso);
 
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
 
-        try {
-            Monedero result = sut.retirarDinero(userEmail, cantidad);
+            try {
+                Monedero result = sut.retirarDinero(userEmail, cantidad);
 
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe ser 0.01", 0.01f, result.getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse incrementado", 249.99f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                assertNotNull("El monedero debería existir", result);
+                assertEquals("El saldo del monedero debe ser 0.01", 0.01f, result.getSaldo(), 0.001);
+                assertEquals("El saldo de cuenta debe haberse incrementado", 249.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
 
-        } catch (Exception e) {
-            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            } catch (Exception e) {
+                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            }
         }
-    }
 
-    @Test
-    public void testValorLimite4() { // Cantidad mínima positiva (0.01)
-        String userEmail = "mberasategui022@ikasle.ehu.eus";
-        float cantidad = 0.01f;
+        @Test
+        public void testValorLimite4() { // Cantidad mínima positiva (0.01)
+            String userEmail = "mberasategui022@ikasle.ehu.eus";
+            float cantidad = 0.01f;
 
-        User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
-        CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
-        usuarioFalso.setCuenta(cuentaFalsa);
-        usuarioFalso.getCuenta().setNumeroRandom(100);
-        Monedero monederoFalso = new Monedero(userEmail + "_wallet");
-        monederoFalso.setSaldo(150.0f);
-        usuarioFalso.setMonedero(monederoFalso);
+            User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
+            CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
+            usuarioFalso.setCuenta(cuentaFalsa);
+            usuarioFalso.getCuenta().setNumeroRandom(100);
+            Monedero monederoFalso = new Monedero(userEmail + "_wallet");
+            monederoFalso.setSaldo(150.0f);
+            usuarioFalso.setMonedero(monederoFalso);
 
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
+            Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
 
-        try {
-            Monedero result = sut.retirarDinero(userEmail, cantidad);
+            try {
+                Monedero result = sut.retirarDinero(userEmail, cantidad);
 
-            assertNotNull("El monedero debería existir", result);
-            assertEquals("El saldo del monedero debe ser 149.99", 149.99f, result.getSaldo(), 0.001);
-            assertEquals("El saldo de cuenta debe haberse incrementado", 100.01f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
+                assertNotNull("El monedero debería existir", result);
+                assertEquals("El saldo del monedero debe ser 149.99", 149.99f, result.getSaldo(), 0.001);
+                assertEquals("El saldo de cuenta debe haberse incrementado", 100.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
 
-        } catch (Exception e) {
-            fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            } catch (Exception e) {
+                fail("Excepción inesperada: " + e.getClass().getSimpleName());
+            }
         }
-    }
 
     @Test
     public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)

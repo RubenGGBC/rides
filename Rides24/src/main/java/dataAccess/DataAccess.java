@@ -498,7 +498,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
                 db.getTransaction().begin();
 
-                try {
+
                     User user = db.find(User.class, userEmail);
                     if (user == null) {
                         throw new NonexitstenUserException("El usuario no existe");
@@ -521,15 +521,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                     db.getTransaction().commit();
 
                     return monedero;
-                } catch (NonexitstenUserException | CantidadInvalidaException e) {
-                    // Hacer rollback y relanzar la excepción correcta
-                    try {
-                        db.getTransaction().rollback();
-                    } catch (Exception rollbackEx) {
-                        // Ignorar cualquier error de rollback, preservar excepción original
-                    }
-                    throw e;
-                }
+
             }
             
             public Monedero retirarDinero(String userEmail, float cantidad)
@@ -542,7 +534,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
                 db.getTransaction().begin();
 
-                try {
+
                     User user = db.find(User.class, userEmail);
                     if (user == null) {
                         throw new NonexitstenUserException("El usuario no existe");
@@ -563,15 +555,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                     db.getTransaction().commit();
 
                     return monedero;
-                } catch (NonexitstenUserException | MonederoNoExisteException | SaldoInsuficienteException e) {
-                    // Hacer rollback y relanzar la excepción correcta
-                    try {
-                        db.getTransaction().rollback();
-                    } catch (Exception rollbackEx) {
-                        // Ignorar cualquier error de rollback, preservar excepción original
-                    }
-                    throw e;
-                }
+
             }
             public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
                     throws MonederoNoExisteException, NonexitstenUserException {

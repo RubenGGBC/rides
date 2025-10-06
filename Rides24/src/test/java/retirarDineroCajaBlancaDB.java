@@ -17,8 +17,8 @@ public class retirarDineroCajaBlancaDB {
 
     @Test
     public void test1() { //Cantidad inválida
-        String userEmail = "mberastegui021";
-        float cantidad = -2;
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
+        float cantidad = -5;
 
         try {
             sut.open();
@@ -31,20 +31,18 @@ public class retirarDineroCajaBlancaDB {
             try {
                 sut.close();
             } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST 1: Capturó CantidadInvalidaException correctamente");
             assertTrue("Cantidad negativa no válida", true);
         } catch (Exception e) {
             try {
                 sut.close();
             } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST 1: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
 
     @Test
     public void test2() { //Usuario no existe
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 50.0f;
 
         try {
@@ -62,13 +60,11 @@ public class retirarDineroCajaBlancaDB {
             try {
                 sut.close();
             } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST 2: Capturó NonexitstenUserException correctamente");
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
             try {
                 sut.close();
             } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST 2: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
@@ -99,7 +95,6 @@ public class retirarDineroCajaBlancaDB {
 
         } catch (MonederoNoExisteException e) {
             try { sut.close(); } catch (Exception ex) {  }
-            System.out.println("✓ TEST 3: Capturó MonederoNoExisteException correctamente");
             assertTrue("El usuario no tiene monedero", true);
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) {
@@ -139,8 +134,7 @@ public class retirarDineroCajaBlancaDB {
             fail("Debería lanzar SaldoInsuficienteException");
 
         } catch (SaldoInsuficienteException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST 4: Capturó SaldoInsuficienteException correctamente");
+            try { sut.close(); } catch (Exception ex) {  }
             assertTrue("Saldo insuficiente en el monedero", true);
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) {
@@ -152,13 +146,12 @@ public class retirarDineroCajaBlancaDB {
                 testDA.open();
                 testDA.removeUser(userEmail);
                 testDA.close();
-            } catch (Exception ex) { /* ignore */ }
+            } catch (Exception ex) {  }
         }
     }
 
     @Test
     public void test5() {
-        // Camino 5: 1-IF(F)-(2-3)-IF2(F)-5-IF3(F)-IF4(F)-(8-11)-End
         // Cantidad>0, User en DB con monedero, saldo suficiente
         String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 100.0f;
@@ -190,11 +183,9 @@ public class retirarDineroCajaBlancaDB {
                     saldoEsperado, userVerificacion.getMonedero().getSaldo(), 0.01);
             testDA.close();
 
-            System.out.println("✓ TEST 5: Completado exitosamente - No se lanzó excepción");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST 5: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) { }
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {

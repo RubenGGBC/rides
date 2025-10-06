@@ -55,7 +55,7 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test1() { // Cantidad inválida
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = -2;
 
         try {
@@ -71,7 +71,7 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test2() { //Usuario no existe
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 100.0f;
 
         Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
@@ -89,7 +89,7 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test3() { // Usuario sin monedero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 100.0f;
@@ -120,7 +120,7 @@ public class retirarDineroCajaBlanca {
 
     @Test
     public void test4() { //Saldo insuficiente
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 100.0f;
@@ -151,7 +151,7 @@ public class retirarDineroCajaBlanca {
     @Test
     public void test5() {
         // Test case 5: Caso exitoso - retiro de dinero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 100.0f;

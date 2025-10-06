@@ -51,13 +51,11 @@ public class retirarDineroCajaNegraDB {
             assertEquals("El saldo de cuenta debe aumentar", saldoInicialCuenta + (int)cantidad, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
             testDA.close();
 
-            System.out.println("✓ TEST CAJA NEGRA 1: Completado exitosamente");
 
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 1: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) { }
             fail("No debería haber saltado excepción: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -68,7 +66,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testCajaNegra2() {//Cantidad inválida (negativa)
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         int cantidad = -5;
@@ -89,14 +87,12 @@ public class retirarDineroCajaNegraDB {
         } catch (CantidadInvalidaException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 2: Capturó CantidadInvalidaException correctamente");
+            } catch (Exception ex) {  }
             assertTrue("Cantidad inválida", true);
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 2: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) {  }
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -120,20 +116,17 @@ public class retirarDineroCajaNegraDB {
         } catch (NonexitstenUserException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 3: Capturó NonexitstenUserException correctamente");
+            } catch (Exception ex) { }
             assertTrue("El usuario no existe", true);
         } catch (IllegalArgumentException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 3: Capturó IllegalArgumentException correctamente");
+            } catch (Exception ex) {  }
             assertTrue("Email null genera IllegalArgumentException", true);
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 3: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) { }
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
@@ -157,21 +150,19 @@ public class retirarDineroCajaNegraDB {
         } catch (NonexitstenUserException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 4: Capturó NonexitstenUserException correctamente");
+            } catch (Exception ex) { }
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 4: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) { }
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
 
     @Test
     public void testCajaNegra5() {// Usuario sin monedero
-        String userEmail = "rgallego007@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         int cantidad = 50;
@@ -190,14 +181,12 @@ public class retirarDineroCajaNegraDB {
         } catch (MonederoNoExisteException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 5: Capturó MonederoNoExisteException correctamente");
+            } catch (Exception ex) {}
             assertEquals("El usuario no tiene monedero", e.getMessage());
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 5: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) {  }
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -236,14 +225,12 @@ public class retirarDineroCajaNegraDB {
         } catch (SaldoInsuficienteException e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 6: Capturó SaldoInsuficienteException correctamente");
+            } catch (Exception ex) { }
             assertEquals("Saldo insuficiente en el monedero", e.getMessage());
         } catch (Exception e) {
             try {
                 sut.close();
-            } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 6: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            } catch (Exception ex) { }
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -260,7 +247,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testValorLimite1() { // Cantidad excede saldo por 0.01 (150.01 vs 150.0)
-        String userEmail = "testLimite1_mberasategui022@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 150.01f;
@@ -283,12 +270,10 @@ public class retirarDineroCajaNegraDB {
             fail("Debería lanzar SaldoInsuficienteException");
 
         } catch (SaldoInsuficienteException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST VALOR LÍMITE 1: Capturó SaldoInsuficienteException correctamente");
+            try { sut.close(); } catch (Exception ex) { }
             assertEquals("Saldo insuficiente en el monedero", e.getMessage());
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 1: Excepción: " + e.getClass().getName());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -299,7 +284,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testValorLimite2() { // Cantidad exacta al saldo (150.0 vs 150.0)
-        String userEmail = "testLimite2_mberasategui022@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 150.0f;
@@ -328,11 +313,9 @@ public class retirarDineroCajaNegraDB {
             assertEquals("El saldo de cuenta debe aumentar", saldoCuenta + (int)cantidad, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
             testDA.close();
 
-            System.out.println("✓ TEST VALOR LÍMITE 2: Completado exitosamente");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 2: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("No debería haber saltado excepción: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -343,7 +326,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testValorLimite3() { // Cantidad justo por debajo del saldo (149.99 vs 150.0)
-        String userEmail = "testLimite3_mberasategui022@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 149.99f;
@@ -371,11 +354,9 @@ public class retirarDineroCajaNegraDB {
             assertEquals("El saldo en DB debe ser 0.01", 0.01f, userAfterTest.getMonedero().getSaldo(), 0.001);
             testDA.close();
 
-            System.out.println("✓ TEST VALOR LÍMITE 3: Completado exitosamente");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 3: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("No debería haber saltado excepción: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -386,7 +367,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testValorLimite4() { // Cantidad mínima positiva (0.01)
-        String userEmail = "testLimite4_mberasategui022@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
         float cantidad = 0.01f;
@@ -414,11 +395,9 @@ public class retirarDineroCajaNegraDB {
             assertEquals("El saldo en DB debe ser 149.99", 149.99f, userAfterTest.getMonedero().getSaldo(), 0.001);
             testDA.close();
 
-            System.out.println("✓ TEST VALOR LÍMITE 4: Completado exitosamente");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 4: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("No debería haber saltado excepción: " + e.getClass().getSimpleName());
         } finally {
             testDA.open();
@@ -429,7 +408,7 @@ public class retirarDineroCajaNegraDB {
 
     @Test
     public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)
-        String userEmail = "testLimite5_mberasategui022@ikasle.ehu.eus";
+        String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 0.0f;
 
         try {
@@ -440,12 +419,10 @@ public class retirarDineroCajaNegraDB {
             fail("Debería lanzar CantidadInvalidaException");
 
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST VALOR LÍMITE 5: Capturó CantidadInvalidaException correctamente");
+            try { sut.close(); } catch (Exception ex) {  }
             assertEquals("La cantidad a retirar debe ser mayor que cero", e.getMessage());
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 5: Excepción: " + e.getClass().getName());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
@@ -463,12 +440,10 @@ public class retirarDineroCajaNegraDB {
             fail("Debería lanzar CantidadInvalidaException");
 
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST VALOR LÍMITE 6: Capturó CantidadInvalidaException correctamente");
+            try { sut.close(); } catch (Exception ex) {  }
             assertEquals("La cantidad a retirar debe ser mayor que cero", e.getMessage());
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST VALOR LÍMITE 6: Excepción: " + e.getClass().getName());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }

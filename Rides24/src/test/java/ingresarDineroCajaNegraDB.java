@@ -44,11 +44,9 @@ public class ingresarDineroCajaNegraDB {
             assertEquals("El saldo de cuenta debe haberse reducido", 50.0f, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
             testDA.close();
 
-            System.out.println("✓ TEST CAJA NEGRA 1: Completado exitosamente");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 1: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {}
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -93,11 +91,9 @@ public class ingresarDineroCajaNegraDB {
             assertEquals("El saldo de cuenta debe haberse reducido", 50.0f, userAfterTest.getCuenta().getNumeroRandom(), 0.01);
             testDA.close();
 
-            System.out.println("✓ TEST CAJA NEGRA 2: Completado exitosamente");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 2: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {}
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
@@ -135,12 +131,10 @@ public class ingresarDineroCajaNegraDB {
             fail("Debería lanzar CantidadInvalidaException");
             
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 3: Capturó CantidadInvalidaException (BUG: No debería capturarla)");
+            try { sut.close(); } catch (Exception ex) {  }
             assertTrue("ERROR: El test debería fallar - Se esperaba que NO se lance CantidadInvalidaException pero sí se lanzó " ,true);
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 3: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 fail("Se produjo rollback por transacción");
             } else {
@@ -167,16 +161,14 @@ public class ingresarDineroCajaNegraDB {
             fail("Debería lanzar excepción");
             
         } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) { }
             System.out.println("✓ TEST CAJA NEGRA 4: Capturó NonexitstenUserException correctamente");
             assertTrue("El usuario no existe", true);
         } catch (IllegalArgumentException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 4: Capturó IllegalArgumentException correctamente");
+            try { sut.close(); } catch (Exception ex) { }
             assertTrue("Email null genera IllegalArgumentException", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 4: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
@@ -184,7 +176,7 @@ public class ingresarDineroCajaNegraDB {
     @Test
     public void testCajaNegra5() {
         // Test case 5: Usuario no existe en la DB
-        String userEmail = "usuarionoexiste@falso.com";
+        String userEmail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50.0f;
 
         try {
@@ -199,12 +191,10 @@ public class ingresarDineroCajaNegraDB {
             fail("Debería lanzar NonexitstenUserException");
 
         } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 5: Capturó NonexitstenUserException correctamente");
+            try { sut.close(); } catch (Exception ex) {  }
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 5: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
+            try { sut.close(); } catch (Exception ex) {  }
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
@@ -235,7 +225,6 @@ public class ingresarDineroCajaNegraDB {
             
         } catch (CantidadInvalidaException e) {
             try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✓ TEST CAJA NEGRA 6: Capturó CantidadInvalidaException correctamente");
             assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
 
             testDA.open();
@@ -246,7 +235,6 @@ public class ingresarDineroCajaNegraDB {
 
         } catch (Exception e) {
             try { sut.close(); } catch (Exception ex) { /* ignore */ }
-            System.out.println("✗ TEST CAJA NEGRA 6: Excepción: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
             } else {
