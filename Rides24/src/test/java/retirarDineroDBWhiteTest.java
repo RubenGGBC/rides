@@ -70,23 +70,19 @@ public class retirarDineroDBWhiteTest {
     }
 
     @Test
-    public void test3() {
-        // Cantidad>0, User está en la DB, pero no tiene monedero
+    public void test3() { //User está en la DB, pero no tiene monedero
         String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 100.0f;
 
         try {
-            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
 
-            // Crear usuario SIN monedero
             testDA.open();
             testDA.crearUserSinMonedero(userEmail, "password123", "TestUser", 500);
             testDA.close();
 
-            // Intentar retirar dinero
             sut.open();
             sut.retirarDinero(userEmail, cantidad);
             sut.close();
@@ -110,23 +106,19 @@ public class retirarDineroDBWhiteTest {
     }
 
     @Test
-    public void test4() {
-        // Cantidad>0, User en DB con monedero, saldo insuficiente
+    public void test4() {// User en DB con monedero, saldo insuficiente
         String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 100.0f;
 
         try {
-            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
 
-            // Crear usuario con monedero con saldo menor que cantidad
             testDA.open();
             testDA.crearUserConMonederoSaldoInsuficiente(userEmail, "password123", "TestUser", 500, 50.0f);
             testDA.close();
 
-            // Intentar retirar más dinero del que tiene
             sut.open();
             sut.retirarDinero(userEmail, cantidad);
             sut.close();
@@ -141,7 +133,6 @@ public class retirarDineroDBWhiteTest {
                 fail("Excepción inesperada: " + e.getClass().getSimpleName());
             }
         } finally {
-            // Limpiar base de datos
             try {
                 testDA.open();
                 testDA.removeUser(userEmail);
@@ -151,20 +142,17 @@ public class retirarDineroDBWhiteTest {
     }
 
     @Test
-    public void test5() {
-        // Cantidad>0, User en DB con monedero, saldo suficiente
+    public void test5() {// User en DB con monedero, saldo suficiente
         String userEmail = "mberasategui022@ikasle.ehu.eus";
         float cantidad = 100.0f;
         float saldoInicial = 200.0f;
         int cuentaInicial = 500;
 
         try {
-            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
 
-            // Crear usuario con monedero con saldo suficiente
             testDA.open();
             testDA.crearUserConMonederoSaldoSuficiente(userEmail, "password123", "TestUser", cuentaInicial, saldoInicial);
             testDA.close();

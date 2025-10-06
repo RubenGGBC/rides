@@ -16,7 +16,7 @@ public class retirarDineroBDBlackTest {
     static TestDataAccess testDA = new TestDataAccess();
 
     @Test
-    public void testCajaNegra1() {// Caso 1: Usuario con monedero y saldo suficiente
+    public void testCajaNegra1() {// Usuario con monedero y saldo suficiente
         String userEmail = "test1_mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
@@ -25,17 +25,14 @@ public class retirarDineroBDBlackTest {
         int saldoInicialCuenta = 500;
 
         try {
-            // Limpiar datos residuales
             testDA.open();
             testDA.removeUser(userEmail);
             testDA.close();
 
-            // Crear usuario con monedero y saldo suficiente
             testDA.open();
             testDA.crearUserConMonederoSaldoSuficiente(userEmail, pass, userName, saldoInicialCuenta, saldoInicialMonedero);
             testDA.close();
 
-            // Retirar dinero
             sut.open();
             Monedero result = sut.retirarDinero(userEmail, cantidad);
             sut.close();
@@ -44,7 +41,6 @@ public class retirarDineroBDBlackTest {
             float saldoEsperado = saldoInicialMonedero - cantidad;
             assertEquals("El saldo del monedero debe ser = viejoSaldo - cantidad", saldoEsperado, result.getSaldo(), 0.01);
 
-            // Verificar en DB
             testDA.open();
             User userAfterTest = testDA.getUser(userEmail);
             assertEquals("El saldo en DB debe coincidir", saldoEsperado, userAfterTest.getMonedero().getSaldo(), 0.01);
@@ -196,7 +192,7 @@ public class retirarDineroBDBlackTest {
     }
 
     @Test
-    public void testCajaNegra6() { // Caso 6: Saldo insuficiente en monedero
+    public void testCajaNegra6() { // Saldo insuficiente en monedero
         String userEmail = "test6_mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";

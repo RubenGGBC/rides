@@ -149,8 +149,7 @@ public class retirarDineroMockWhiteTest {
     }
 
     @Test
-    public void test5() {
-        // Test case 5: Caso exitoso - retiro de dinero
+    public void test5() {// Caso exitoso - retiro de dinero
         String userEmail = "mberasategui022@ikasle.ehu.eus";
         String pass = "contraseña";
         String userName = "UserTest";
