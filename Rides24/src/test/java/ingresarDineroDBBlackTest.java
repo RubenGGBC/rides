@@ -8,7 +8,7 @@ import testOperations.TestDataAccess;
 
 import static org.junit.Assert.*;
 
-public class ingresarDineroCajaNegraDB {
+public class ingresarDineroDBBlackTest {
 
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();

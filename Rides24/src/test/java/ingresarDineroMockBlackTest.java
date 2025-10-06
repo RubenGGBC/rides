@@ -19,7 +19,7 @@ import javax.persistence.Persistence;
 
 import static org.junit.Assert.*;
 
-public class IngresarDineroCajaNegra {
+public class ingresarDineroMockBlackTest {
     static DataAccess sut;
 
     protected MockedStatic<Persistence> persistenceMock;

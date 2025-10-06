@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
-public class ingresarDineroCajaBlanca {
+public class ingresarDineroMockWhiteTest {
     static DataAccess sut;
 
     protected MockedStatic<Persistence> persistenceMock;
