@@ -11,18 +11,13 @@ import javax.jws.WebService;
 
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
-import domain.Ride;
-import domain.CuentaBancaria;
-import domain.Driver;
-import domain.Monedero;
+import domain.*;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.SaldoInsuficienteException;
 import exceptions.AnyRidesException;
 import exceptions.CantidadInvalidaException;
 import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
-import domain.User;
-import domain.Valoracion;
 import exceptions.UserAlredyExistException;
 import exceptions.RideAlreadyExistException;
 
@@ -93,7 +88,8 @@ public class BLFacadeImplementation  implements BLFacade {
    public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail ) throws RideMustBeLaterThanTodayException, RideAlreadyExistException{
 	   
 		dbManager.open();
-		Ride ride=dbManager.createRide(from, to, date, nPlaces, price, driverEmail);		
+        RideCreationData rideData = new RideCreationData(from, to, date, nPlaces, price);
+        Ride ride = dbManager.createRide(rideData, driverEmail);
 		dbManager.close();
 		return ride;
    }

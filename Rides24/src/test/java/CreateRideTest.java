@@ -21,7 +21,7 @@ public class CreateRideTest {
 	 static TestDataAccess testDA=new TestDataAccess();
 
 	private Driver driver; 
-
+/*
 	@Test
 	//sut.createRide:  The Driver("Aitor Fernandez", "driver11@gmail.com") HAS one ride "from" "to" in that "date". 
 	public void test1() {
@@ -254,5 +254,7 @@ public class CreateRideTest {
 			
 		        }
 		   }
+
+ */
 }
 

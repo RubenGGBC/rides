@@ -18,11 +18,7 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
-import domain.CuentaBancaria;
-import domain.Driver;
-import domain.EstadoViaje;
-import domain.Monedero;
-import domain.Ride;
+import domain.*;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.SaldoInsuficienteException;
@@ -31,8 +27,6 @@ import exceptions.AnyRidesException;
 import exceptions.CantidadInvalidaException;
 import exceptions.MonederoNoExisteException;
 import exceptions.NonexitstenUserException;
-import domain.User;
-import domain.Valoracion;
 
 /**
  * It implements the data access to the objectDb database
@@ -140,34 +134,43 @@ public class DataAccess  {
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
  	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
-	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverEmail) throws  RideAlreadyExistException, RideMustBeLaterThanTodayException {
-		System.out.println(">> DataAccess: createRide=> from= "+from+" to= "+to+" driver="+driverEmail+" date "+date);
-		try {
-			if(new Date().compareTo(date)>0) {
-				throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
-			}
-			db.getTransaction().begin();
-			
-			Driver driver = db.find(Driver.class, driverEmail);
-			if (driver.doesRideExists(from, to, date)) {
-				db.getTransaction().commit();
-				throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
-			}
-			Ride ride = driver.addRide(from, to, date, nPlaces, price);
-			//next instruction can be obviated
-			db.persist(driver); 
-			db.getTransaction().commit();
 
-			return ride;
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			db.getTransaction().commit();
-			return null;
-		}
-		
-		
-	}
-	
+    public Ride createRide(RideCreationData rideData, String driverEmail)
+            throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
+
+        System.out.println(">> DataAccess: createRide=> from= " + rideData.getFrom() +
+                " to= " + rideData.getTo() +
+                " driver=" + driverEmail +
+                " date " + rideData.getDate());
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
+
+        try {
+            if (new Date().compareTo(rideData.getDate()) > 0) {
+                throw new RideMustBeLaterThanTodayException(
+                        bundle.getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
+            }
+
+            db.getTransaction().begin();
+            Driver driver = db.find(Driver.class, driverEmail);
+
+            if (driver.doesRideExists(rideData.getFrom(), rideData.getTo(), rideData.getDate())) {
+                throw new RideAlreadyExistException(bundle.getString("DataAccess.RideAlreadyExist"));
+            }
+
+            Ride ride = driver.addRide(rideData.getFrom(), rideData.getTo(),
+                    rideData.getDate(), rideData.getNPlaces(),
+                    rideData.getPrice());
+            db.persist(driver);
+            return ride;
+
+        } catch (NullPointerException e) {
+            return null;
+
+        } finally {
+            db.getTransaction().commit();
+        }
+    }
+
 	/**
 	 * This method retrieves the rides from two locations on a given date 
 	 * 
@@ -269,6 +272,7 @@ public void open(){
         System.out.println(">> DataAccess: createUser=> email= " + email + " nombre= " + nombre);
         db.getTransaction().commit();
     }
+
 
 public User loguser(String email, String password, boolean driver) throws NonexitstenUserException {
 	
@@ -540,35 +544,59 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 
-                if (cantidad <= 0) {
-                    throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
-                }
+                User user = comprobar_condiciones_entrada(userEmail, cantidad);
+                Monedero monedero = user.getMonedero();
+
+                monedero.retirarDinero(cantidad);
+                user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() + cantidad));
+                db.merge(user);
+                db.getTransaction().commit();
+
+                return monedero;
+
+            }
+
+
+            private User comprobar_condiciones_entrada(String userEmail, float cantidad)
+                    throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
+
+                comprobar_cantidad(cantidad);
 
                 db.getTransaction().begin();
 
 
-                    User user = db.find(User.class, userEmail);
-                    if (user == null) {
-                        throw new NonexitstenUserException("El usuario no existe");
-                    }
+                User user = db.find(User.class, userEmail);
+                comprobar_user(user);
 
-                    Monedero monedero = user.getMonedero();
-                    if (monedero == null) {
-                        throw new MonederoNoExisteException("El usuario no tiene monedero");
-                    }
+                Monedero monedero = user.getMonedero();
+                comprobar_monedero(monedero, cantidad);
 
-                    if (!monedero.tieneSaldoSuficiente(cantidad)) {
-                        throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
-                    }
+                user.setMonedero(monedero);
 
-                    monedero.retirarDinero(cantidad);
-                    user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() + cantidad));
-                    db.merge(user);
-                    db.getTransaction().commit();
-
-                    return monedero;
-
+                return user;
             }
+
+            private void comprobar_cantidad(float cantidad) throws CantidadInvalidaException {
+                if (cantidad <= 0) {
+                    throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
+                }
+            }
+    private void comprobar_user(User user) throws NonexitstenUserException {
+        if (user == null) {
+            throw new NonexitstenUserException("El usuario no existe");
+        }
+    }
+
+    private void comprobar_monedero(Monedero monedero, float cantidad) throws MonederoNoExisteException, SaldoInsuficienteException {
+        if (monedero == null) {
+            throw new MonederoNoExisteException("El usuario no tiene monedero");
+        }
+
+        if (!monedero.tieneSaldoSuficiente(cantidad)) {
+            throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
+        }
+    }
+
     public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria)
             throws MonederoNoExisteException, NonexitstenUserException {
         System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail= " + userEmail);
