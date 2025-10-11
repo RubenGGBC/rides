@@ -251,25 +251,23 @@ public void open(){
 		db.close();
 		System.out.println("DataAcess closed");
 	}
-    public void createUser(String email, String password, boolean driver, String nombre) throws UserAlredyExistException {
+    public void createUser(String email, String password, String nombre) throws UserAlredyExistException {
         db.getTransaction().begin();
-        User user=new User(email,password,driver,nombre);
 
-        if (db.find(User.class,email)!=null) {
+        if (db.find(User.class, email) != null) {
             db.getTransaction().commit();
             throw new UserAlredyExistException("Ya existe un usuario con ese email");
-        }else {
-            String tipo = "Driver";
-            if(!driver) {
-                tipo = "Cliente";
-            }else {
-                Driver conductor=new Driver(email,nombre);
-                db.persist(conductor);
-            }
-            System.out.println(">> DataAccess: createUser=> email= "+email+" tipo= "+tipo+" nombre= "+ nombre);
-            db.persist(user);
-            db.getTransaction().commit();
         }
+
+        // SIEMPRE crear ambas entidades
+        User user = new User(email, password, true, nombre);
+        Driver conductor = new Driver(email, nombre);
+
+        db.persist(conductor);
+        db.persist(user);
+
+        System.out.println(">> DataAccess: createUser=> email= " + email + " nombre= " + nombre);
+        db.getTransaction().commit();
     }
 
 public User loguser(String email, String password, boolean driver) throws NonexitstenUserException {
