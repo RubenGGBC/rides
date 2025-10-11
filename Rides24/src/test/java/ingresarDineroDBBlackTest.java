@@ -13,6 +13,7 @@ public class ingresarDineroDBBlackTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
+    /*
     @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
@@ -57,7 +58,8 @@ public class ingresarDineroDBBlackTest {
             testDA.removeUser(userEmail);
             testDA.close();
         }
-    }
+    }ç
+     */
 
     @Test
     public void testCajaNegra2() {

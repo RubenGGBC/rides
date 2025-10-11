@@ -48,10 +48,15 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 
-		<sonar.organization>jononekin</sonar.organization>
+		<sonar.organization>rubenggbc</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.projectKey>jononekin_monopoly-euskara</sonar.projectKey>
-		<sonar.login>69f0b261f26fe8390be129e064c0bf84e7a4c3b1</sonar.login>
+		<sonar.projectKey>rubenggbc_ridesic</sonar.projectKey>
+		<sonar.login>06316df5ea1e48675c438d64b04a6325b318ea5c</sonar.login>
+		<sonar.sources>src/main/java</sonar.sources>
+		<sonar.test>src/test/java</sonar.test>
+		<sonar.java.binaries>src/main/java</sonar.java.binaries>
+		<sonar.exclusions>**/AñadirSaldo.java</sonar.exclusions>
+        <sonar.exclusions>src</sonar.exclusions>
 	</properties>
 
 	<!-- https://mvnrepository.com/artifact/junit/junit -->

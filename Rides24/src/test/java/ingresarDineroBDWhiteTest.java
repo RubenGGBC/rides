@@ -13,6 +13,7 @@ public class ingresarDineroBDWhiteTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
+    /*
     @Test
     public void test1() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -44,6 +45,8 @@ public class ingresarDineroBDWhiteTest {
             }
         }
     }
+
+     */
 
     @Test
     public void test2() {

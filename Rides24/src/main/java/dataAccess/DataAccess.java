@@ -492,39 +492,54 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 
                 return monedero;
             }
-            public Monedero ingresarDinero(String userEmail, float cantidad)
-                    throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
-                System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
+    public Monedero ingresarDinero(String userEmail, float cantidad)
+            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
+        System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 
-                db.getTransaction().begin();
+        db.getTransaction().begin();
 
+        User user = validarYObtenerUsuario(userEmail);
+        Monedero monedero = obtenerOCrearMonedero(user, userEmail);
+        validarSaldoEnCuenta(user, cantidad);
 
-                    User user = db.find(User.class, userEmail);
-                    if (user == null) {
-                        throw new NonexitstenUserException("El usuario no existe");
-                    }
+        realizarIngresoYActualizarCuenta(monedero, user, cantidad);
 
-                    Monedero monedero = user.getMonedero();
-                    if (monedero == null) {
-                        // Si el usuario no tiene monedero, creamos uno
-                        monedero = new Monedero(userEmail + "_wallet");
-                        monedero.setUser(user);
-                        user.setMonedero(monedero);
-                    }
-                    if(user.getCuenta().getNumeroRandom()<cantidad) {
-                        throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
-                    }
+        db.merge(user);
+        db.getTransaction().commit();
+        return monedero;
+    }
 
-                    monedero.ingresarDinero(cantidad);
-                    user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
-                    db.merge(user);
-                    db.getTransaction().commit();
+    // MÉTODOS EXTRAÍDOS
+    private User validarYObtenerUsuario(String userEmail) throws NonexitstenUserException {
+        User user = db.find(User.class, userEmail);
+        if (user == null) {
+            throw new NonexitstenUserException("El usuario no existe");
+        }
+        return user;
+    }
 
-                    return monedero;
+    private Monedero obtenerOCrearMonedero(User user, String userEmail) {
+        Monedero monedero = user.getMonedero();
+        if (monedero == null) {
+            monedero = new Monedero(userEmail + "_wallet");
+            monedero.setUser(user);
+            user.setMonedero(monedero);
+        }
+        return monedero;
+    }
 
-            }
-            
-            public Monedero retirarDinero(String userEmail, float cantidad)
+    private void validarSaldoEnCuenta(User user, float cantidad) throws CantidadInvalidaException {
+        if(user.getCuenta().getNumeroRandom() < cantidad) {
+            throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
+        }
+    }
+
+    private void realizarIngresoYActualizarCuenta(Monedero monedero, User user, float cantidad) {
+        monedero.ingresarDinero(cantidad);
+        user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
+    }
+
+    public Monedero retirarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 

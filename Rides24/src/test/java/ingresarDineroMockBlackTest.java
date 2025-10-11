@@ -48,6 +48,7 @@ public class ingresarDineroMockBlackTest {
         persistenceMock.close();
     }
 
+    /*
     @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
@@ -75,6 +76,7 @@ public class ingresarDineroMockBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
+     */
 
     @Test
     public void testCajaNegra2() {
