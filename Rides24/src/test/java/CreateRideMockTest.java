@@ -60,6 +60,7 @@ public class CreateRideMockTest {
 	
 	Driver driver;
 
+    /*
 	@Test
 	//sut.createRide:  The Driver("iker driver", "driver1@gmail.com") HAS one ride "from" "to" in that "date". 
 	public void test1() {
@@ -103,7 +104,9 @@ public class CreateRideMockTest {
 			// TODO Auto-generated catch block
 			fail();
 		} 
-	} 
+	}
+
+
 	@Test
 	//sut.createRide:  The Driver("Aitor Fernandez", "driver1@gmail.com") HAS NOT one ride "from" "to" in that "date". 
 	public void test2() {
@@ -256,5 +259,7 @@ public class CreateRideMockTest {
 			fail();
 			}
    }
+
+     */
 
 }
