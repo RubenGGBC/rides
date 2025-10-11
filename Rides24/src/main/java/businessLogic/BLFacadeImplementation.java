@@ -144,7 +144,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	    public void createUser(String email, String password, boolean driver, String nombre) throws UserAlredyExistException{
 	 	   
 	 		dbManager.open();
-	 		dbManager.createUser(email, password, driver, nombre);
+	 		dbManager.createUser(email, password, nombre);
 	 		dbManager.close();
 	 	
 	    }

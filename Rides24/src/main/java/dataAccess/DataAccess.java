@@ -251,28 +251,26 @@ public void open(){
 		db.close();
 		System.out.println("DataAcess closed");
 	}
-	public void createUser(String email, String password, boolean driver, String nombre) throws UserAlredyExistException {
-		db.getTransaction().begin();
-		User user=new User(email,password,driver,nombre);
-		
-		if (db.find(User.class,email)!=null) {
-			db.getTransaction().commit();
-			throw new UserAlredyExistException("Ya existe un usuario con ese email");
-		}else {
-			String tipo = "Driver";
-			if(!driver) {
-			tipo = "Cliente";
-			}else {
-				Driver conductor=new Driver(email,nombre);
-				db.persist(conductor);
-			}
-		System.out.println(">> DataAccess: createUser=> email= "+email+" tipo= "+tipo+" nombre= "+ nombre);
-		db.persist(user); 
-		db.getTransaction().commit();
+    public void createUser(String email, String password, boolean driver, String nombre) throws UserAlredyExistException {
+        db.getTransaction().begin();
+        User user=new User(email,password,driver,nombre);
 
-		}
-	
-}
+        if (db.find(User.class,email)!=null) {
+            db.getTransaction().commit();
+            throw new UserAlredyExistException("Ya existe un usuario con ese email");
+        }else {
+            String tipo = "Driver";
+            if(!driver) {
+                tipo = "Cliente";
+            }else {
+                Driver conductor=new Driver(email,nombre);
+                db.persist(conductor);
+            }
+            System.out.println(">> DataAccess: createUser=> email= "+email+" tipo= "+tipo+" nombre= "+ nombre);
+            db.persist(user);
+            db.getTransaction().commit();
+        }
+    }
 
 public User loguser(String email, String password, boolean driver) throws NonexitstenUserException {
 	
@@ -539,6 +537,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
     }
 
+
     public Monedero retirarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
@@ -572,39 +571,31 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                     return monedero;
 
             }
-            public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria) 
-                    throws MonederoNoExisteException, NonexitstenUserException {
-                System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail= " + userEmail);
-                
-                db.getTransaction().begin();
-                
-                User user = db.find(User.class, userEmail);
-                Driver driver= findDriverByUserEmail(userEmail);
-                if (user == null) {
-                    db.getTransaction().rollback();
-                    throw new NonexitstenUserException("El usuario no existe");
-                }
-                
-                Monedero monedero = user.getMonedero();
-                if (monedero == null) {
-                    // Si el usuario no tiene monedero, creamos uno
-                    monedero = new Monedero(userEmail + "_wallet");
-                    monedero.setUser(user);
-                    monedero.setD(driver);
-                    user.setMonedero(monedero);
-                    driver.setMonedero(monedero);
-                }
-                
-                monedero.setCuentaBancaria(cuentaBancaria);
-                user.setCuenta(cuentaBancaria);
-                driver.setCuenta(cuentaBancaria);
-                db.merge(user);
-                db.merge(driver);
-                db.getTransaction().commit();
-                
-                return monedero;
-            }
+    public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria)
+            throws MonederoNoExisteException, NonexitstenUserException {
+        System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail= " + userEmail);
 
+        db.getTransaction().begin();
+
+        User user = validarYObtenerUsuario(userEmail);
+        Driver driver = findDriverByUserEmail(userEmail);
+        Monedero monedero = obtenerOCrearMonedero(user, userEmail);
+
+        if (driver != null) {
+            monedero.setD(driver);
+            driver.setMonedero(monedero);
+            driver.setCuenta(cuentaBancaria);
+            db.merge(driver);
+        }
+
+        monedero.setCuentaBancaria(cuentaBancaria);
+        user.setCuenta(cuentaBancaria);
+
+        db.merge(user);
+        db.getTransaction().commit();
+
+        return monedero;
+    }
             public float consultarSaldo(String userEmail) 
                     throws MonederoNoExisteException, NonexitstenUserException {
                 System.out.println(">> DataAccess: consultarSaldo => userEmail= " + userEmail);
