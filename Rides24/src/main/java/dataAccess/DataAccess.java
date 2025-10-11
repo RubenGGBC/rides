@@ -599,7 +599,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
     public Monedero asociarCuentaBancaria(String userEmail, CuentaBancaria cuentaBancaria)
             throws MonederoNoExisteException, NonexitstenUserException {
-        System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail= " + userEmail);
+        System.out.println(">> DataAccess: asociarCuentaBancaria => userEmail=" + userEmail);
 
         db.getTransaction().begin();
 
