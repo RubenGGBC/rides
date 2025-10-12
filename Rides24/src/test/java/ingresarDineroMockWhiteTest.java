@@ -47,6 +47,7 @@ public class ingresarDineroMockWhiteTest {
     @After
     public void tearDown() {
         persistenceMock.close();
+        System.out.println("Fin de la prueba");
 
 
     }
