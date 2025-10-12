@@ -52,7 +52,6 @@ public class ingresarDineroMockWhiteTest {
     }
 
 
-    /*
     @Test
     public void ingresarDineroTest1() throws NonexitstenUserException, CantidadInvalidaException {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -75,8 +74,8 @@ public class ingresarDineroMockWhiteTest {
             sut.close();
         }
     }
-     */
 
+    /*
     @Test
     public void ingresarDineroCajaTest2() throws NonexitstenUserException, MonederoNoExisteException, CantidadInvalidaException {
         String useremail = "rgallego007@ikasle.ehu.eus";
@@ -105,7 +104,9 @@ public class ingresarDineroMockWhiteTest {
         }
 
     }
+    */
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre creación de monedero cuando no existe + validación de saldo insuficiente (líneas 523-526 y 532-533)
     @Test
     public void ingresarDinderoTest3_UsuarioSinMonedero_SaldoInsuficiente() {
         String useremail = "rgallego007@ikasle.ehu.eus";
@@ -133,6 +134,7 @@ public class ingresarDineroMockWhiteTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre caso exitoso con creación de monedero + ingreso + actualización de cuenta (líneas 523-526, 538-539)
     @Test
     public void ingresarDineroTest4_CrearMonederoAutomaticoDineroencuenta() {
         String useremail = "nuevo@usuario.com";

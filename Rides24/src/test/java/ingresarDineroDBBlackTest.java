@@ -13,7 +13,6 @@ public class ingresarDineroDBBlackTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
-    /*
     @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
@@ -58,9 +57,9 @@ public class ingresarDineroDBBlackTest {
             testDA.removeUser(userEmail);
             testDA.close();
         }
-    }ç
-     */
+    }
 
+    /*
     @Test
     public void testCajaNegra2() {
         // Test case 2: Usuario existe, tiene cuenta con suficiente dinero, sin monedero
@@ -107,6 +106,7 @@ public class ingresarDineroDBBlackTest {
             testDA.close();
         }
     }
+    */
 
     @Test
     public void testCajaNegra3() {
@@ -175,6 +175,7 @@ public class ingresarDineroDBBlackTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarYObtenerUsuario() cuando user==null (línea 515-516)
     @Test
     public void testCajaNegra5() {
         // Test case 5: Usuario no existe en la DB
@@ -201,6 +202,7 @@ public class ingresarDineroDBBlackTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarSaldoEnCuenta() con monedero YA existente (línea 532-533)
     @Test
     public void testCajaNegra6() {
         // Test case 6: Usuario con saldo insuficiente en cuenta

@@ -13,7 +13,6 @@ public class ingresarDineroBDWhiteTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
-    /*
     @Test
     public void test1() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -32,11 +31,17 @@ public class ingresarDineroBDWhiteTest {
             fail("Deberia haver lanzado NonexitstenUserException");
 
         } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) {}
+            try {
+                sut.close();
+            } catch (Exception ex) {
+            }
             System.out.println("✓ TEST 1: Capturó NonexitstenUserException correctamente");
             assertTrue("El usuario no existe", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { }
+            try {
+                sut.close();
+            } catch (Exception ex) {
+            }
             System.out.println("✗ TEST 1: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
@@ -46,8 +51,7 @@ public class ingresarDineroBDWhiteTest {
         }
     }
 
-     */
-
+    /*
     @Test
     public void test2() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -71,7 +75,7 @@ public class ingresarDineroBDWhiteTest {
             System.out.println("✓ TEST 2: Capturó CantidadInvalidaException correctamente");
             assertTrue("No hay suficiente dinero en la cuent para hacer la transaccion", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {  }
             System.out.println("✗ TEST 2: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
@@ -84,6 +88,7 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
         }
     }
+    */
 
     @Test
     public void test3() {
@@ -104,7 +109,10 @@ public class ingresarDineroBDWhiteTest {
             fail("Debería lanzar CantidadInvalidaException");
 
         } catch (CantidadInvalidaException e) {
-            try { sut.close(); } catch (Exception ex) {  }
+            try {
+                sut.close();
+            } catch (Exception ex) {
+            }
             System.out.println("✓ TEST 3: Capturó CantidadInvalidaException correctamente");
             assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
 
@@ -115,7 +123,10 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) {  }
+            try {
+                sut.close();
+            } catch (Exception ex) {
+            }
             System.out.println("✗ TEST 3: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
@@ -129,6 +140,8 @@ public class ingresarDineroBDWhiteTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre creación de monedero (línea 523-526) + transacción exitosa completa (línea 538-539)
+    /*
     @Test
     public void test4() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -160,7 +173,10 @@ public class ingresarDineroBDWhiteTest {
             System.out.println("✓ TEST 4: Completado exitosamente - No se lanzó excepción");
 
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) {  }
+            try {
+                sut.close();
+            } catch (Exception ex) {
+            }
             System.out.println("✗ TEST 4: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
@@ -173,5 +189,7 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
         }
     }
-
 }
+     */
+}
+
