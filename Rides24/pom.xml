@@ -56,7 +56,8 @@
 		<sonar.test>src/test/java</sonar.test>
 		<sonar.java.binaries>src/main/java</sonar.java.binaries>
 		<sonar.exclusions>**/AñadirSaldo.java</sonar.exclusions>
-        <sonar.exclusions>src</sonar.exclusions>
+
+
 	</properties>
 
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
