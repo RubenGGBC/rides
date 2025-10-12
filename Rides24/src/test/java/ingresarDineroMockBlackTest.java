@@ -197,7 +197,7 @@ public class ingresarDineroMockBlackTest {
         } catch (Exception e) {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
-    }*/"
+    }*/
 
     @Test
     public void testCajaNegra7_ValoresLimite_ConMonedero() {
