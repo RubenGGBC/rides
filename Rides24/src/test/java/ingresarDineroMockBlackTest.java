@@ -48,7 +48,7 @@ public class ingresarDineroMockBlackTest {
         persistenceMock.close();
     }
 
-    /*
+
     @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
@@ -76,8 +76,8 @@ public class ingresarDineroMockBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-     */
 
+/*
     @Test
     public void testCajaNegra2() {
         // Test case 2: Usuario existe, tiene cuenta con suficiente dinero, sin monedero
@@ -104,7 +104,7 @@ public class ingresarDineroMockBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-
+*/
     @Test
     public void testCajaNegra3() {
         // Test case 3: Cantidad negativa
@@ -129,6 +129,7 @@ public class ingresarDineroMockBlackTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validación de userEmail null (línea 515)
     @Test
     public void testCajaNegra4() {
         // Test case 4: userEmail es null
@@ -150,6 +151,7 @@ public class ingresarDineroMockBlackTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarYObtenerUsuario() cuando user no existe (líneas 515-516)
     @Test
     public void testCajaNegra5() {
         // Test case 5: Usuario no existe en la DB
@@ -169,6 +171,7 @@ public class ingresarDineroMockBlackTest {
         }
     }
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarSaldoEnCuenta() sin monedero previo (líneas 523-526 y 532-533)
     @Test
     public void testCajaNegra6() {
         // Test case 6: Usuario con saldo insuficiente en cuenta

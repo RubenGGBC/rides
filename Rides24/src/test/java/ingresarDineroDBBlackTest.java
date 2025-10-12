@@ -13,7 +13,7 @@ public class ingresarDineroDBBlackTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
-    /*
+
     @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
@@ -58,9 +58,10 @@ public class ingresarDineroDBBlackTest {
             testDA.removeUser(userEmail);
             testDA.close();
         }
-    }ç
-     */
+       }
 
+
+    /*
     @Test
     public void testCajaNegra2() {
         // Test case 2: Usuario existe, tiene cuenta con suficiente dinero, sin monedero
@@ -107,7 +108,9 @@ public class ingresarDineroDBBlackTest {
             testDA.close();
         }
     }
+    */
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre caso de cantidad negativa (debería detectar bug en validación - líneas 538-539)
     @Test
     public void testCajaNegra3() {
         // Test case 3: Cantidad negativa (debe lanzar excepción desde BL)

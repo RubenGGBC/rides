@@ -13,7 +13,7 @@ public class ingresarDineroBDWhiteTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
 
-    /*
+
     @Test
     public void test1() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -46,8 +46,9 @@ public class ingresarDineroBDWhiteTest {
         }
     }
 
-     */
 
+
+    /*
     @Test
     public void test2() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -71,7 +72,7 @@ public class ingresarDineroBDWhiteTest {
             System.out.println("✓ TEST 2: Capturó CantidadInvalidaException correctamente");
             assertTrue("No hay suficiente dinero en la cuent para hacer la transaccion", true);
         } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { /* ignore */ }
+            try { sut.close(); } catch (Exception ex) {  }
             System.out.println("✗ TEST 2: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
             if (e.getClass().getSimpleName().contains("RollbackException")) {
                 assertTrue("Se produjo rollback por transacción", true);
@@ -84,7 +85,9 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
         }
     }
+    */
 
+    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre creación de monedero + saldo insuficiente (líneas 523-526 y 532-533)
     @Test
     public void test3() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
