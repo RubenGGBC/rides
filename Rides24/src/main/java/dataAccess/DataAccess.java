@@ -542,7 +542,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
     }
 
-    // MÉTODOS EXTRAÍDOS
+
     private User validarYObtenerUsuario(String userEmail) throws NonexitstenUserException {
         User user = db.find(User.class, userEmail);
         if (user == null) {
