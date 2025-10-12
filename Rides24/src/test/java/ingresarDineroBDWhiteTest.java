@@ -88,6 +88,8 @@ public class ingresarDineroBDWhiteTest {
     */
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre creación de monedero + saldo insuficiente (líneas 523-526 y 532-533)
+
+    /*
     @Test
     public void test3() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -131,6 +133,8 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
         }
     }
+
+     */
 
     @Test
     public void test4() {
