@@ -33,4 +33,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=rubenggbc_ridesicn
+        run: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agentorg.jacoco:jacoco-maven-plugin:report install sonar:sonar
