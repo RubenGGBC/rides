@@ -49,12 +49,13 @@ public class ingresarDineroMockBlackTest {
     }
 
 
-    @Test
+    /*@Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
+        // COMENTADO: testCajaNegra7 ya cubre este camino con valores límite
         String userEmail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50.0f;
-        
+
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
         CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
         usuarioFalso.setCuenta(cuentaFalsa);
@@ -62,20 +63,20 @@ public class ingresarDineroMockBlackTest {
         Monedero monedero = new Monedero(userEmail + "_wallet");
         monedero.setUser(usuarioFalso);
         usuarioFalso.setMonedero(monedero);
-        
+
         Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
-        
+
         try {
             Monedero result = sut.ingresarDinero(userEmail, cantidad);
-            
+
             assertNotNull("El monedero debería existir", result);
             assertEquals("El saldo del monedero debe coincidir", cantidad, result.getSaldo(), 0.01);
             assertEquals("El saldo de cuenta debe haberse reducido", 50.0f, usuarioFalso.getCuenta().getNumeroRandom(), 0.01f);
-            
+
         } catch (Exception e) {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
-    }
+    }*/
 
 /*
     @Test

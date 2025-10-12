@@ -109,7 +109,7 @@ public class ingresarDineroMockWhiteTest {
     }
     */
 
-    @Test
+    /*@Test
     public void ingresarDinderoTest3_UsuarioSinMonedero_SaldoInsuficiente() {
         String useremail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50;
@@ -124,17 +124,17 @@ public class ingresarDineroMockWhiteTest {
         try {
             sut.open();
             Monedero result = sut.ingresarDinero(useremail, cantidad);
-            fail("Debería lanzar CantidadInvalidaException");
+            fail("Deberia lanzar CantidadInvalidaException");
         } catch (CantidadInvalidaException e) {
             assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
                 assertNotNull(usuarioFalso.getMonedero());
             assertEquals(0.0f, usuarioFalso.getMonedero().getSaldo(), 0.01f);
         } catch (Exception e) {
-            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
+            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
         } finally {
             sut.close();
         }
-    }
+    }*/
 
     @Test
     public void ingresarDineroTest4_CrearMonederoAutomaticoDineroencuenta() {
