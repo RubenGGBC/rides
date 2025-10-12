@@ -492,7 +492,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 
                 return monedero;
             }
-    /*public Monedero ingresarDinero(String userEmail, float cantidad)
+    public Monedero ingresarDinero(String userEmail, float cantidad)
             throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
         System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 
@@ -507,7 +507,8 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.merge(user);
         db.getTransaction().commit();
         return monedero;
-    }*/
+    }
+    /*
     public Monedero ingresarDinero(String userEmail, float cantidad)
             throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
         System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
@@ -538,7 +539,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
 
         return monedero;
 
-    }
+    }*/
 
     // MÉTODOS EXTRAÍDOS
     private User validarYObtenerUsuario(String userEmail) throws NonexitstenUserException {
