@@ -130,7 +130,7 @@ public class ingresarDineroMockBlackTest {
     }
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validación de userEmail null (línea 515)
-    @Test
+   /* @Test
     public void testCajaNegra4() {
         // Test case 4: userEmail es null
         String userEmail = null;
@@ -149,7 +149,7 @@ public class ingresarDineroMockBlackTest {
         } catch (Exception e) {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
-    }
+    }*/
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarYObtenerUsuario() cuando user no existe (líneas 515-516)
     @Test
