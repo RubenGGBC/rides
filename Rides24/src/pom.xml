@@ -51,11 +51,7 @@
         <sonar.organization>rubenggbc</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectKey>rubenggbc_ridesic</sonar.projectKey>
-        <sonar.login>f97194750a2ca258d126b596e1854676d4e1e79e</sonar.login>
-        <sonar.sources>src/main/java</sonar.sources>
-        <sonar.test>src/test/java</sonar.test>
-        <sonar.java.binaries>src/main/java</sonar.java.binaries>
-        <sonar.exclusions>**/AñadirSaldo.java</sonar.exclusions>
+
 
 
     </properties>
