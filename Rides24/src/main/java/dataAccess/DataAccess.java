@@ -492,7 +492,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 
                 return monedero;
             }
-    public Monedero ingresarDinero(String userEmail, float cantidad)
+    /*public Monedero ingresarDinero(String userEmail, float cantidad)
             throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
         System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 
@@ -507,6 +507,37 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.merge(user);
         db.getTransaction().commit();
         return monedero;
+    }*/
+    public Monedero ingresarDinero(String userEmail, float cantidad)
+            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
+        System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
+
+        db.getTransaction().begin();
+
+
+        User user = db.find(User.class, userEmail);
+        if (user == null) {
+            throw new NonexitstenUserException("El usuario no existe");
+        }
+
+        Monedero monedero = user.getMonedero();
+        if (monedero == null) {
+            // Si el usuario no tiene monedero, creamos uno
+            monedero = new Monedero(userEmail + "_wallet");
+            monedero.setUser(user);
+            user.setMonedero(monedero);
+        }
+        if(user.getCuenta().getNumeroRandom()<cantidad) {
+            throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
+        }
+
+        monedero.ingresarDinero(cantidad);
+        user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
+        db.merge(user);
+        db.getTransaction().commit();
+
+        return monedero;
+
     }
 
     // MÉTODOS EXTRAÍDOS
