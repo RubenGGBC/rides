@@ -53,7 +53,6 @@
         <sonar.organization>rubenggbc</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.projectKey>rubenggbc_ridesicn</sonar.projectKey>
-		<sonar.login>d5c74a396fb8df08bf57ffd9f54b684e97a68907</sonar.login>
 
 
 	</properties>
