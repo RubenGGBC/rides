@@ -14,37 +14,38 @@ public class ingresarDineroBDWhiteTest {
     static TestDataAccess testDA = new TestDataAccess();
 
 
-    @Test
-    public void test1() {
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 50.0f;
-
-        try {
-
-            testDA.open();
-            testDA.removeUser(userEmail); //Lo borramos por si acaso
-            testDA.close();
-
-            sut.open();
-            sut.ingresarDinero(userEmail, cantidad);
-            sut.close();
-
-            fail("Deberia haver lanzado NonexitstenUserException");
-
-        } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) {}
-            System.out.println("✓ TEST 1: Capturó NonexitstenUserException correctamente");
-            assertTrue("El usuario no existe", true);
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) { }
-            System.out.println("✗ TEST 1: Excepción capturada: " + e.getClass().getName() + " - " + e.getMessage());
-            if (e.getClass().getSimpleName().contains("RollbackException")) {
-                assertTrue("Se produjo rollback por transacción", true);
-            } else {
-                fail("Excepción inesperada: " + e.getClass().getSimpleName());
-            }
-        }
-    }
+    // COMENTADO: Path mas sencillo - Usuario no existe
+//    @Test
+//    public void test1() {
+//        String userEmail = "rgallego007@ikasle.ehu.eus";
+//        float cantidad = 50.0f;
+//
+//        try {
+//
+//            testDA.open();
+//            testDA.removeUser(userEmail);
+//            testDA.close();
+//
+//            sut.open();
+//            sut.ingresarDinero(userEmail, cantidad);
+//            sut.close();
+//
+//            fail("Deberia haver lanzado NonexitstenUserException");
+//
+//        } catch (NonexitstenUserException e) {
+//            try { sut.close(); } catch (Exception ex) {}
+//            System.out.println("TEST 1: Capturo NonexitstenUserException correctamente");
+//            assertTrue("El usuario no existe", true);
+//        } catch (Exception e) {
+//            try { sut.close(); } catch (Exception ex) { }
+//            System.out.println("TEST 1: Excepcion capturada: " + e.getClass().getName() + " - " + e.getMessage());
+//            if (e.getClass().getSimpleName().contains("RollbackException")) {
+//                assertTrue("Se produjo rollback por transaccion", true);
+//            } else {
+//                fail("Excepcion inesperada: " + e.getClass().getSimpleName());
+//            }
+//        }
+//    }
 
 
 

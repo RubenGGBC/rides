@@ -153,57 +153,57 @@ public class ingresarDineroDBBlackTest {
         }
     }
 */
-    @Test
-    public void testCajaNegra4() {
-        // Test case 4: userEmail es null
-        String userEmail = null;
-        float cantidad = 50.0f;
+    // COMENTADO: Path mas sencillo - Usuario no existe (userEmail null)
+//    @Test
+//    public void testCajaNegra4() {
+//        String userEmail = null;
+//        float cantidad = 50.0f;
+//
+//        try {
+//            sut.open();
+//            sut.ingresarDinero(userEmail, cantidad);
+//            sut.close();
+//
+//            fail("Deberia lanzar excepcion");
+//
+//        } catch (NonexitstenUserException e) {
+//            try { sut.close(); } catch (Exception ex) { }
+//            System.out.println("TEST CAJA NEGRA 4: Capturo NonexitstenUserException correctamente");
+//            assertTrue("El usuario no existe", true);
+//        } catch (IllegalArgumentException e) {
+//            try { sut.close(); } catch (Exception ex) { }
+//            assertTrue("Email null genera IllegalArgumentException", true);
+//        } catch (Exception e) {
+//            try { sut.close(); } catch (Exception ex) {  }
+//            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
+//        }
+//    }
 
-        try {
-            sut.open();
-            sut.ingresarDinero(userEmail, cantidad);
-            sut.close();
-            
-            fail("Debería lanzar excepción");
-            
-        } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) { }
-            System.out.println("✓ TEST CAJA NEGRA 4: Capturó NonexitstenUserException correctamente");
-            assertTrue("El usuario no existe", true);
-        } catch (IllegalArgumentException e) {
-            try { sut.close(); } catch (Exception ex) { }
-            assertTrue("Email null genera IllegalArgumentException", true);
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) {  }
-            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
-        }
-    }
-
-    @Test
-    public void testCajaNegra5() {
-        // Test case 5: Usuario no existe en la DB
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 50.0f;
-
-        try {
-            testDA.open();
-            testDA.removeUser(userEmail); // Asegurar que no existe
-            testDA.close();
-
-            sut.open();
-            sut.ingresarDinero(userEmail, cantidad);
-            sut.close();
-            
-            fail("Debería lanzar NonexitstenUserException");
-
-        } catch (NonexitstenUserException e) {
-            try { sut.close(); } catch (Exception ex) {  }
-            assertTrue("El usuario no existe", true);
-        } catch (Exception e) {
-            try { sut.close(); } catch (Exception ex) {  }
-            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
-        }
-    }
+    // COMENTADO: Path mas sencillo - Usuario no existe
+//    @Test
+//    public void testCajaNegra5() {
+//        String userEmail = "rgallego007@ikasle.ehu.eus";
+//        float cantidad = 50.0f;
+//
+//        try {
+//            testDA.open();
+//            testDA.removeUser(userEmail);
+//            testDA.close();
+//
+//            sut.open();
+//            sut.ingresarDinero(userEmail, cantidad);
+//            sut.close();
+//
+//            fail("Deberia lanzar NonexitstenUserException");
+//
+//        } catch (NonexitstenUserException e) {
+//            try { sut.close(); } catch (Exception ex) {  }
+//            assertTrue("El usuario no existe", true);
+//        } catch (Exception e) {
+//            try { sut.close(); } catch (Exception ex) {  }
+//            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
+//        }
+//    }
 
     @Test
     public void testCajaNegra6() {

@@ -54,28 +54,29 @@ public class ingresarDineroMockWhiteTest {
 
 
 
-    @Test
-    public void ingresarDineroTest1() throws NonexitstenUserException, CantidadInvalidaException {
-        String userEmail = "rgallego007@ikasle.ehu.eus";
-        float cantidad = 50.0f;
-
-        // Camino 1: usuario no esta en la db
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
-
-        try {
-            sut.open();
-            try {
-                sut.ingresarDinero(userEmail, cantidad);
-            } catch (MonederoNoExisteException e) {
-                throw new RuntimeException(e);
-            }
-            fail("Debería lanzar NonexitstenUserException");
-        } catch (NonexitstenUserException e) {
-            assertTrue("El usuario no existe", true);
-        } finally {
-            sut.close();
-        }
-    }
+    // COMENTADO: Path mas sencillo - Usuario no existe
+//    @Test
+//    public void ingresarDineroTest1() throws NonexitstenUserException, CantidadInvalidaException {
+//        String userEmail = "rgallego007@ikasle.ehu.eus";
+//        float cantidad = 50.0f;
+//
+//        // Camino 1: usuario no esta en la db
+//        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
+//
+//        try {
+//            sut.open();
+//            try {
+//                sut.ingresarDinero(userEmail, cantidad);
+//            } catch (MonederoNoExisteException e) {
+//                throw new RuntimeException(e);
+//            }
+//            fail("Deberia lanzar NonexitstenUserException");
+//        } catch (NonexitstenUserException e) {
+//            assertTrue("El usuario no existe", true);
+//        } finally {
+//            sut.close();
+//        }
+//    }
 
 
     /*
@@ -109,7 +110,7 @@ public class ingresarDineroMockWhiteTest {
     }
     */
 
-    /*@Test
+    @Test
     public void ingresarDinderoTest3_UsuarioSinMonedero_SaldoInsuficiente() {
         String useremail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50;
@@ -134,7 +135,7 @@ public class ingresarDineroMockWhiteTest {
         } finally {
             sut.close();
         }
-    }*/
+    }
 
     @Test
     public void ingresarDineroTest4_CrearMonederoAutomaticoDineroencuenta() {

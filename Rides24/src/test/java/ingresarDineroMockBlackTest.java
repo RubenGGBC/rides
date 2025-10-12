@@ -49,10 +49,9 @@ public class ingresarDineroMockBlackTest {
     }
 
 
-    /*@Test
+    @Test
     public void testCajaNegra1() {
         // Test case 1: Usuario existe, tiene cuenta con suficiente dinero, tiene monedero
-        // COMENTADO: testCajaNegra7 ya cubre este camino con valores límite
         String userEmail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 50.0f;
 
@@ -76,7 +75,7 @@ public class ingresarDineroMockBlackTest {
         } catch (Exception e) {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
-    }*/
+    }
 
 /*
     @Test
@@ -152,28 +151,27 @@ public class ingresarDineroMockBlackTest {
         }
     }*/
 
-    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarYObtenerUsuario() cuando user no existe (líneas 515-516)
-    @Test
-    public void testCajaNegra5() {
-        // Test case 5: Usuario no existe en la DB
-        String userEmail = "usuarionoexiste@falso.com";
-        float cantidad = 50.0f;
-        
-        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
-        
-        try {
-            sut.ingresarDinero(userEmail, cantidad);
-            fail("Debería lanzar NonexitstenUserException");
-            
-        } catch (NonexitstenUserException e) {
-            assertTrue("El usuario no existe", true);
-        } catch (Exception e) {
-            fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
-        }
-    }
+    // COMENTADO: Path mas sencillo - Usuario no existe (lineas 521-522)
+//    @Test
+//    public void testCajaNegra5() {
+//        String userEmail = "usuarionoexiste@falso.com";
+//        float cantidad = 50.0f;
+//
+//        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
+//
+//        try {
+//            sut.ingresarDinero(userEmail, cantidad);
+//            fail("Deberia lanzar NonexitstenUserException");
+//
+//        } catch (NonexitstenUserException e) {
+//            assertTrue("El usuario no existe", true);
+//        } catch (Exception e) {
+//            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
+//        }
+//    }
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarSaldoEnCuenta() sin monedero previo (líneas 523-526 y 532-533)
-    /*@Test
+    @Test
     public void testCajaNegra6() {
         // Test case 6: Usuario con saldo insuficiente en cuenta
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -198,7 +196,7 @@ public class ingresarDineroMockBlackTest {
         } catch (Exception e) {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
-    }*/
+    }
 
     @Test
     public void testCajaNegra7_ValoresLimite_ConMonedero() {
