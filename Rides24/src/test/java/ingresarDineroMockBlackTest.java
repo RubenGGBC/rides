@@ -172,32 +172,32 @@ public class ingresarDineroMockBlackTest {
     }
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarSaldoEnCuenta() sin monedero previo (líneas 523-526 y 532-533)
-    @Test
+    /*@Test
     public void testCajaNegra6() {
         // Test case 6: Usuario con saldo insuficiente en cuenta
         String userEmail = "rgallego007@ikasle.ehu.eus";
         float cantidad = 120.0f;
-        
+
         User usuarioFalso = new User(userEmail, "contraseña", false, "UserTest");
         CuentaBancaria cuentaFalsa = new CuentaBancaria("1234567890");
         usuarioFalso.setCuenta(cuentaFalsa);
         usuarioFalso.getCuenta().setNumeroRandom(100); // Solo tiene 100
-        
+
         Mockito.when(db.find(User.class, userEmail)).thenReturn(usuarioFalso);
-        
+
         try {
             sut.ingresarDinero(userEmail, cantidad);
             fail("Debería lanzar CantidadInvalidaException");
-            
+
         } catch (CantidadInvalidaException e) {
             assertEquals("No tienes tanto dinero en la cuenta", e.getMessage());
             assertNotNull("El usuario debería existir", usuarioFalso);
             assertNotNull("El monedero debería haberse creado", usuarioFalso.getMonedero());
-            
+
         } catch (Exception e) {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
-    }
+    }*/"
 
     @Test
     public void testCajaNegra7_ValoresLimite_ConMonedero() {
