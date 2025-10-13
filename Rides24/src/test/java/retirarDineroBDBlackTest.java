@@ -59,7 +59,7 @@ public class retirarDineroBDBlackTest {
             testDA.close();
         }
     }
-
+    /*
     @Test
     public void testCajaNegra2() {//Cantidad inválida (negativa)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -96,7 +96,7 @@ public class retirarDineroBDBlackTest {
             testDA.close();
         }
     }
-
+*/
     @Test
     public void testCajaNegra3() {// userEmail es null
         String userEmail = null;

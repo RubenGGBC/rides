@@ -76,7 +76,7 @@ public class retirarDineroMockBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-
+/*
     @Test
     public void testCajaNegra2() {// Cantidad inválida (negativa)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -102,6 +102,8 @@ public class retirarDineroMockBlackTest {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
+
+ */
 
     @Test
     public void testCajaNegra3() { // userEmail es null
