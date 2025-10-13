@@ -306,7 +306,7 @@ public class retirarDineroMockBlackTest {
             }
         }
 
-    /*
+    //coverage
     @Test
     public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -332,7 +332,7 @@ public class retirarDineroMockBlackTest {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
-
+    //coverage
     @Test
     public void testValorLimite6() { // Cantidad negativa mínima (-0.01)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -358,5 +358,5 @@ public class retirarDineroMockBlackTest {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
     }
-    */
+
 }

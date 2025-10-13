@@ -52,7 +52,8 @@ public class retirarDineroMockWhiteTest {
     public void tearDown() {
         persistenceMock.close();
     }
-    /*
+    //coverage
+
     @Test
     public void test1() { // Cantidad inválida
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -69,7 +70,7 @@ public class retirarDineroMockWhiteTest {
         }
     }
 
-     */
+
 
     @Test
     public void test2() { //Usuario no existe

@@ -59,7 +59,8 @@ public class retirarDineroBDBlackTest {
             testDA.close();
         }
     }
-    /*
+    //coverage
+
     @Test
     public void testCajaNegra2() {//Cantidad inválida (negativa)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -96,7 +97,7 @@ public class retirarDineroBDBlackTest {
             testDA.close();
         }
     }
-*/
+
     @Test
     public void testCajaNegra3() {// userEmail es null
         String userEmail = null;
@@ -402,7 +403,7 @@ public class retirarDineroBDBlackTest {
         }
     }
 
-    /*
+    //coverage
     @Test
     public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -423,7 +424,7 @@ public class retirarDineroBDBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-
+    //coverage
     @Test
     public void testValorLimite6() { // Cantidad negativa mínima (-0.01)
         String userEmail = "testLimite6_mberasategui022@ikasle.ehu.eus";
@@ -444,5 +445,5 @@ public class retirarDineroBDBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-    */
+
 }
