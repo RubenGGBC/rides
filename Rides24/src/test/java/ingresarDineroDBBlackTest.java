@@ -61,7 +61,7 @@ public class ingresarDineroDBBlackTest {
        }
 
 
-    /*
+
     @Test
     public void testCajaNegra2() {
         // Test case 2: Usuario existe, tiene cuenta con suficiente dinero, sin monedero
@@ -108,10 +108,10 @@ public class ingresarDineroDBBlackTest {
             testDA.close();
         }
     }
-    */
+
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre caso de cantidad negativa (debería detectar bug en validación - líneas 538-539)
-    /*
+
     @Test
     public void testCajaNegra3() {
         // Test case 3: Cantidad negativa (debe lanzar excepción desde BL)
@@ -152,7 +152,7 @@ public class ingresarDineroDBBlackTest {
             testDA.close();
         }
     }
-*/
+
     // COMENTADO: Path mas sencillo - Usuario no existe (userEmail null)
 //    @Test
 //    public void testCajaNegra4() {

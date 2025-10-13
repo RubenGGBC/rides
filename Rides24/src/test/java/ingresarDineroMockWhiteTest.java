@@ -79,7 +79,7 @@ public class ingresarDineroMockWhiteTest {
 //    }
 
 
-    /*
+
     @Test
     public void ingresarDineroCajaTest2() throws NonexitstenUserException, MonederoNoExisteException, CantidadInvalidaException {
         String useremail = "rgallego007@ikasle.ehu.eus";
@@ -108,7 +108,7 @@ public class ingresarDineroMockWhiteTest {
         }
 
     }
-    */
+
 
     @Test
     public void ingresarDinderoTest3_UsuarioSinMonedero_SaldoInsuficiente() {

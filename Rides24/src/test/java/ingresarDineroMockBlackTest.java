@@ -77,7 +77,7 @@ public class ingresarDineroMockBlackTest {
         }
     }
 
-/*
+
     @Test
     public void testCajaNegra2() {
         // Test case 2: Usuario existe, tiene cuenta con suficiente dinero, sin monedero
@@ -104,7 +104,7 @@ public class ingresarDineroMockBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
-*/
+
     @Test
     public void testCajaNegra3() {
         // Test case 3: Cantidad negativa
