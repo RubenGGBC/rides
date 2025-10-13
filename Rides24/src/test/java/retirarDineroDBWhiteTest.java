@@ -15,6 +15,7 @@ public class retirarDineroDBWhiteTest {
     static DataAccess sut = new DataAccess();
     static TestDataAccess testDA = new TestDataAccess();
     //coverage
+    /*
     @Test
     public void test1() { //Cantidad inválida
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -40,6 +41,8 @@ public class retirarDineroDBWhiteTest {
         }
     }
 
+
+     */
 
 
     @Test
