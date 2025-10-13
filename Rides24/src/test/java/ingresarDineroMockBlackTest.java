@@ -129,8 +129,8 @@ public class ingresarDineroMockBlackTest {
         }
     }
 
-    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validación de userEmail null (línea 515)
-   /* @Test
+    //coverage
+    @Test
     public void testCajaNegra4() {
         // Test case 4: userEmail es null
         String userEmail = null;
@@ -149,26 +149,26 @@ public class ingresarDineroMockBlackTest {
         } catch (Exception e) {
             fail("Lanzó excepción incorrecta: " + e.getClass().getSimpleName());
         }
-    }*/
+    }
 
-    // COMENTADO: Path mas sencillo - Usuario no existe (lineas 521-522)
-//    @Test
-//    public void testCajaNegra5() {
-//        String userEmail = "usuarionoexiste@falso.com";
-//        float cantidad = 50.0f;
-//
-//        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
-//
-//        try {
-//            sut.ingresarDinero(userEmail, cantidad);
-//            fail("Deberia lanzar NonexitstenUserException");
-//
-//        } catch (NonexitstenUserException e) {
-//            assertTrue("El usuario no existe", true);
-//        } catch (Exception e) {
-//            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
-//        }
-//    }
+    //coverage
+    @Test
+    public void testCajaNegra5() {
+        String userEmail = "usuarionoexiste@falso.com";
+        float cantidad = 50.0f;
+
+        Mockito.when(db.find(User.class, userEmail)).thenReturn(null);
+
+        try {
+            sut.ingresarDinero(userEmail, cantidad);
+            fail("Deberia lanzar NonexitstenUserException");
+
+        } catch (NonexitstenUserException e) {
+            assertTrue("El usuario no existe", true);
+        } catch (Exception e) {
+            fail("Lanzo excepcion incorrecta: " + e.getClass().getSimpleName());
+        }
+    }
 
     // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre validarSaldoEnCuenta() sin monedero previo (líneas 523-526 y 532-533)
     @Test

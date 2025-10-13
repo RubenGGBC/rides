@@ -14,38 +14,38 @@ public class ingresarDineroBDWhiteTest {
     static TestDataAccess testDA = new TestDataAccess();
 
 
-    // COMENTADO: Path mas sencillo - Usuario no existe
-//    @Test
-//    public void test1() {
-//        String userEmail = "rgallego007@ikasle.ehu.eus";
-//        float cantidad = 50.0f;
-//
-//        try {
-//
-//            testDA.open();
-//            testDA.removeUser(userEmail);
-//            testDA.close();
-//
-//            sut.open();
-//            sut.ingresarDinero(userEmail, cantidad);
-//            sut.close();
-//
-//            fail("Deberia haver lanzado NonexitstenUserException");
-//
-//        } catch (NonexitstenUserException e) {
-//            try { sut.close(); } catch (Exception ex) {}
-//            System.out.println("TEST 1: Capturo NonexitstenUserException correctamente");
-//            assertTrue("El usuario no existe", true);
-//        } catch (Exception e) {
-//            try { sut.close(); } catch (Exception ex) { }
-//            System.out.println("TEST 1: Excepcion capturada: " + e.getClass().getName() + " - " + e.getMessage());
-//            if (e.getClass().getSimpleName().contains("RollbackException")) {
-//                assertTrue("Se produjo rollback por transaccion", true);
-//            } else {
-//                fail("Excepcion inesperada: " + e.getClass().getSimpleName());
-//            }
-//        }
-//    }
+    //coverage
+    @Test
+    public void test1() {
+        String userEmail = "rgallego007@ikasle.ehu.eus";
+        float cantidad = 50.0f;
+
+        try {
+
+            testDA.open();
+            testDA.removeUser(userEmail);
+            testDA.close();
+
+            sut.open();
+            sut.ingresarDinero(userEmail, cantidad);
+            sut.close();
+
+            fail("Deberia haver lanzado NonexitstenUserException");
+
+        } catch (NonexitstenUserException e) {
+            try { sut.close(); } catch (Exception ex) {}
+            System.out.println("TEST 1: Capturo NonexitstenUserException correctamente");
+            assertTrue("El usuario no existe", true);
+        } catch (Exception e) {
+            try { sut.close(); } catch (Exception ex) { }
+            System.out.println("TEST 1: Excepcion capturada: " + e.getClass().getName() + " - " + e.getMessage());
+            if (e.getClass().getSimpleName().contains("RollbackException")) {
+                assertTrue("Se produjo rollback por transaccion", true);
+            } else {
+                fail("Excepcion inesperada: " + e.getClass().getSimpleName());
+            }
+        }
+    }
 
 
 
@@ -88,9 +88,7 @@ public class ingresarDineroBDWhiteTest {
     }
 
 
-    // COMENTAR ESTE TEST REDUCIRÁ EL COVERAGE: Cubre creación de monedero + saldo insuficiente (líneas 523-526 y 532-533)
-
-    /*
+    //coverage
     @Test
     public void test3() {
         String userEmail = "rgallego007@ikasle.ehu.eus";
@@ -134,8 +132,6 @@ public class ingresarDineroBDWhiteTest {
             testDA.close();
         }
     }
-
-     */
 
     @Test
     public void test4() {

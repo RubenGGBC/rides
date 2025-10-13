@@ -52,6 +52,7 @@ public class retirarDineroMockWhiteTest {
     public void tearDown() {
         persistenceMock.close();
     }
+
     //coverage
 
     @Test
