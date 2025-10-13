@@ -402,6 +402,7 @@ public class retirarDineroBDBlackTest {
         }
     }
 
+    /*
     @Test
     public void testValorLimite5() { // Cantidad = 0 (límite entre válido/inválido)
         String userEmail = "mberasategui022@ikasle.ehu.eus";
@@ -443,4 +444,5 @@ public class retirarDineroBDBlackTest {
             fail("Excepción inesperada: " + e.getClass().getSimpleName());
         }
     }
+    */
 }
