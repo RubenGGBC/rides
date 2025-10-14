@@ -492,7 +492,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
                 
                 return monedero;
             }
-   /* public Monedero ingresarDinero(String userEmail, float cantidad)
+   public Monedero ingresarDinero(String userEmail, float cantidad)
             throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
         System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
 
@@ -508,39 +508,8 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         db.getTransaction().commit();
         return monedero;
     }
-    */
-
-    public Monedero ingresarDinero(String userEmail, float cantidad)
-            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException {
-        System.out.println(">> DataAccess: ingresarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-
-        db.getTransaction().begin();
 
 
-        User user = db.find(User.class, userEmail);
-        if (user == null) {
-            throw new NonexitstenUserException("El usuario no existe");
-        }
-
-        Monedero monedero = user.getMonedero();
-        if (monedero == null) {
-            // Si el usuario no tiene monedero, creamos uno
-            monedero = new Monedero(userEmail + "_wallet");
-            monedero.setUser(user);
-            user.setMonedero(monedero);
-        }
-        if(user.getCuenta().getNumeroRandom()<cantidad) {
-            throw new CantidadInvalidaException("No tienes tanto dinero en la cuenta");
-        }
-
-        monedero.ingresarDinero(cantidad);
-        user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
-        db.merge(user);
-        db.getTransaction().commit();
-
-        return monedero;
-
-    }
 
 
     private User validarYObtenerUsuario(String userEmail) throws NonexitstenUserException {
@@ -571,42 +540,9 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
         monedero.ingresarDinero(cantidad);
         user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() - cantidad));
     }
-    public Monedero retirarDinero(String userEmail, float cantidad)
-            throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
-        System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
-
-        if (cantidad <= 0) {
-            throw new CantidadInvalidaException("La cantidad a retirar debe ser mayor que cero");
-        }
-
-        db.getTransaction().begin();
 
 
-        User user = db.find(User.class, userEmail);
-        if (user == null) {
-            throw new NonexitstenUserException("El usuario no existe");
-        }
 
-        Monedero monedero = user.getMonedero();
-        if (monedero == null) {
-            throw new MonederoNoExisteException("El usuario no tiene monedero");
-        }
-
-        if (!monedero.tieneSaldoSuficiente(cantidad)) {
-            throw new SaldoInsuficienteException("Saldo insuficiente en el monedero");
-        }
-
-        monedero.retirarDinero(cantidad);
-        user.getCuenta().setNumeroRandom((int)(user.getCuenta().getNumeroRandom() + cantidad));
-        db.merge(user);
-        db.getTransaction().commit();
-
-        return monedero;
-
-    }
-
-
-    /*
     public Monedero retirarDinero(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
                 System.out.println(">> DataAccess: retirarDinero => userEmail= " + userEmail + ", cantidad= " + cantidad);
@@ -624,7 +560,7 @@ public Ride reserva(Ride viaje)throws AnyRidesException{
             }
 
 
-     */
+
 
             private User comprobar_condiciones_entrada(String userEmail, float cantidad)
                     throws MonederoNoExisteException, NonexitstenUserException, CantidadInvalidaException, SaldoInsuficienteException {
