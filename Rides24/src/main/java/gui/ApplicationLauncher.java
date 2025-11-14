@@ -13,12 +13,13 @@ import dataAccess.DataAccess;
 import domain.Driver;
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
+import exceptions.UserAlredyExistException;
 
 public class ApplicationLauncher { 
 	
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UserAlredyExistException {
 
 		ConfigXML c=ConfigXML.getInstance();
 	
@@ -35,46 +36,10 @@ public class ApplicationLauncher {
 		a.setVisible(true);
 
 
-		try {
-			
-			BLFacade appFacadeInterface;
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			
-			if (c.isBusinessLogicLocal()) {
-			
-				DataAccess da= new DataAccess();
-				appFacadeInterface=new BLFacadeImplementation(da);
+        BLFacade appFacadeInterface = new BLFactory().getBussinessLogic(c);
 
-				
-			} 
-			
-			else { //If remote
-				
-				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
-				 
-				URL url = new URL(serviceName);
+        MainGUI.setBussinessLogic(appFacadeInterface);
 
-		 
-		        //1st argument refers to wsdl document above
-				//2nd argument is service name, refer to wsdl document above
-		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-		 
-		        Service service = Service.create(url, qname);
-
-		         appFacadeInterface = service.getPort(BLFacade.class);
-			} 
-			
-			MainGUI.setBussinessLogic(appFacadeInterface);
-
-		
-
-			
-		}catch (Exception e) {
-			
-			
-			System.out.println("Error in ApplicationLauncher: "+e.toString());
-		}
-		//a.pack();
 
 
 	}

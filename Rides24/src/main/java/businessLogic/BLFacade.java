@@ -106,7 +106,9 @@ public interface BLFacade  {
 	 public List<Ride> getReservedRides(String email);
 	 
 	 public Driver getDriverByUser(User user);
-	 
+
+	 public Driver getDriver(String email);
+
 	 public void updateRide(Ride ride);
 	 public List<Ride> getReservedRidesByDriver(Driver driver);
 	 
@@ -123,9 +125,11 @@ public interface BLFacade  {
 	 public void updatearUser(User usuario);
 	 
 	 public void updatearDriver(Driver d);
-	    
+
    	 public void cobro(Monedero mon, float cantidad);
-}
+
+         public ExtendedIterator<String> getDepartingCitiesIterator();
+    }
 
 
 
